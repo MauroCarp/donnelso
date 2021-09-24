@@ -4,9 +4,9 @@
     
     <h1>
       
-      Tablero
+      Establecimiento Don Nelso
       
-      <small>Panel de Control</small>
+      <small>STOCK</small>
     
     </h1>
 
@@ -21,106 +21,33 @@
   </section>
 
   <section class="content">
+
+    <cajas-superiores></cajas-superiores>
+
     <div class="row">
       
-    <?php
+      <div v-for="(boton, index) in btnPrincipales" :key="index" class="col-lg-2 col-xs-6">
 
-    if($_SESSION["perfil"] =="Administrador"){
-
-      include "inicio/cajas-superiores.php";
-
-    }
-
-    ?>
-
-    </div> 
-
-     <div class="row">
-       
-        <!-- <div class="col-lg-12">
-
-          <?php
-
-          // if($_SESSION["perfil"] =="Administrador"){
-          
-          //  include "reportes/grafico-dias.php";
+          <button v-if="boton.modal" class="btn btn-primary btn-lg btn-block" data-toggle="modal" :data-target="boton.href"><b>{{boton.titulo}}</b></button>
+         
+          <a v-else class="btn btn-primary btn-lg btn-block" :href="boton.href"><b>{{boton.titulo}}</b></a>
 
 
-          // }
+      </div>
+ 
+    </div>
 
-          ?>
-
-        </div> -->
-        <div class="col-md-4">
-          <?php
-
-            if($_SESSION["perfil"] =="Administrador"){
-
-            include "inicio/rankingConsignatarios.php";
-
-
-            }
-
-          ?>
-        </div>  
-        
-        <div class="col-md-4">
-          <?php
-
-            if($_SESSION["perfil"] =="Administrador"){
-
-            include "inicio/rankingProveedores.php";
-
-
-            }
-
-          ?>
-        </div>  
-        
-        <div class="col-md-4">
-        <?php
-
-          if($_SESSION["perfil"] =="Administrador"){
-
-          include "inicio/rankingTropas.php";
-
-
-          }
-
-          ?>
-        </div>  
-
-         <div class="col-lg-12">
-           
-          <?php
-
-          if($_SESSION["perfil"] =="Especial" || $_SESSION["perfil"] =="Vendedor"){
-
-             echo '<div class="box box-success">
-
-             <div class="box-header">
-
-             <h1>Bienvenid@ ' .$_SESSION["nombre"].'</h1>
-
-             </div>
-
-             </div>';
-
-          }
-
-          ?>
-
-         </div>
-
-     </div>
 
     <div class="row">
-          <div class="col-lg-12">
+
+          <div class="col-lg-12" style="text-align:center;">
             <br>
-            <img src="vistas/img/plantilla/logo-barlovento.png" style="width:100%;">
+            <img src="vistas/img/plantilla/logo-inicio.png" style="height:250px;">
           
           </div>
+
     </div>
+
   </section>
  
 </div>

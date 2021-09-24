@@ -1,11 +1,11 @@
 {
-    "short_name": "Barlovento SRL",
-    "name": "Gestion de Feedlot Barlovento SRL",
+    "short_name": "E.D.N",
+    "name": "Establecimiento Don Nelso",
     "start_url": "/index.php",
-    "background_color": "#3c8dbc",
+    "background_color": "#06820B",
     "display": "fullscreen",
     "orientation": "portrait",
-    "theme_color": "#3c8dbc",
+    "theme_color": "#06820B",
     "icons": [
         {
             "src": "vistas/img/plantilla/icons/icon-72x72.png",

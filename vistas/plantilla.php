@@ -2,6 +2,11 @@
 
 session_start();
 
+function formatearFecha($fecha){
+  $fecha = explode('-',$fecha);
+  $nuevaFecha = $fecha[2]."-".$fecha[1]."-".$fecha[0];
+  return $nuevaFecha;
+}
 
 ?>
 <!DOCTYPE html>
@@ -11,14 +16,19 @@ session_start();
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <title>Reportes Feedlot</title>
+  <title>Establecimiento Don Nelso</title>
 
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
   <link rel="icon" href="vistas/img/plantilla/icono-negro.png">
+  
+  <link rel="manifest" href="manifest.json">
 
-   <!--=====================================
+  <!-- ANDROID -->
+  <meta name="theme-color" content="#06820B">
+    <!--========================
+   =============
   PLUGINS DE CSS
   ======================================-->
 
@@ -138,12 +148,12 @@ CUERPO DOCUMENTO
 ======================================-->
 
 <body class="hold-transition skin-blue sidebar-collapse sidebar-mini login-page">
- 
+      
   <?php
 
   if(isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "ok"){
 
-   echo '<div class="wrapper">';
+   echo '<div class="wrapper" id="app">';
 
     /*=============================================
     CABEZOTE
@@ -157,6 +167,7 @@ CUERPO DOCUMENTO
 
     include "modulos/menu.php";
 
+
     /*=============================================
     CONTENIDO
     =============================================*/
@@ -164,33 +175,17 @@ CUERPO DOCUMENTO
     if(isset($_GET["ruta"])){
 
       if($_GET["ruta"] == "inicio" ||
-         $_GET["ruta"] == "datos" ||
-         $_GET["ruta"] == "datos-compras" ||
-         $_GET["ruta"] == "datos-muertes" ||
-         $_GET["ruta"] == "panelControl" ||
-         $_GET["ruta"] == "piri" ||
+         $_GET["ruta"] == "registrosCompras" ||
+         $_GET["ruta"] == "servicios" ||
+         $_GET["ruta"] == "registroServicios" ||
+         $_GET["ruta"] == "pre-ventas" ||
+         $_GET["ruta"] == "ventas" ||
+         $_GET["ruta"] == "engorde" ||
+         $_GET["ruta"] == "sanidad" ||
+         $_GET["ruta"] == "consumo" ||
+         $_GET["ruta"] == "chazinados" ||
+         $_GET["ruta"] == "muertes" ||
          $_GET["ruta"] == "usuarios" ||
-         $_GET["ruta"] == "archivosCarga" ||
-         $_GET["ruta"] == "generar-reportes" ||
-         $_GET["ruta"] == "cargar-datos-compras" ||
-         $_GET["ruta"] == "reportes-compras" ||
-         $_GET["ruta"] == "reportes-compras.imprimir" ||
-         $_GET["ruta"] == "reportes-muertes" ||
-         $_GET["ruta"] == "reportes-muertes.imprimir" ||
-         $_GET["ruta"] == "reportes-muertesRango.imprimir" ||
-         $_GET["ruta"] == "cargar-datos" ||
-         $_GET["ruta"] == "cargar-datos-ventas" ||
-         $_GET["ruta"] == "cargar-datos-muertes" ||
-         $_GET["ruta"] == "reportes" ||
-         $_GET["ruta"] == "reportes.imprimir" ||
-         $_GET["ruta"] == "reportes/reportesFiltrados" ||
-         $_GET["ruta"] == "reportes/reportesFiltrados.imprimir" ||
-         $_GET["ruta"] == "reportes/reportesFiltradosMuertes" ||
-         $_GET["ruta"] == "reportesRango" ||
-         $_GET["ruta"] == "reportesRango.imprimir" ||
-         $_GET["ruta"] == "reportes/reportes-muertesRango" ||
-         $_GET["ruta"] == "reportes/reportesFiltradosMuertes.imprimir" ||
-         $_GET["ruta"] == "reportes/grafico-general" ||
          $_GET["ruta"] == "salir"){
 
         include "modulos/".$_GET["ruta"].".php";
@@ -223,18 +218,229 @@ CUERPO DOCUMENTO
 
   ?>
 
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 
+<script>
+
+  Vue.component('cajas-superiores',{
+    
+    data: function (){
+      
+      return{
+        cajasSuperiores: [
+        
+        {tipo:'Lechones',idCantidad: 'cantidadCerdo',icono: 
+        'icon-cerdo', numeroCantidad: 23,numeroPrecio: 450,idPrecio: 'precioKgCerdo'},
+        
+        {tipo:'Chivos',idCantidad: 'cantidadChivo',icono: 
+        'icon-chivo', numeroCantidad: 12,numeroPrecio: 450,idPrecio: 'precioKgChivo'},
+        
+        {tipo:'Corderos',idCantidad: 'cantidadCordero',icono: 
+        'icon-cordero', numeroCantidad: 14,numeroPrecio: 450,idPrecio: 'precioKgCordero'},
+        
+        {tipo:'Pollos',idCantidad: 'cantidadPollo',icono: 
+        'icon-pollo', numeroCantidad: 23,numeroPrecio: 450,idPrecio: 'precioKgPollo'},
+        
+        {tipo:'Vacas',idCantidad: 'cantidadVaca',icono: 
+        'icon-vaca', numeroCantidad: 22,numeroPrecio: 450,idPrecio: 'precioKgVaca'},
+        ]
+    
+      }
+    
+    },
+    template: `
+      <div class="row">
+      
+        <caja-superior
+          v-for="(animal, index) in cajasSuperiores" 
+          :key="index" 
+          :tipo="animal.tipo"
+          :idCantidad="animal.idCantidad"
+          :icono="animal.icono"
+          :numeroCantidad="animal.numeroCantidad"
+          :numeroPrecio="animal.numeroPrecio"
+          :idPrecio="animal.idPrecio">
+
+        </caja-superior>
+      
+      </div>
+    `
+
+  })
+
+  Vue.component('caja-superior',{
+
+    props:{
+      tipo: String,
+      idCantidad: String,
+      idPrecio: String,
+      numeroCantidad: Number,
+      numeroPrecio: Number,
+      icono: String,
+    },
+    template: `
+    <div  class="col-lg-2 col-xs-6">
+
+      <div class="small-box bg-green">
+        
+        <div class="inner">
+          
+          <p style="font-size:150%;font-weight:bold;">{{ tipo }}<br>
+            <strong><span :id="idCantidad" style="font-size:1.3em;">{{numeroCantidad}}</span></strong> <br>
+            $ <span :id="idPrecio" style="font-size:.8em;">{{numeroPrecio}}</span> /Kg
+          </p>
+
+        </div>
+        
+        <div class="icon">
+          
+          <i :class="icono"></i>
+        
+        </div>
+
+      </div>
+    
+    </div>
+    `
+
+  })
+
+  Vue.component('stock-chazinados',{
+    
+    data: function (){
+      
+      return{
+        stockChazinados: [
+        
+        {tipo:'Salames',idCantidad: 'stockSalames',icono: 
+        '', numeroCantidad: '22 Kg',numeroPrecio: 450,idPrecio: 'precioKgSalame'},
+
+        {tipo:'Chorizos',idCantidad: 'stockChorizos',icono: 
+        '', numeroCantidad: '22 Kg',numeroPrecio: 450,idPrecio: 'precioKgChorizo'},
+
+        {tipo:'Morcillas',idCantidad: 'stockMorcillas',icono: 
+        '', numeroCantidad: '22 Kg',numeroPrecio: 450,idPrecio: 'precioKgMorcilla'},
+
+        {tipo:'Bondiola',idCantidad: 'stockBondiola',icono: 
+        '', numeroCantidad: '22 Kg',numeroPrecio: 450,idPrecio: 'precioKgBondiola'},
+
+        {tipo:'Jamon',idCantidad: 'stockJamon',icono: 
+        '', numeroCantidad: '22 Kg',numeroPrecio: 450,idPrecio: 'precioKgJamon'},
+
+        {tipo:'Codeguines',idCantidad: 'stockCodeguines',icono: 
+        '', numeroCantidad: '22 Kg',numeroPrecio: 450,idPrecio: 'precioKgCodeguin'},
+
+        {tipo:'Grasa',idCantidad: 'stockGrasa',icono: 
+        '', numeroCantidad: '22 Kg',numeroPrecio: 450,idPrecio: 'precioKgGrasa'},
+
+        {tipo:'Chicharron',idCantidad: 'stockChicharron',icono: 
+        '', numeroCantidad: '22 Kg',numeroPrecio: 450,idPrecio: 'precioKgChicharron'},
+
+        {tipo:'Carne',idCantidad: 'stockCarne',icono: 
+        '', numeroCantidad: '22 Kg',numeroPrecio: 450,idPrecio: 'precioKgCarne'},
+        ]
+    
+      }
+    
+    },
+    template: `
+      <div class="row">
+      
+        <caja-StockChazinados
+          v-for="(animal, index) in stockChazinados" 
+          :key="index" 
+          :tipo="animal.tipo"
+          :idCantidad="animal.idCantidad"
+          :icono="animal.icono"
+          :numeroCantidad="animal.numeroCantidad"
+          :numeroPrecio="animal.numeroPrecio"
+          :idPrecio="animal.idPrecio">
+
+          </caja-StockChazinados>
+      
+      </div>
+    `
+
+  })
+
+  Vue.component('caja-StockChazinados',{
+
+    props:{
+      tipo: String,
+      idCantidad: String,
+      idPrecio: String,
+      numeroCantidad: String,
+      numeroPrecio: Number,
+      icono: String,
+    },
+    template: `
+    <div  class="col-lg-4 col-xs-6">
+
+      <div class="small-box bg-green">
+        
+        <div class="inner">
+          
+          <p style="font-size:150%;font-weight:bold;">{{ tipo }}<br>
+            <strong><span :id="idCantidad" style="font-size:1.3em;">{{numeroCantidad}}</span></strong> <br>
+            $ <span :id="idPrecio" style="font-size:.8em;">{{numeroPrecio}}</span> /Kg
+          </p>
+
+        </div>
+        
+        <div class="icon">
+          
+          <i :class="icono"></i>
+        
+        </div>
+
+      </div>
+    
+    </div>
+    `
+
+  })
+
+
+  const app = new Vue({
+    el:'#app',
+    data:{
+      btnPrincipales:[
+        {titulo: 'Pre-Venta',href:'#ventanaModalPreVenta',modal:true},
+        {titulo: 'Venta',href:'pre-ventas',modal:false},
+        {titulo: 'Parto',href:'#ventanaModalParto',modal:true},
+        {titulo: 'Ingreso',href:'#ventanaModalCompra',modal:true},
+        {titulo: 'Servicios',href:'#ventanaModalServicios',modal:true},
+        {titulo: 'Engorde',href:'engorde',modal:false},
+        {titulo: 'Sanidad',href:'sanidad',modal:false},
+        {titulo: 'Faenar',href:'#ventanaModalFaenar',modal:true},
+        {titulo: 'Chazinados',href:'#ventanaModalChazinado',modal:true},
+        {titulo: 'Stock Chazinados',href:'#ventanaModalStockChazinados',modal:true},
+        {titulo: 'Consumo',href:'consumo',modal:false},
+        {titulo: 'Muertes',href:'#ventanaModalMuertes',modal:true},
+      ]
+
+    
+    }
+  });
+
+</script>
+
+<script src="vistas/js/app.js"></script>
 <script src="vistas/js/plantilla.js"></script>
 <script src="vistas/js/usuarios.js"></script>
-<script src="vistas/js/compras.js"></script>
-<script src="vistas/js/muertes.js"></script>
 <script src="vistas/js/ventas.js"></script>
-<script src="vistas/js/panelControl.js"></script>
 <script src="vistas/js/reportes.js"></script>
-<script src="vistas/js/reportesCompras.js"></script>
-<script src="vistas/js/reportesMuertes.js"></script>
-<script src="vistas/js/piri.js"></script>
 <script src="vistas/js/archivos.js"></script>
+<script src="vistas/js/ingresos.js"></script>
+<script src="vistas/js/faenar.js"></script>
+<script src="vistas/js/servicios.js"></script>
+<script src="vistas/js/chazinados.js"></script>
+<script src="vistas/js/sanidad.js"></script>
+<script src="vistas/js/consumo.js"></script>
+<script src="vistas/js/racionesStock.js"></script>
+<script src="vistas/js/precios.js"></script>
+<script src="vistas/js/engorde.js"></script>
+<script src="vistas/js/muertes.js"></script>
 
 </body>
 </html>

@@ -1,81 +1,56 @@
 <?php
 
-require_once "../controladores/compras.controlador.php";
-require_once "../modelos/compras.modelo.php";
-
-require_once "../controladores/datos.controlador.php";
-require_once "../modelos/datos.modelo.php";
-
+require_once "../controladores/ingresos.controlador.php";
+require_once "../modelos/ingresos.modelo.php";
 
 class TablaCompras{
 
- 	/*=============================================
- 	 MOSTRAR LA TABLA DE PRODUCTOS
-  	=============================================*/ 
+    public function mostrarTablaCompras(){
 
-	public function mostrarTablaCompras(){
+        $item = NULL;
+        $valor = NULL;
+        $orden = 'fecha';
 
+        $compras = ControladorIngresos::ctrMostrarCompras($item,$valor,$orden);
 
-		$item = NULL;
-		$valor = NULL;
-		$orden = 'fecha';
-		$compras = ControladorDatosCompras::ctrMostrardatos($item, $valor,$orden);
+        // if(count($compras == 0)){
 
-s
-        if(count($compras) == 0){
+        //     echo '{"data": []}';
 
-  			echo '{"data": []}';
+        //     return;
+        // }	
+                
+        $datosJson = array();
 
-		  	return;
-  		}	
-		
-  		$datosJson = '{
-		  "data": [';
+        $datosJson['data'] = array();
 
-		  for($i = 0; $i < count($compras); $i++){
+            for ($i=0; $i < sizeof($compras) ; $i++) { 
 
-		//   	/*=============================================
- 	 	// 	TRAEMOS LAS ACCIONES
-  		// 	=============================================*/ 
+                $fecha = strtotime($compras[$i]['fecha']);
 
-			$fecha = strtotime($compras[$i]['fecha']);
+                $fecha = date('d-m-Y',$fecha);
 
-            $fecha = date('d-m-Y',$fecha);
+                $boton = "<button class='btn btn-danger btnEliminarCompra btn-no-margintop' idCompra='".$compras[$i]['idCompra']."'><i class='fa fa-times'></i></button>";
 
-			$kgIng = number_format($compras[$i]['kgIng'],2,',','.')." Kg.";
+                $datosJson['data'][$i][] = $fecha;
+                $datosJson['data'][$i][] = ucfirst($compras[$i]["tipo"]);
+                $datosJson['data'][$i][] = $compras[$i]["proveedor"];
+                $datosJson['data'][$i][] = $compras[$i]["cantidad"];
+                $datosJson['data'][$i][] = $compras[$i]["pesoTotal"].' Kg';
+                $datosJson['data'][$i][] = '$ '.$compras[$i]["precioTotal"];
+                $datosJson['data'][$i][] = $boton;
 
-			$precioKg = "$ ".number_format($compras[$i]["precioKg"],2,',','.');
+            }
+  
+            $datosJson = json_encode($datosJson);
 
+          echo $datosJson;
+  
 
-		  	$datosJson .='[
-			      "'.ltrim($compras[$i]["consignatario"]).'",
-			      "'.ltrim($compras[$i]["proveedor"]).'",
-			      "'.$compras[$i]["tropa"].'",
-			      "'.$fecha.'",
-			      "'.$compras[$i]["cantidad"].'",
-			      "'.$kgIng.'",
-			      "'.$precioKg.'"
-			    ],';
-
-		  }
-
-		  $datosJson = substr($datosJson, 0, -1);
-
-		 $datosJson .=   '] 
-
-		 }';
-		
-		echo $datosJson;
-
-
-	}
-
+    }
 
 }
 
-/*=============================================
-ACTIVAR TABLA DE PRODUCTOS
-=============================================*/ 
-$activarCompras = new TablaCompras();
-$activarCompras -> mostrarTablaCompras();
+$mostrarTablaCompras = new TablaCompras();
+$mostrarTablaCompras -> mostrarTablaCompras();
 

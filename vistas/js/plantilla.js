@@ -67,3 +67,58 @@ if(window.matchMedia("(max-width:767px)").matches){
 
 	$("body").addClass('sidebar-collapse');
 }
+
+
+$("input[name='animal']").change(function(){
+
+	let value = $(this).val();
+
+	if(value == 'vaca' || value == 'pollo'){
+
+
+		$('#inputCantidad').removeClass('hide');
+		$('#inputCantidad').show();
+		$('#inputSeccion').hide();
+		
+	}else{
+		
+		$('#inputCantidad').hide();
+		$('#inputSeccion').show();
+
+	}
+
+})
+
+$('#cantidadNacidos').change(function(){
+
+	let value = $(this).val();
+
+	
+	
+});
+
+// PONER MAYUSCULAS 
+
+const capitalizarPrimeraLetra = (str)=>{
+	return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+//   CARGAR OPTION SELECTED
+
+const optionSelected = (idSelect,optValue)=>{
+
+	let select = document.getElementById(idSelect);
+
+		for (let index = 0; index < select.length; index++) {
+			
+			let opt = select[index];
+
+			if(opt.value == optValue){
+
+				opt.setAttribute('selected','true');
+
+			}
+
+		}
+		
+}
