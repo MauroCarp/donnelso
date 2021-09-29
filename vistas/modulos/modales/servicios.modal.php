@@ -39,7 +39,7 @@
                                         </label>
                 
                                         <label style="font-size:2em;">
-                                            <input type="radio" name="animalServicio" class="hide" value="cordero"/>
+                                            <input type="radio" name="animalServicio" class="hide" value="ovino"/>
                                             <i class="icon icon-cordero"></i>
                                         </label>
 
@@ -93,7 +93,8 @@
                                     
                                         <label for="caravanaMachoRodeo">N° Caravana Macho:</label>
                                     
-                                        <input type="text" id="caravanaMachoRodeo" name="caravanaMachoRodeo" class="form-control" required>
+                                        <select id="caravanaMachoRodeo" name="caravanaMachoRodeo" class="form-control" required>
+                                        </select>
                                     
                                     </div>
 
@@ -111,7 +112,8 @@
                                         
                                             <label for="caravanaHembra0">N° Caravana Hembra:</label>
                                         
-                                            <input type="text" id="caravanaHembra0" name="caravanaHembras[]" class="form-control" required>
+                                            <select  id="caravanaHembra0" name="caravanaHembras[]" class="form-control caravanaHembras" required>
+                                            </select>
 
                                         </div>
 

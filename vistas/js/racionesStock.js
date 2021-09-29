@@ -50,9 +50,9 @@ $('#agregarStock').on('click',(evt)=>{
             
             if(response == 'CampoVacio'){
 
-                swal({
+                new swal({
     
-                    type: "error",
+                    icon: "error",
                     title: "¡Hay campos que no pueden ir vacíos!",
                     showConfirmButton: true,
                     confirmButtonText: "Cerrar"
@@ -63,9 +63,9 @@ $('#agregarStock').on('click',(evt)=>{
 
             if(response == 'ok'){
 
-                swal({
+                new swal({
 
-                    type: "success",
+                    icon: "success",
                     title: "El stock ha sido actualizado correctamente!",
                     showConfirmButton: true,
                     confirmButtonText: "Cerrar"
@@ -85,9 +85,9 @@ $('#agregarStock').on('click',(evt)=>{
 
             if(response == 'error'){
 
-                swal({
+                new swal({
 
-                    type: "error",
+                    icon: "error",
                     title: "Hubo un error al actualizar. Notificar a Mauro",
                     showConfirmButton: true,
                     confirmButtonText: "Cerrar"
@@ -145,10 +145,10 @@ $('.tablaRaciones').on('click','.btnEliminarRacion',function(){
 
     let id = $(this).attr('idRacion');
 
-    swal({
+    new swal({
         title: '¿Está seguro de borrar el Registro?',
         text: "¡Si no lo está puede cancelar la accíón!",
-        type: 'warning',
+        icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
           cancelButtonColor: '#d33',

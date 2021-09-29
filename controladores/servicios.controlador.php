@@ -18,16 +18,25 @@ class ControladorServicios{
             'caravanaMacho'=>$_POST['caravanaMachoRodeo'],
             'caravanaHembras'=>$caravanasHembras);
 
+            // CARGAR RODEO
             $respuesta = ModeloServicios::mdlNuevoRodeo($tabla,$datos);
+
+            // MODIFICAR MACHO
+            // $tabla2 = 'machos';
+            
+            // $item = 'idRodeo';
+
+            // $valor = ControladorServicios::ctrMostarRodeo();
+            // $respuesta = ControladorAnimales::ctrActualizarAnimal($tabla2);
 
             if($respuesta == 'ok'){
                     
                 echo '<script>
 
-                    swal({
+                  new  swal({
 
-                        type: "success",
-                        title: "El registro ha sido guardada correctamente!",
+                        icon: "success",
+                        title: "El registro ha sido guardado correctamente!",
                         showConfirmButton: true,
                         confirmButtonText: "Cerrar"
 
@@ -49,7 +58,7 @@ class ControladorServicios{
 
                 swal({
 
-                    type: "error",
+                    icon: "error",
                     title: "Hubo un error al cargar. Notificar a Mauro",
                     showConfirmButton: true,
                     confirmButtonText: "Cerrar"
@@ -91,9 +100,9 @@ class ControladorServicios{
                     
                 echo '<script>
 
-                    swal({
+                    new swal({
 
-                        type: "success",
+                        icon: "success",
                         title: "El registro ha sido actualizado correctamente!",
                         showConfirmButton: true,
                         confirmButtonText: "Cerrar"
@@ -116,7 +125,7 @@ class ControladorServicios{
 
                 swal({
 
-                    type: "error",
+                    icon: "error",
                     title: "Hubo un error al cargar. Notificar a Mauro",
                     showConfirmButton: true,
                     confirmButtonText: "Cerrar"
@@ -145,32 +154,38 @@ class ControladorServicios{
 
     }
 
-    static public function ctrEliminarRodeo(){
+    static public function ctrDesctivarRodeo(){
         
-        if(isset($_GET["idSanidad"])){
+        if(isset($_GET["numRodeo"]) AND isset($_GET['tipo'])){
 
-			$tabla ="sanidad";
+			$tabla = "rodeos";
+            
+            $item = 'numeroRodeo';
 
-            $item = 'idSanidad';
+            $valor = $_GET['numRodeo'];
+            
+            $item2 = 'tipo';
 
-            $valor = $_GET['idSanidad'];
+            $valor2 = $_GET['tipo'];
 
-            $respuesta = ModeloSanidad::mdlEliminarSanidad($tabla, $item,$valor);
+            $estadoRodeo = 0;
 
+            $respuesta = ModeloServicios::mdlDesctivarRodeo($tabla, $item,$valor,$item2,$valor2,$estadoRodeo);
+            
             if($respuesta == "ok"){
 
-				echo'<script>
+                echo'<script>
 
-				swal({
-					  type: "success",
-					  title: "El registro  ha sido borrado correctamente",
+				new swal({
+					  icon: "success",
+					  title: "El registro  ha sido desactivado correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar",
 					  closeOnConfirm: false
 					  }).then(function(result) {
 								if (result.value) {
 
-								window.location = "sanidad";
+								window.location = "servicios";
 
 								}
 							})
@@ -181,6 +196,40 @@ class ControladorServicios{
 
 		}
     }
+
+    static public function ctrServirHembra($item,$valor,$item2,$valor2,$estadoRodeo){
+
+        $tabla = 'animales';
+
+        $tabla2 = 'hembras';
+
+        $respuesta = ModeloServicios::mdlServirHembra($tabla,$tabla2,$item,$valor,$item2,$valor2,$estadoRodeo);
+
+        return $respuesta;
+
+    }
+
+    static public function ctrServicioValido($item,$valor,$item2,$valor2,$estadoRodeo){
+
+        $tabla = 'animales';
+
+        $tabla2 = 'hembras';
+
+        $respuesta = ModeloServicios::mdlServicioValido($tabla,$tabla2,$item,$valor,$item2,$valor2,$estadoRodeo);
+
+        return $respuesta;
+
+    }
+
+    static public function ctrMostrarReproductor($tabla2,$datos){
+
+        $tabla = 'animales';
+
+        return $respuesta = ModeloServicios::mdlMostrarReproductor($tabla,$tabla2,$datos);
+
+    }
+
 }   
+
 
 ?>

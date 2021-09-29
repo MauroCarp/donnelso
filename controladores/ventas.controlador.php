@@ -24,9 +24,9 @@ class ControladorVentas{
                     
                 echo '<script>
 
-                    swal({
+                    new swal({
 
-                        type: "success",
+                        icon: "success",
                         title: "La Pre-Venta ha sido guardada correctamente!",
                         showConfirmButton: true,
                         confirmButtonText: "Cerrar"
@@ -49,7 +49,7 @@ class ControladorVentas{
 
                 swal({
 
-                    type: "error",
+                    icon: "error",
                     title: "Hubo un error al cargar. Notificar a Mauro",
                     showConfirmButton: true,
                     confirmButtonText: "Cerrar"
@@ -89,9 +89,9 @@ class ControladorVentas{
                     
                 echo '<script>
 
-                    swal({
+                    new swal({
 
-                        type: "success",
+                        icon: "success",
                         title: "La Pre-Venta ha sido guardada correctamente!",
                         showConfirmButton: true,
                         confirmButtonText: "Cerrar"
@@ -114,7 +114,7 @@ class ControladorVentas{
 
                 swal({
 
-                    type: "error",
+                    icon: "error",
                     title: "Hubo un error al cargar. Notificar a Mauro",
                     showConfirmButton: true,
                     confirmButtonText: "Cerrar"
@@ -160,7 +160,7 @@ class ControladorVentas{
 				echo'<script>
 
 				swal({
-					  type: "success",
+					  icon: "success",
 					  title: "La Pre-Venta ha sido borrada correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar",

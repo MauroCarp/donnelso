@@ -1,5 +1,69 @@
-// MODAL PARIR
+// CARGAR SELECTS CARAVANAS
 
+const cargarCaravana = (tipo)=>{
+    
+    let data = `cargarSelect=true&tipo=${tipo}`
+
+    let url = 'ajax/servicios.ajax.php'
+
+    $.ajax({
+        method: 'post',
+        url,
+        data,
+        success:(response)=>{
+            
+            $('#caravanaMachoRodeo').html('')
+            $('.caravanaHembras').html('')
+
+            let caravanas = JSON.parse(response)
+
+            for (let index = 0; index < caravanas.machos.length; index++) {
+
+                $('#caravanaMachoRodeo').append(`<option value="${caravanas.machos[index][index]}">${caravanas.machos[index][index]}</option>`)
+            
+            }
+
+            $('.caravanaHembras').each(function(){
+                                
+                for (let index = 0; index < caravanas.hembras.length; index++) {
+                   
+                   $(this).append(`<option value="${caravanas.hembras[index][index]}">${caravanas.hembras[index][index]}</option>`)
+            
+                }
+                
+            });
+  
+        }
+
+    })
+
+}
+
+$('input[name=animalServicio]').on('change',(evt)=>{
+
+    let tipo = evt.target.value
+
+    cargarCaravana(tipo);
+
+});
+
+// CONFIGURACION MODAL AGREGAR RODEO
+
+$('#agregarHembraRodeo').on('click',()=>{
+    
+
+    $('#inputsHembras').append(generarInputCaravanas(propsServicios));
+
+    propsServicios.numero += 1;    
+
+    let tipo = $('input[name=animalServicio]:checked').val()
+    
+    cargarCaravana(tipo);
+    
+});
+
+
+// GENERAR INPUTS CARAVANAS
 const propsServicios = {
     campo: 'caravanaHembras',
     numero: 1,
@@ -9,18 +73,6 @@ const propsServicios = {
     rowId: 'rowHembra',
     idEliminar: 'eliminarCampoSanidad',
 }
-
-$('#agregarHembraRodeo').on('click',()=>{
-    
-
-    $('#inputsHembras').append(generarInputCaravanas(propsServicios));
-
-    propsServicios.numero += 1;    
-
-});
-
-
-// GENERAR INPUTS CARAVANAS
 
 const generarInputCaravanas = (props)=>{
 
@@ -54,8 +106,7 @@ const generarInputCaravanas = (props)=>{
     label.setAttribute('for',`${props.nombreIdInput}${props.numero}`);
     label.textContent = `${props.textContent} ${props.numero + 1}:`;
 
-    let input = document.createElement('input');
-    input.setAttribute('type','text');
+    let input = document.createElement('select');
     input.setAttribute('id',`${props.nombreIdInput}${props.numero}`); 
     input.setAttribute('class',`form-control ${props.campo}`);
     input.setAttribute('name',`caravanaHembras[]`);
@@ -147,6 +198,10 @@ const generarItem = (leyendaText,dato)=>{
         checkbox.setAttribute('class',`custom-control-input`)
         checkbox.setAttribute('caravana',dato)
         checkbox.setAttribute('onchange',`hembraServida()`)
+
+        let tipo = localStorage.getItem('animalServicio')
+
+        caravanaServidaValida(tipo,dato,checkbox)
         
         divCheckBox.append(checkbox)
         divCheckBox.append(label)
@@ -178,6 +233,20 @@ const generarRodeo = (props)=>{
     tituloRodeo.setAttribute('class', 'widget-user-username');
     tituloRodeo.innerText = `Rodeo N° ${props.numeroRodeo}`
 
+    let btnEliminarRodeo = document.createElement('button');
+    btnEliminarRodeo.setAttribute('class','btn btn-danger btnEliminarRodeo')
+    btnEliminarRodeo.setAttribute('numRodeo',props.numeroRodeo)
+    btnEliminarRodeo.setAttribute('tipo',props.tipo)
+    btnEliminarRodeo.setAttribute('type','button')
+    btnEliminarRodeo.setAttribute('style','float:right;margin:auto auto')
+    btnEliminarRodeo.setAttribute('onclick','eliminarRodeo()')
+
+    let iconCross = document.createElement('i')
+    iconCross.setAttribute('class','fa fa-times')
+
+    btnEliminarRodeo.append(iconCross)
+    header.append(btnEliminarRodeo)
+
     let cuerpo = document.createElement('div');
     cuerpo.setAttribute('class','box box-widget widget-user-2');
     
@@ -193,6 +262,7 @@ const generarRodeo = (props)=>{
     lista.append(itemCaravanaMacho);
     
     let numero = 1;
+
     caravanasHembras.map(caravana => {
         
         let item = generarItem(`Caravana Hembra ${numero}`,caravana)
@@ -212,7 +282,6 @@ const generarRodeo = (props)=>{
 
 }
 
-
 const rodeos = (idTab,tipo)=>{
    
     let url = 'ajax/servicios.ajax.php';
@@ -226,11 +295,12 @@ const rodeos = (idTab,tipo)=>{
         success:function(response){
             
             let respuesta = JSON.parse(response)
-        
+
+            
             respuesta.map(rodeo=>{
                     
                $(`#${idTab}`).append(generarRodeo(rodeo));
-
+            
             })
 
         }
@@ -261,11 +331,11 @@ const hembraServida = ()=>{
 
     if (event.checked) {
 
-        servirHembra(caravana,tipo,1)
+        servirHembra(caravana,tipo,'Servida')
         
     }else{
         
-        servirHembra(caravana,tipo,0)
+        servirHembra(caravana,tipo,'En rodeo')
 
     }
     
@@ -282,20 +352,35 @@ const servirHembra = (caravana,tipo,estado)=>{
         url,
         data,
         success:function(response){
-            
-            let Toast = swal.mixin({
+                console.log(response);
+                
+            let Toast =  swal.mixin({
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,
                 timer: 3000
               });
 
+            let leyenda = 'Hembra Servida'
+            
+            let avisoEstado = 'success'
+            
+            if(estado == 'En rodeo'){
+                
+                leyenda = 'Servicio Cancelado'; 
+                
+                avisoEstado = 'warning'
+
+            }   
+
+
             if(response == 'ok'){
-               
-              
+                
                 Toast.fire({
-                    icon: 'success',
-                    title: 'HOLA JUAN CARLOS elitr.'
+
+                    icon: avisoEstado,
+                    title: leyenda
+
                 })
 
             }else{
@@ -306,12 +391,67 @@ const servirHembra = (caravana,tipo,estado)=>{
     })
 }
 
+// ES CARAVANA SERVIDA 
+
+const caravanaServidaValida = (tipo,caravana,checkbox)=>{
+
+    let data = `validarServicio=true&tipo=${tipo}&caravana=${caravana}`;
+
+    let url = 'ajax/servicios.ajax.php';
+    
+    $.ajax({
+
+        method: 'post',
+        url,
+        data,
+        success:(response)=>{
+            
+            if(response){
+                
+                checkbox.setAttribute('checked','true');
+            
+            }
+
+        }
+
+    });
+
+}
 
 $('a[href="servicios"]').on('click',()=>{
     
     localStorage.setItem('animalServicio','cerdo');
 
 });
+
+// ELIMINAR RODEO
+const eliminarRodeo = ()=>{
+    
+    let numRodeo = window.event.target.attributes[1].nodeValue
+    let tipo = window.event.target.attributes[2].nodeValue
+
+    
+	new swal({
+        title: '¿Está seguro de desctivar el rodeo?',
+        text: "¡Si no lo está puede cancelar la accíón!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'Cancelar',
+          confirmButtonText: 'Si, desactivar rodeo!'
+      }).then(function(result){
+    
+        if(result.value){
+    
+          window.location = `index.php?ruta=servicios&numRodeo=${numRodeo}&tipo=${tipo}`
+    
+        }
+    
+      })
+
+
+}
 
 $(()=>{
 
@@ -323,5 +463,9 @@ $(()=>{
     
     rodeos(idTab,tipo);
 
+    cargarCaravana('cerdo');
+
 
 })
+
+

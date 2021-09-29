@@ -33,9 +33,9 @@ class ControladorPrecios{
                     
                 echo '<script>
 
-                    swal({
+                    new swal({
 
-                        type: "success",
+                        icon: "success",
                         title: "Los precios han sido actualizados!",
                         showConfirmButton: true,
                         confirmButtonText: "Cerrar"
@@ -58,7 +58,7 @@ class ControladorPrecios{
 
                 swal({
 
-                    type: "error",
+                    icon: "error",
                     title: "Hubo un error al cargar. Notificar a Mauro",
                     showConfirmButton: true,
                     confirmButtonText: "Cerrar"

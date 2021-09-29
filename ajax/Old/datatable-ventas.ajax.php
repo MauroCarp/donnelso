@@ -2,11 +2,6 @@
 require_once "../controladores/datos.controlador.php";
 require_once "../modelos/datos.modelo.php";
 
-function formatearFecha($fecha){
-	$fecha = explode('-',$fecha);
-	$nuevaFecha = $fecha[2]."-".$fecha[1]."-".$fecha[0];
-	return $nuevaFecha;
-}
 
 class TablaVentas{
 

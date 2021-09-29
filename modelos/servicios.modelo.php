@@ -32,51 +32,61 @@ class ModeloServicios{
 
 	}
 
-	static public function mdlActualizarSanidad($tabla,$datos){
+	// static public function mdlActualizarSanidad($tabla,$datos){
         
-        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET 
-		animal = :animal,
-		fecha = :fecha ,
-		aplicacion = :aplicacion,
-		motivo = :motivo,
-		caravana = :caravana,
-		comentarios = :comentarios,
-		gastoVet = :gastoVet WHERE idSanidad = :id"); 
+    //     $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET 
+	// 	animal = :animal,
+	// 	fecha = :fecha ,
+	// 	aplicacion = :aplicacion,
+	// 	motivo = :motivo,
+	// 	caravana = :caravana,
+	// 	comentarios = :comentarios,
+	// 	gastoVet = :gastoVet WHERE idSanidad = :id"); 
         
-        $stmt->bindParam(":animal", $datos["animal"], PDO::PARAM_STR);
-		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
-		$stmt->bindParam(":motivo", $datos["motivo"], PDO::PARAM_STR);
-		$stmt->bindParam(":aplicacion", $datos["aplicacion"], PDO::PARAM_STR);
-		$stmt->bindParam(":caravana", $datos["caravana"], PDO::PARAM_STR);
-		$stmt->bindParam(":comentarios", $datos["comentarios"], PDO::PARAM_STR);
-		$stmt->bindParam(":gastoVet", $datos["costoVeterinario"], PDO::PARAM_STR);
-		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR);
+    //     $stmt->bindParam(":animal", $datos["animal"], PDO::PARAM_STR);
+	// 	$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+	// 	$stmt->bindParam(":motivo", $datos["motivo"], PDO::PARAM_STR);
+	// 	$stmt->bindParam(":aplicacion", $datos["aplicacion"], PDO::PARAM_STR);
+	// 	$stmt->bindParam(":caravana", $datos["caravana"], PDO::PARAM_STR);
+	// 	$stmt->bindParam(":comentarios", $datos["comentarios"], PDO::PARAM_STR);
+	// 	$stmt->bindParam(":gastoVet", $datos["costoVeterinario"], PDO::PARAM_STR);
+	// 	$stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR);
 
 
-		if($stmt->execute()){
+	// 	if($stmt->execute()){
 			
-			// print_r($stmt ->errorInfo());
-			return "ok";	
+	// 		// print_r($stmt ->errorInfo());
+	// 		return "ok";	
 			
-		}else{
+	// 	}else{
 
-			var_dump($stmt ->errorInfo());
-			return 'error';
+	// 		var_dump($stmt ->errorInfo());
+	// 		return 'error';
 			
-		}
+	// 	}
 		
-		$stmt->close();
+	// 	$stmt->close();
 		
-		$stmt = null;
+	// 	$stmt = null;
 
-	}
+	// }
 
     static public function mdlMostrarRodeo($tabla,$item,$valor,$item2,$valor2){
 
-        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item AND $item2 = :$item2 ORDER BY fecha DESC");
+		if($item2 != null){
 
-        $stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
-        $stmt->bindParam(":".$item2, $valor2, PDO::PARAM_STR);
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item AND $item2 = :$item2 AND estado = 1 ORDER BY fecha DESC");
+			
+			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":".$item2, $valor2, PDO::PARAM_STR);
+			
+		}else{
+			
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+			
+			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+		}
         
         $stmt->execute();
         
@@ -88,23 +98,114 @@ class ModeloServicios{
 
     }
 
-	static public function mdlEliminarSanidad($tabla,$item,$valor){
+	static public function mdlDesctivarRodeo($tabla,$item,$valor,$item2,$valor2,$estadoRodeo){
         
-        $stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE $item = :$item");
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET estado = :estado WHERE $item = :$item AND $item2 = :$item2");
 		
 		$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+		$stmt->bindParam(":".$item2, $valor2, PDO::PARAM_STR);
+		$stmt->bindParam(":estado", $estadoRodeo, PDO::PARAM_STR);
 
 		if($stmt->execute()){
 			
 			return "ok";	
 			
 		}else{
-			print_r($stmt ->errorInfo());
 
 			return 'error';
 			
 		}
     }
+
+	static public function mdlServirHembra($tabla,$tabla2,$item,$valor,$item2,$valor2,$estadoRodeo){
+        
+			$stmt = Conexion::conectar()->prepare("UPDATE $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal SET estadoRodeo = :estadoRodeo WHERE $tabla.$item = :$item AND $tabla2.$item2 = :$item2");
+
+			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":".$item2, $valor2, PDO::PARAM_STR);
+			$stmt->bindParam(":estadoRodeo", $estadoRodeo, PDO::PARAM_STR);
+
+			if($stmt->execute()){
+				
+				// print_r($stmt ->errorInfo());
+				return "ok";	
+				
+			}else{
+
+				var_dump($stmt ->errorInfo());
+				return 'error';
+				
+			}
+			
+			$stmt->close();
+			
+			$stmt = null;
+
+    }
+
+	static public function mdlServicioValido($tabla,$tabla2,$item,$valor,$item2,$valor2,$estadoRodeo){
+        
+        $stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM  $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal WHERE estadoRodeo = :estadoRodeo AND $tabla.$item = :$item AND $tabla2.$item2 = :$item2");
+
+        $stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+        $stmt->bindParam(":".$item2, $valor2, PDO::PARAM_STR);
+        $stmt->bindParam(":estadoRodeo", $estadoRodeo, PDO::PARAM_STR);
+
+        $stmt->execute();
+
+		return 	$stmt-> fetch();
+		
+		$stmt->close();
+		
+		$stmt = null;
+
+    }
+
+	static public function mdlMostrarReproductor($tabla,$tabla2,$datos){
+		
+		if($datos['sexo'] == 'M'){
+
+			$stmt = Conexion::conectar()->prepare("SELECT $tabla2.caravana FROM $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal WHERE
+			
+			$tabla.tipo = :tipo AND 
+			$tabla.destino  = :destino AND 
+			$tabla.sexo = :sexo AND 
+			$tabla2.idRodeo IS :idRodeo  
+			
+			ORDER BY $tabla2.caravana DESC");
+			
+			$stmt->bindParam(":idRodeo", $datos['idRodeo'], PDO::PARAM_STR);
+			
+		}else{
+			
+			$stmt = Conexion::conectar()->prepare("SELECT $tabla2.caravana FROM $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal
+			 WHERE 
+			 
+			 $tabla.tipo = :tipo AND 
+			 $tabla.destino  = :destino AND 
+			 $tabla.sexo = :sexo AND 
+			 $tabla2.estadoRodeo = :estadoRodeo  
+			 
+			 ORDER BY $tabla2.caravana DESC");
+			
+			$stmt->bindParam(":estadoRodeo", $datos['estadoRodeo'], PDO::PARAM_STR);
+
+		}
+		
+		$stmt->bindParam(":tipo", $datos['tipo'], PDO::PARAM_STR);
+		$stmt->bindParam(":destino", $datos['destino'], PDO::PARAM_STR);
+		$stmt->bindParam(":sexo", $datos['sexo'], PDO::PARAM_STR);
+	
+		$stmt->execute();
+			
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		
+		$stmt = null;
+
+	}
+	
 
 }
 

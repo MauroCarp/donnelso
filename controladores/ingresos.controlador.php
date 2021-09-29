@@ -23,9 +23,9 @@ class ControladorIngresos{
                     if($respesta != 'ok'){
                         echo '<script>
 
-                        	    swal({
+                        	    new swal({
         
-                                    type: "error",
+                                    icon: "error",
                                     title: "¡El Proveedor no ha sido guardado correctamente!",
                                     showConfirmButton: true,
                                     confirmButtonText: "Cerrar"
@@ -130,9 +130,9 @@ class ControladorIngresos{
 
                     	echo '<script>
 
-                            swal({
+                            new swal({
 
-                                type: "success",
+                                icon: "success",
                                 title: "¡La Compra ha sido guardada correctamente!",
                                 showConfirmButton: true,
                                 confirmButtonText: "Cerrar"
@@ -153,9 +153,9 @@ class ControladorIngresos{
                     
                     echo '<script>
 
-                    swal({
+                    new swal({
 
-                        type: "error",
+                        icon: "error",
                         title: "Hubo un error al cargar. Notificar a Mauro",
                         showConfirmButton: true,
                         confirmButtonText: "Cerrar"
@@ -180,9 +180,9 @@ class ControladorIngresos{
 
                 echo '<script>
 
-                            swal({
+                            new swal({
 
-                                type: "error",
+                                icon: "error",
                                 title: "¡Hay campos que no pueden ir vacío!",
                                 showConfirmButton: true,
                                 confirmButtonText: "Cerrar"
@@ -281,9 +281,9 @@ class ControladorIngresos{
 
                 echo '<script>
 
-                            swal({
+                            new swal({
 
-                                type: "success",
+                                icon: "success",
                                 title: "¡La Compra ha eliminada!",
                                 showConfirmButton: true,
                                 confirmButtonText: "Cerrar"
@@ -304,9 +304,9 @@ class ControladorIngresos{
 
                 echo '<script>
 
-                            swal({
+                            new swal({
 
-                                type: "error",
+                                icon: "error",
                                 title: "¡La Compra no ha sido eliminada correctamente! Avisar a Mauro",
                                 showConfirmButton: true,
                                 confirmButtonText: "Cerrar"

@@ -32,10 +32,10 @@ $(".tablaPreVentas").on("click", ".btnEliminarPreVenta", function(){
 
 	let idVenta = $(this).attr("idPreVenta");
 
-	swal({
+	new swal({
 	  title: '¿Está seguro de borrar la Pre-venta?',
 	  text: "¡Si no lo está puede cancelar la accíón!",
-	  type: 'warning',
+	  icon: 'warning',
 	  showCancelButton: true,
 	  confirmButtonColor: '#3085d6',
 		cancelButtonColor: '#d33',

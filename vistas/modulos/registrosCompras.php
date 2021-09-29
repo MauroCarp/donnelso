@@ -1,9 +1,4 @@
 <?php
-function formatearFecha($fecha){
-  $fecha = explode('-',$fecha);
-  $nuevaFecha = $fecha[2]."-".$fecha[1]."-".$fecha[0];
-  return $nuevaFecha;
-}
 
 
 

@@ -27,9 +27,9 @@ class ControladorSanidad{
                     
                 echo '<script>
 
-                    swal({
+                   new swal({
 
-                        type: "success",
+                        icon: "success",
                         title: "El registro ha sido guardada correctamente!",
                         showConfirmButton: true,
                         confirmButtonText: "Cerrar"
@@ -52,7 +52,7 @@ class ControladorSanidad{
 
                 swal({
 
-                    type: "error",
+                    icon: "error",
                     title: "Hubo un error al cargar. Notificar a Mauro",
                     showConfirmButton: true,
                     confirmButtonText: "Cerrar"
@@ -98,9 +98,9 @@ class ControladorSanidad{
                     
                 echo '<script>
 
-                    swal({
+                    new swal({
 
-                        type: "success",
+                        icon: "success",
                         title: "El registro ha sido actualizado correctamente!",
                         showConfirmButton: true,
                         confirmButtonText: "Cerrar"
@@ -123,7 +123,7 @@ class ControladorSanidad{
 
                 swal({
 
-                    type: "error",
+                    icon: "error",
                     title: "Hubo un error al cargar. Notificar a Mauro",
                     showConfirmButton: true,
                     confirmButtonText: "Cerrar"
@@ -169,7 +169,7 @@ class ControladorSanidad{
 				echo'<script>
 
 				swal({
-					  type: "success",
+					  icon: "success",
 					  title: "El registro  ha sido borrado correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar",

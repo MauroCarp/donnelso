@@ -170,10 +170,10 @@ $('#cargarInsumo').on('click',()=>{
 // SWAL ELIMINAR FORMULA
 const swalEliminar = (id,campo,ruta,idName)=>{
 
-  swal({
+  new swal({
       title: `¿Está seguro de borrar el ${campo}?`,
       text: "¡Si no lo está puede cancelar la accíón!",
-      type: 'warning',
+      icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
@@ -204,10 +204,10 @@ $(".tablaInsumos").on("click", ".btnEliminarInsumo", function(){
 
 	var idInsumo = $(this).attr("idInsumo");
 
-	swal({
+	new swal({
 	  title: '¿Está seguro de borrar el Insumo?',
 	  text: "¡Si no lo está puede cancelar la accíón!",
-	  type: 'warning',
+	  icon: 'warning',
 	  showCancelButton: true,
 	  confirmButtonColor: '#3085d6',
 		cancelButtonColor: '#d33',
@@ -230,10 +230,10 @@ $(".tablaRegistroInsumos").on("click", ".btnEliminarRegistroInsumo", function(){
 
 	var idRegistroInsumo = $(this).attr("idRegistroInsumo");
 
-	swal({
+	new swal({
 	  title: '¿Está seguro de borrar el Registro?',
 	  text: "¡Si no lo está puede cancelar la accíón!",
-	  type: 'warning',
+	  icon: 'warning',
 	  showCancelButton: true,
 	  confirmButtonColor: '#3085d6',
 		cancelButtonColor: '#d33',
@@ -257,10 +257,10 @@ $(".tablaFormulas").on("click", ".btnEliminarFormula", function(){
 
 	var idFormula = $(this).attr("idFormula");
 
-	swal({
+	new swal({
 	  title: '¿Está seguro de borrar la Formula?',
 	  text: "¡Si no lo está puede cancelar la accíón!",
-	  type: 'warning',
+	  icon: 'warning',
 	  showCancelButton: true,
 	  confirmButtonColor: '#3085d6',
 		cancelButtonColor: '#d33',

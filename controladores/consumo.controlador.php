@@ -17,9 +17,9 @@ class ControladorConsumo{
 
                     echo '<script>
 
-                    swal({
+                    new swal({
 
-                        type: "error",
+                        icon: "error",
                         title: "¡El insumo ya esta registrado!",
                         showConfirmButton: true,
                         confirmButtonText: "Cerrar"
@@ -47,9 +47,9 @@ class ControladorConsumo{
 
                 echo '<script>
 
-                    swal({
+                new swal({
 
-                        type: "success",
+                        icon: "success",
                         title: "El insumo ha sido guardado correctamente!",
                         showConfirmButton: true,
                         confirmButtonText: "Cerrar"
@@ -70,9 +70,9 @@ class ControladorConsumo{
              
                     echo '<script>
 
-                    swal({
+                    new  swal({
 
-                        type: "error",
+                        icon: "error",
                         title: "Hubo un error al cargar. Notificar a Mauro",
                         showConfirmButton: true,
                         confirmButtonText: "Cerrar"
@@ -95,9 +95,9 @@ class ControladorConsumo{
 
                 echo '<script>
 
-                            swal({
+                new swal({
 
-                                type: "error",
+                                icon: "error",
                                 title: "¡Hay campos que no pueden ir vacíos!",
                                 showConfirmButton: true,
                                 confirmButtonText: "Cerrar"
@@ -137,8 +137,8 @@ class ControladorConsumo{
 
 				echo'<script>
 
-				swal({
-					  type: "success",
+				new swal({
+					  icon: "success",
 					  title: "El Insumo ha sido borrado correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar",
@@ -203,8 +203,8 @@ class ControladorConsumo{
 
 				echo'<script>
 
-				swal({
-					  type: "success",
+				new swal({
+					  icon: "success",
 					  title: "El Registro ha sido borrado correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar",
@@ -295,9 +295,9 @@ class ControladorConsumo{
                     
                     echo '<script>
 
-                        swal({
+                    new  swal({
 
-                            type: "success",
+                            icon: "success",
                             title: "La formula ha sido guardada correctamente!",
                             showConfirmButton: true,
                             confirmButtonText: "Cerrar"
@@ -318,9 +318,9 @@ class ControladorConsumo{
             
                     echo '<script>
 
-                    swal({
+                    new swal({
 
-                        type: "error",
+                        icon: "error",
                         title: "Hubo un error al cargar. Notificar a Mauro",
                         showConfirmButton: true,
                         confirmButtonText: "Cerrar"
@@ -343,9 +343,9 @@ class ControladorConsumo{
 
                 echo '<script>
         
-                swal({
+                new swal({
         
-                    type: "error",
+                    icon: "error",
                     title: "¡Hay campos que no pueden ir vacíos!",
                     showConfirmButton: true,
                     confirmButtonText: "Cerrar"
@@ -383,8 +383,8 @@ class ControladorConsumo{
 
 				echo'<script>
 
-				swal({
-					  type: "success",
+				new swal({
+					  icon: "success",
 					  title: "La Formula ha sido borrada correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar",
@@ -479,9 +479,9 @@ class ControladorConsumo{
                     
                 echo '<script>
 
-                    swal({
+                   new swal({
 
-                        type: "success",
+                        icon: "success",
                         title: "El registro ha sido guardado correctamente!",
                         showConfirmButton: true,
                         confirmButtonText: "Cerrar"
@@ -502,9 +502,9 @@ class ControladorConsumo{
         
                 echo '<script>
 
-                swal({
+               new swal({
 
-                    type: "error",
+                    icon: "error",
                     title: "Hubo un error al cargar. Notificar a Mauro",
                     showConfirmButton: true,
                     confirmButtonText: "Cerrar"
@@ -549,8 +549,8 @@ class ControladorConsumo{
 
 				echo'<script>
 
-				swal({
-					  type: "success",
+				new swal({
+					  icon: "success",
 					  title: "El registro ha sido borrado correctamente",
 					  showConfirmButton: true,
 					  confirmButtonText: "Cerrar",

@@ -51,16 +51,12 @@
 
 <?php
 
-$eliminarRegistroSanidad = new ControladorSanidad;
+$eliminarRodeo = new ControladorServicios;
 
-$eliminarRegistroSanidad -> ctrEliminarSanidad();
+$eliminarRodeo -> ctrDesctivarRodeo();
 
-$editarRegistroSanidad = new ControladorSanidad;
+// include "modales/sanidad.modal.php";
 
-$editarRegistroSanidad -> ctrActualizarSanidad();
-
-include "modales/sanidad.modal.php";
-
-include "modales/sanidadEditar.modal.php";
+// include "modales/sanidadEditar.modal.php";
 
 ?>
