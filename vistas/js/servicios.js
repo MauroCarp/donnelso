@@ -11,27 +11,31 @@ const cargarCaravana = (tipo)=>{
         url,
         data,
         success:(response)=>{
-            
-            $('#caravanaMachoRodeo').html('')
-            $('.caravanaHembras').html('')
 
             let caravanas = JSON.parse(response)
-
-            for (let index = 0; index < caravanas.machos.length; index++) {
-
-                $('#caravanaMachoRodeo').append(`<option value="${caravanas.machos[index][index]}">${caravanas.machos[index][index]}</option>`)
+            
+            if ($('#caravanaMachoRodeo').html() == '') {
+                
+                for (let index = 0; index < caravanas.machos.length; index++) {
+                    
+                    $('#caravanaMachoRodeo').append(`<option value="${caravanas.machos[index][0]}">${caravanas.machos[index][0]}</option>`)
+                    
+                }
             
             }
 
             $('.caravanaHembras').each(function(){
-                                
+                    
+                if($(this).html() == ''){
+
                 for (let index = 0; index < caravanas.hembras.length; index++) {
-                   
-                   $(this).append(`<option value="${caravanas.hembras[index][index]}">${caravanas.hembras[index][index]}</option>`)
+                    
+                   $(this).append(`<option value="${caravanas.hembras[index][0]}">${caravanas.hembras[index][0]}</option>`)
             
                 }
-                
-            });
+            }                
+            
+        });
   
         }
 
@@ -42,6 +46,10 @@ const cargarCaravana = (tipo)=>{
 $('input[name=animalServicio]').on('change',(evt)=>{
 
     let tipo = evt.target.value
+            
+    $('#caravanaMachoRodeo').html('')
+
+    $('.caravanaHembras').html('')
 
     cargarCaravana(tipo);
 
