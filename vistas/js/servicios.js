@@ -461,6 +461,17 @@ const eliminarRodeo = ()=>{
 
 }
 
+// ELIMINAR REGISTRO RODEO
+
+$('.tablaRegistrosServicios').on('click','.btnEliminarRegistroRodeo',function(){
+
+    let idRodeo = $(this).attr('idRodeo');
+    console.log(idRodeo);
+    
+});
+
+
+
 $(()=>{
 
     let tipo = localStorage.getItem('animalServicio');

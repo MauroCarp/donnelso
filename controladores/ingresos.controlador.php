@@ -207,6 +207,10 @@ class ControladorIngresos{
 
     }
 
+    /*=============================================
+	OBTENER ULTIMO ID
+    =============================================*/
+
     static public function ctrObtenerUltimoId(){
 
         $tabla = 'animales';
@@ -215,6 +219,10 @@ class ControladorIngresos{
 
     }
 
+    /*=============================================
+	NUEVO INGRESO EXTERNO
+    =============================================*/
+    
     static public function ctrNuevoExterno($datos){
 
         $tabla = 'externos';
@@ -234,7 +242,11 @@ class ControladorIngresos{
         return $respuesta = ModeloIngresos::mdlNuevoExterno($tabla,$datos);
 
     }
-
+    
+    /*=============================================
+    CARGAR REGISTRO COMPRA
+    =============================================*/
+    
     static public function ctrRegistroCompras($datos){
 
         $tabla = 'registroingresos';
@@ -247,6 +259,10 @@ class ControladorIngresos{
 
     }
 
+    /*=============================================
+    MOSTRAR COMPRAS
+    =============================================*/
+    
     static public function ctrMostrarCompras($item,$valor,$orden){
 
         $tabla = 'registroingresos';
@@ -254,6 +270,10 @@ class ControladorIngresos{
         return $resultado = ModeloIngresos::mdlMostrarCompras($tabla,$item,$valor,$orden);
 
     }
+
+    /*=============================================
+	ELIMINAR COMPRA
+    =============================================*/
 
     static public function ctrEliminarCompra(){
 
@@ -328,23 +348,239 @@ class ControladorIngresos{
         }    
     }
 
-    static public function ctrBuscarMadre($valor,$valor2){
+    /*=============================================
+	BUSCAR MADRES
+    =============================================*/
+    
+    static public function ctrBuscarMadrePadre($valor,$item2,$valor2){
 
         $tabla = 'animales';
 
         $tabla2 = 'hembras';
 
-        $item = 'idAnimal';
+        $item = 'tipo';
 
-        $item2 = 'tipo';
+        $resultado = ModeloIngresos::mdlBuscarMadrePadre($tabla,$tabla2,$item,$valor,$item2,$valor2);
 
-        $item3 = 'caravana';
-
-        $resultado = ModeloIngresos::mdlBuscarMadre($tabla,$tabla2,$item,$item2,$item3,$valor,$valor2);
-    
-        return $resultado[0]; 
+        return $resultado; 
 
     }
+
+    	/*=============================================
+	NUEVA PARTO
+    =============================================*/
+
+	static public function ctrNuevoParto(){
+
+		if(isset($_POST["btnCargarParto"])){
+
+                $tabla = 'animales';
+
+                $mellizos = (isset($_POST['mellizos'])) ? $_POST['mellizos'] : 0; 
+
+                $datosParto = array("animal" => $_POST["animal"],
+                "fechaParto" => $_POST["fechaParto"],
+                "caravanaMadre" => $_POST["caravanaParto"],
+                "cantidadNacidos" => $_POST['cantidadNacidos'],
+                "sexo" => $_POST['sexo'],
+                "mellizos" => $mellizos,
+                "complicacionMadre" => $_POST["complicacionMadre"]);
+
+                $item2 = 'caravana';
+
+                $valor2 = $_POST['caravanaParto'];
+
+                $caravanaMacho = ControladorIngresos::ctrBuscarMadrePadre($datosParto['animal'],$item2,$valor2);
+
+                $datosParto['caravanaMacho'] = $caravanaMacho[0][0];
+
+                // SE CARGA REGISTRO DE PARTO
+                $respuestas[] = ControladorIngresos::ctrNuevoRegParto($datosParto);
+
+                // SE ACTUALIZA EL ESTADO DE LA HEMBRA
+
+                $actualizarHembra = ControladorServicios::ctrServirHembra('tipo',$datosParto['animal'],'caravana',$datosParto['caravanaMadre'],'Descanso');
+
+                $respuestas[] = $actualizarHembra;
+                
+                // SE CARGAN LOS NACIDOS
+
+                for ($i=0; $i < $datosParto['cantidadNacidos'] ; $i++) { 
+                    
+                    $idAnimal = ($_POST['animal'].$_POST['caravanaNacido'.($i + 1)]);
+                    
+                    $datosNacido = array(
+                        'tipo' => $_POST['animal'],
+                        'idAnimal' => $idAnimal,
+                        'peso' => $_POST['pesoNacido'.($i + 1)],
+                        'fechaNacimiento' => $_POST['fechaParto'],
+                        'sexo' => $_POST['sexoNacido'.($i + 1)],
+                        'estado' => $_POST['estadoNacido'.($i + 1)],
+                        'destino' => $_POST['destinoNacido'.($i + 1)],
+                        'caravana' => $_POST['caravanaNacido'.($i + 1)],
+                        'complicacion' => $_POST['complicacionNacido'.($i + 1)]);
+
+                    $respuesta = ControladorAnimales::ctrNuevoAnimal($datosNacido);
+                    
+                }
+
+        }}
+    //             $ultimoId = ControladorIngresos::ctrObtenerUltimoId(); 
+
+    //             $ultimoId = ($ultimoId) ? $ultimoId[0] : 1; 
+                
+    //             if($_POST['machosCompra'] != 0){
+                    
+    //                 $datos['sexo'] = 'M';
+
+    //                 for ($i=0; $i < $_POST['machosCompra'] ; $i++) { 
+                        
+    //                     $datos['idAnimal'] = $ultimoId.$datos['animal'];
+
+    //                     $ultimoId++;
+
+    //                     $respuestas[] = ModeloIngresos::mdlNuevoIngreso($tabla, $datos);
+
+    //                     $respuestas[] = ControladorIngresos::ctrNuevoExterno($datos);
+
+    //                 }
+
+    //             }
+
+    //             if($_POST['hembrasCompra'] != 0){
+                    
+    //                 $datos['sexo'] = 'H';
+
+    //                 for ($i=0; $i < $_POST['hembrasCompra'] ; $i++) { 
+                                                
+    //                     $datos['idAnimal'] = $ultimoId.$datos['animal'];
+
+    //                     $ultimoId++;
+                        
+    //                     $respuestas[] = ModeloIngresos::mdlNuevoIngreso($tabla, $datos);
+
+    //                     $respuestas[] = ControladorIngresos::ctrNuevoExterno($datos);
+
+    //                 }
+
+    //             }
+
+    //             if($_POST['cantidadCompra'] != 0){
+                    
+    //                 for ($i=0; $i < $_POST['cantidadCompra'] ; $i++) {
+                               
+    //                     $datos['idAnimal'] = $ultimoId.$datos['animal'];
+
+    //                     $ultimoId++;
+                        
+    //                     $respuestas[] = ModeloIngresos::mdlNuevoIngreso($tabla, $datos);
+
+    //                     $respuestas[] = ControladorIngresos::ctrNuevoExterno($datos);
+
+    //                 }
+
+    //             }
+
+
+    //             if(!in_array('error',$respuestas)){
+
+    //                 	echo '<script>
+
+    //                         new swal({
+
+    //                             icon: "success",
+    //                             title: "¡La Compra ha sido guardada correctamente!",
+    //                             showConfirmButton: true,
+    //                             confirmButtonText: "Cerrar"
+
+    //                         }).then(function(result){
+
+    //                             if(result.value){
+                                
+    //                                 window.location = "registrosCompras";
+
+    //                             }
+
+    //                         });
+
+    //                     </script>';
+
+    //             }else{
+                    
+    //                 echo '<script>
+
+    //                 new swal({
+
+    //                     icon: "error",
+    //                     title: "Hubo un error al cargar. Notificar a Mauro",
+    //                     showConfirmButton: true,
+    //                     confirmButtonText: "Cerrar"
+
+    //                 }).then(function(result){
+
+    //                     if(result.value){
+                        
+    //                         window.location = "registrosCompras";
+
+    //                     }
+
+    //                 });
+                
+
+    //             </script>';
+
+    //             };  
+
+
+	// 	    }else{
+
+    //             echo '<script>
+
+    //                         new swal({
+
+    //                             icon: "error",
+    //                             title: "¡Hay campos que no pueden ir vacío!",
+    //                             showConfirmButton: true,
+    //                             confirmButtonText: "Cerrar"
+
+    //                         }).then(function(result){
+
+    //                             if(result.value){
+                                
+    //                                 window.location = "registrosCompras";
+
+    //                             }
+
+    //                         });
+                        
+
+    //                     </script>';
+
+
+    //         }
+
+	//     }
+
+    // }
+
+    static public function ctrNuevoRegParto($datos){
+    
+        $tabla = 'partos';
+
+        return $respuesta = ModeloIngresos::mdlNuevoRegParto($tabla,$datos);
+
+    }
+
+    static public function ctrUltimaCaravanaHija($item,$valor,$item2,$valor2){
+
+        $tabla = 'animales';
+
+        $tabla2 = 'hembras';
+
+        return $resultado = ModeloIngresos::mdlUltimaCaravanaHija($tabla,$tabla2,$item,$valor,$item2,$valor2);
+
+    }
+
 }   
 
 ?>

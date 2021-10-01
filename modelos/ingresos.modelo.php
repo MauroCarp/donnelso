@@ -210,16 +210,87 @@ class ModeloIngresos{
 	BUSCAR CARAVANA
 	=============================================*/
 
-	static public function mdlBuscarMadre($tabla,$tabla2,$item,$item2,$item3,$valor,$valor2){
-	
-		$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla INNER JOIN $tabla2 ON $tabla.$item = $tabla2.$item WHERE $tabla.$item2 = :$item2 AND $tabla2.$item3 = :$item3");
+	static public function mdlBuscarMadrePadre($tabla,$tabla2,$item,$valor,$item2,$valor2){
 		
-		$stmt -> bindParam(":".$item2, $valor, PDO::PARAM_STR);
-		$stmt -> bindParam(":".$item3, $valor2, PDO::PARAM_STR);
+		if($item2 == NULL){
+		
+			$stmt = Conexion::conectar()->prepare("SELECT caravana FROM $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal WHERE $tabla.$item = :$item AND estadoRodeo = 'Servida' ");
+			
+		}else{
+			
+			$stmt = Conexion::conectar()->prepare("SELECT caravanaMacho FROM $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal WHERE $tabla.$item = :$item AND $tabla2.$item2 = :$item2");
+
+			$stmt -> bindParam(":".$item2, $valor2, PDO::PARAM_STR);
+		}
+		
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 	
 		$stmt -> execute();
 
 		// var_dump($stmt ->errorInfo());
+
+		return $stmt -> fetchAll();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+	/*=============================================
+	NUEVO REG PARTO
+	=============================================*/
+	static public function mdlNuevoRegParto($tabla,$datos){
+		
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(idMadre,idPadre,fecha,cantidad,sexo,mellizo,complicacion) VALUES(:idMadre,:idPadre,:fecha,:cantidad,:sexo,:mellizo,:complicacion)");
+
+		$idPadre = $datos["animal"].$datos['caravanaMacho'];
+
+		$idMadre = $datos["animal"].$datos['caravanaMadre'];
+
+		$stmt->bindParam(":idMadre", $idMadre, PDO::PARAM_STR);
+		$stmt->bindParam(":idPadre", $idPadre, PDO::PARAM_STR);
+		$stmt->bindParam(":fecha", $datos["fechaParto"], PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $datos["cantidadNacidos"], PDO::PARAM_STR);
+		$stmt->bindParam(":sexo", $datos["sexo"], PDO::PARAM_STR);
+		$stmt->bindParam(":mellizo", $datos["mellizo"], PDO::PARAM_STR);
+		$stmt->bindParam(":complicacion", $datos["complicacionMadre"], PDO::PARAM_STR);
+	
+		
+		if($stmt->execute()){
+
+			
+			return "ok";	
+			
+		}else{
+
+			var_dump($stmt ->errorInfo());
+			
+			return 'error';
+			
+		}
+		
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+	/*=============================================
+	BUSCAR ULTIMA CARAVANA HIJA
+	=============================================*/
+
+	static public function mdlUltimaCaravanaHija($tabla,$tabla2,$item,$valor,$item2,$valor2){
+
+		$stmt = Conexion::conectar()->prepare("SELECT $tabla2.caravana FROM $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal WHERE $tabla.$item = :$item AND $tabla2.$item2 LIKE :$item2 ORDER BY $tabla2.id DESC");
+		
+		$caravanaHija = $valor2.'/%';
+
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+		$stmt -> bindParam(":".$item2, $caravanaHija, PDO::PARAM_STR);
+			
+		$stmt -> execute();
 
 		return $stmt -> fetch();
 
@@ -228,6 +299,5 @@ class ModeloIngresos{
 		$stmt = null;
 
 	}
-
 
 }

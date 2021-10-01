@@ -4,20 +4,18 @@
 
     <div class="box-body">
 
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ventanaModalSanidad">Agregar Registro</button><br><br>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ventanaModalServicios">Agregar Registro</button><br><br>
 
-      <table class="table table-bordered table-striped dt-responsive tablas tablaSanidad" width="100%">
+      <table class="table table-bordered table-striped dt-responsive tablas tablaRegistrosServicios" width="100%">
           
         <thead>
 
           <tr>
 
+            <th>Animal</th>
             <th>Fecha</th>
-            <th>Motivo</th>
-            <th>Aplicaci&oacute;n</th>
-            <th>N° Car.</th>
-            <th>Comentarios</th>
-            <th>$ Vet.</th>
+            <th>Macho</th>
+            <th>Hembras</th>
             <th></th>
 
           </tr> 
@@ -28,22 +26,19 @@
 
         <?php
 
-        $respuesta = ControladorSanidad::ctrMostrarSanidad($item,$animal);
+        $respuesta = ControladorServicios::ctrMostrarRodeo($item,$animal,$item2,$valor2);
 
         for ($i=0; $i < sizeof($respuesta) ; $i++) { 
 
           echo "<tr>
+                        <td>".ucfirst($respuesta[$i]['tipo'])."</td>
                         <td>".formatearFecha($respuesta[$i]['fecha'])."</td>
-                        <td>".ucfirst($respuesta[$i]['motivo'])."</td>
-                        <td>".ucfirst($respuesta[$i]['aplicacion'])."</td>
-                        <td>".$respuesta[$i]['caravana']."</td>
-                        <td>".$respuesta[$i]['comentarios']."</td>
-                        <td>".$respuesta[$i]['gastoVet']."</td>
+                        <td>".$respuesta[$i]['caravanaMacho']."</td>
+                        <td>".$respuesta[$i]['caravanasHembras']."</td>
                         <td>
                           <div class='btn-group'>
                                             
-                              <button class='btn btn-warning btnEditarSanidad' idSanidad='".$respuesta[$i]['idSanidad']."' style='margin-top:0px;' id='modalEditarSanidad'  data-toggle='modal' data-target='#ventanaModalEditarSanidad'><span class='fa fa-pencil'></span></button>
-                              <button class='btn btn-danger btnEliminarSanidad' idSanidad='".$respuesta[$i]['idSanidad']."' style='margin-top:0px;'><i class='fa fa-times'></i></button>
+                              <button class='btn btn-danger btnEliminarRegistroRodeo' idRegistro='".$respuesta[$i]['idRodeo']."' style='margin-top:0px;'><i class='fa fa-times'></i></button>
                               
                           </div>
                         </td>

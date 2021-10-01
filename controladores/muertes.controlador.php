@@ -1,27 +1,24 @@
 <?php
 
-class ControladorSanidad{
+class ControladorMuertes{
 
     
-    static public function ctrNuevoRegistro(){
+    static public function ctrNuevaMuerte(){
 
-        if(isset($_POST['btnSanidad'])){
+        if(isset($_POST['btnIngresarMuerte'])){
 
-            $tabla = 'sanidad';
+            $tabla = 'muertes';
             
-            $caravana = ($_POST['caravanaSanidad'] == '') ? null : $_POST['caravanaSanidad'];
+            $motivo = ($_POST['motivoMuerte'] == 'Otro') ? $_POST['otroMotivoMuerte'] : $_POST['motivoMuerte'];
 
             $datos = array(
-            'animal'=>$_POST['animalSanidad'],
-            'fecha'=>$_POST['fechaSanidad'],
-            'motivo'=>$_POST['motivoSanidad'],
-            'aplicacion'=>$_POST['aplicacionSanidad'],
-            'caravana'=>$caravana,
-            'comentarios'=>$_POST['comentariosSanidad'],
-            'costoVeterinario'=>$_POST['costoVeterinario']
+            'animal'=>$_POST['animalMuerte'],
+            'fechaMuerte'=>$_POST['fechaMuerte'],
+            'caravanaMuerte'=>$_POST['caravanaMuerte'],
+            'motivo'=>$motivo
             );
 
-            $respuesta = ModeloSanidad::mdlNuevoRegistro($tabla,$datos);
+            $respuesta = ModeloMuertes::mdlNuevaMuerte($tabla,$datos);
 
             if($respuesta == 'ok'){
                     
@@ -30,7 +27,7 @@ class ControladorSanidad{
                    new swal({
 
                         icon: "success",
-                        title: "El registro ha sido guardada correctamente!",
+                        title: "El registro ha sido guardado correctamente!",
                         showConfirmButton: true,
                         confirmButtonText: "Cerrar"
 
@@ -38,7 +35,7 @@ class ControladorSanidad{
 
                         if(result.value){
                         
-                            window.location = "sanidad";
+                            window.location = "muertes";
 
                         }
 
@@ -61,7 +58,7 @@ class ControladorSanidad{
 
                     if(result.value){
                     
-                        window.location = "sanidad";
+                        window.location = "muertes";
 
                     }
 
@@ -73,7 +70,7 @@ class ControladorSanidad{
         }
     }
 
-    static public function ctrActualizarSanidad(){
+    static public function ctrActualizarMuerte(){
 
         if(isset($_POST['btnSanidadEditar'])){
 
@@ -144,25 +141,25 @@ class ControladorSanidad{
         }
     }
 
-    static public function ctrMostrarSanidad($item,$valor){
+    static public function ctrMostrarMuerte($item,$valor){
 
-        $tabla = 'sanidad';
+        $tabla = 'muertes';
 
-        return $respuesta = ModeloSanidad::mdlMostrarSanidad($tabla,$item,$valor);
+        return $respuesta = ModeloMuertes::mdlMostrarMuerte($tabla,$item,$valor);
 
     }
 
-    static public function ctrEliminarSanidad(){
+    static public function ctrEliminarMuerte(){
         
-        if(isset($_GET["idSanidad"])){
+        if(isset($_GET["idMuerte"])){
 
-			$tabla ="sanidad";
+			$tabla ="muertes";
 
-            $item = 'idSanidad';
+            $item = 'id';
 
-            $valor = $_GET['idSanidad'];
+            $valor = $_GET['idMuerte'];
 
-            $respuesta = ModeloSanidad::mdlEliminarSanidad($tabla, $item,$valor);
+            $respuesta = ModeloMuertes::mdlEliminarMuerte($tabla, $item,$valor);
 
             if($respuesta == "ok"){
 
@@ -177,7 +174,7 @@ class ControladorSanidad{
 					  }).then(function(result) {
 								if (result.value) {
 
-								window.location = "sanidad";
+								window.location = "muertes";
 
 								}
 							})

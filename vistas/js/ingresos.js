@@ -3,42 +3,22 @@
 $('#btnParirModal').on('click',(evt)=>{
     
     evt.preventDefault();
-    
-    let caravanaMadre = $('#caravanaParto').val();
-    
-    let tipoAnimal = $("input[name=animal]").val();
-    
-    let data = `caravanaMadre=${caravanaMadre}&tipo=${tipoAnimal}`;
-    
-    console.log(data);
-    
-    let url = 'ajax/ingresos.ajax.php';
 
-    $.ajax({
-
-        method: 'POST',
-        url: url,
-        data:data,
-        success:function(response){
-
-            let respuesta = JSON.parse(response);
-                        
-            if(respuesta.caravanaValida == 1){
-                
-                $('#inputNacimientos').show();
-
-            }else{
-
-                alert(`No hay ${capitalizarPrimeraLetra(tipoAnimal)} Madre que coincida con esa Caravana.`);
-            }
-            
-        }
+    $('#cantidadNacidos').val(0)
 
 
-    });
+    if($('#caravanaParto').val() != null){
+      
+        $('#inputNacimientos').show();
+      
+        $('.rowNacidos').remove()
+
+    }else{
+
+        alert('No se selecciono una caravana');
+    };
 
 
-        // $('#inputNacimientos').css('display','block');
 
 
 });
@@ -90,6 +70,7 @@ const generarInputNacido = (campo,type,id)=>{
         textarea.setAttribute('class','form-control');
         textarea.setAttribute('id',id);
         textarea.setAttribute('rows','3');
+        textarea.setAttribute('name',id);
     
         formGroup.append(label);
         formGroup.append(textarea);
@@ -108,9 +89,12 @@ const generarInputNacido = (campo,type,id)=>{
 
         input.setAttribute('id',id);
         input.setAttribute('class',`form-control ${campo}`);
+        input.setAttribute('name',id)
 
         if(type == 'number')
-            input.setAttribute('step','0.50');
+            input.setAttribute('step','0.50')
+            input.setAttribute('required','required')
+            input.setAttribute('name',id)
 
         formGroup.append(input);
 
@@ -118,9 +102,10 @@ const generarInputNacido = (campo,type,id)=>{
         let divSexo = document.createElement('div');
         divSexo.setAttribute('id',id);
     
-        input.setAttribute('name',campo);
+        input.setAttribute('name',id);
         input.setAttribute('class',campo);
         input.setAttribute('value','M');
+        input.setAttribute('checked','checked');
         input.setAttribute('style','height:20px;width:20px;');
         
         let textInputM = document.createElement('b');
@@ -131,6 +116,7 @@ const generarInputNacido = (campo,type,id)=>{
         
         let inputH = input.cloneNode(true);
         inputH.removeAttribute('value');
+        inputH.removeAttribute('checked');
         inputH.setAttribute('value','H');
 
         textInputH = textInputM.cloneNode(true);
@@ -163,6 +149,7 @@ const generarSelectNacido = (campo,id,options)=>{
     let select = document.createElement('select');
     select.setAttribute('id',id);
     select.setAttribute('class',`form-control ${campo}`);
+    select.setAttribute('name',id);
 
     options.map((opcion)=>{
 
@@ -184,41 +171,121 @@ const generarSelectNacido = (campo,id,options)=>{
 
 }
 
+const btnCargarParto = ()=>{
+
+    let row = document.createElement('div')
+    row.setAttribute('class','row divBtnCargar')
+
+    let divBtn = document.createElement('div')
+    divBtn.setAttribute('class','col-xs-12 col-lg-6')
+
+    let btn = document.createElement('button')
+    btn.setAttribute('class','btn btn-primary btn-block')
+    btn.setAttribute('id','btnCargarParto')
+    btn.setAttribute('name','btnCargarParto')
+    btn.setAttribute('type','submit')
+    btn.innerText = 'Cargar Parto'
+
+    divBtn.append(btn);
+    row.append(divBtn)
+
+    return row
+}
+
+// CARGAR INPUT NACIDOS SEGUN CANTIDAD
+        
+    // CARGAR CARAVANA INPUTS NACIDOS
+    const obtenerUltimaCaravanaMadre = (props)=>{
+
+        let data = `caravana=${props.caravanaMadre}&tipo=${props.tipo}`
+
+        let url = 'ajax/ingresos.ajax.php'
+
+        $.ajax({
+            method:'post',
+            url,
+            data,
+            success:(response)=>{
+
+                let respuesta = JSON.parse(response);
+
+                let caravanaHija = respuesta.ultimaCaravanaHija.caravana.split('/')
+
+                caravanaHija = caravanaHija[1]
+
+                console.log(caravanaHija);
+                
+                
+            }
+        })
+
+    }
+     
 $('#cantidadNacidos').on('change',()=>{
 
     $('.rowNacidos').remove();
+    $('.divBtnCargar').remove();
     
     let cantidad = $('#cantidadNacidos').val();
+    
+    let caravanaMadre = $('#caravanaParto').val()
+    
+    let tipo = $('input[name=animal]').val();
 
     const inputNacidos = document.getElementById('inputNacidos');
 
-    // GENERO CAMPO NACIMIENTO
-    for (let index = 0; index < cantidad; index++) {
-        
-        let rowNacido = document.createElement('div');
-        rowNacido.setAttribute('class','rowNacidos');
+    // OBTENER CON AJAX LA ULTIMACARAVANA DE LA MADRE
 
-        let titulo = document.createElement('h2');
-        let numeroTitulo = document.createTextNode(`N° ${index + 1}`);
-        
-        titulo.append(numeroTitulo);
+    let data = `caravana=${caravanaMadre}&tipo=${tipo}`
 
-        rowNacido.append(titulo);
-        
-        let hr = document.createElement('hr');
-        rowNacido.append(hr);
+    let url = 'ajax/ingresos.ajax.php'
 
-        // GENERO CAMPOS DE FORMULARIO
-        let camposNacidos = generarNacido(index + 1);
+    $.ajax({
+        method:'post',
+        url,
+        data,
+        success:(response)=>{
 
-        rowNacido.append(camposNacidos);
+            // GENERO CAMPO NACIMIENTO
+            let respuesta = JSON.parse(response);
 
-        inputNacidos.append(rowNacido);
+            let caravanaHija = respuesta.ultimaCaravanaHija.caravana.split('/')
 
-    }
+            caravanaHija = caravanaHija[1]
 
-         
+            for (let index = 0; index < cantidad; index++) {
+            
+                let rowNacido = document.createElement('div');
+                rowNacido.setAttribute('class','rowNacidos');
+    
+                let titulo = document.createElement('h2');
+                let numeroTitulo = document.createTextNode(`N° ${index + 1}`);
+                
+                titulo.append(numeroTitulo);
+    
+                rowNacido.append(titulo);
+                
+                let hr = document.createElement('hr');
+                rowNacido.append(hr);
+    
+                // GENERO CAMPOS DE FORMULARIO
+                let camposNacidos = generarNacido(index + 1);
+    
+                rowNacido.append(camposNacidos);
+    
+                inputNacidos.append(rowNacido);
+    
+                $(`#caravanaNacido${index + 1}`).val(`${caravanaMadre}/${parseInt(caravanaHija) + (index + 1)}`)
+    
+            }
+    
+            $('#inputNacidos').append(btnCargarParto())
+            
+        }
+    })
 });
+
+// MOSTAR INPUT SEGUN ANIMAL EN COMPRAS
 
 $("input[name='animalCompra']").on('change',function(){
 
@@ -236,7 +303,6 @@ $("input[name='animalCompra']").on('change',function(){
     }
 
 })
-
 
 // CAMPO OTRO PROVEEDOR
 
@@ -308,8 +374,45 @@ $(".tablaCompras").on("click", ".btnEliminarCompra", function(){
   
 	})
   
-  });
+});
 
+const cargarCaravanaParto = (tipo)=>{
+
+    let url = 'ajax/ingresos.ajax.php'
+
+    let data = `tipoAnimal=${tipo}`;
+
+    $.ajax({
+        method:'post',
+        url,
+        data,
+        success:(response)=>{
+          
+                let respuesta = JSON.parse(response);
+
+                let caravanas = respuesta.caravanasMadre
+                
+                $('#caravanaParto').html('');
+
+                caravanas.map(caravana=>{
+
+                    $('#caravanaParto').append(`<option value="${caravana.caravana}">${caravana.caravana}</option>`)
+                
+                })
+            
+        }
+    })
+}
+
+$('input[name=animal]').on('change',(evt)=>{
+
+    let tipo = evt.target.value;
+
+    $('#inputNacimientos').hide()
+
+    cargarCaravanaParto(tipo);
+
+});
 
 // CARGAR SELECT PROVEEDORES
 
@@ -331,6 +434,10 @@ $(()=>{
         }
 
     });
+
+    let tipo = $('input[name=animal]:checked').val();
+    
+    cargarCaravanaParto(tipo);
 
 });
 

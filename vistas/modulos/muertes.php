@@ -24,7 +24,7 @@
 
         <button class="btn btn-primary" data-toggle="modal" data-target="#ventanaModalMuertes">Cargar Muerte</button><br><br>
 
-       <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
+       <table class="table table-bordered table-striped dt-responsive tablas tablaMuertes" width="100%">
          
         <thead>
          
@@ -40,25 +40,38 @@
         </thead>
 
         <tbody>
-       
-            <tr>
-                <td>Cerdo</td>
-                <td>27/07/2021</td>
-                <td>10/4</td>
-                <td>Neumonia</td>
-                <td>
-                    
-                    <div class="btn-group">
-                
-                        <button class="btn btn-warning btnEditarMuerte" idMuerte="2" style="margin-top:0px;" data-toggle="modal" data-target="#ventanaModalEditarMuertes"><i class="fa fa-pencil"></i></button>
-                
-                        <button class="btn btn-danger btnEliminarMuerte" idMuerte="2" style="margin-top:0px;"><i class="fa fa-times"></i></button>
-                        
-                    </div>
+        
+            <?php
 
-                </td>
+              $item = null;
 
-            </tr>
+              $valor = null;
+
+              $muertes = ControladorMuertes::ctrMostrarMuerte($item,$valor);
+
+              for ($i=0; $i < sizeof($muertes); $i++) { 
+                
+                echo "<tr>
+                            <td>".ucfirst($muertes[$i]['animal'])."</td>
+                            <td>".formatearFecha($muertes[$i]['fecha'])."</td>
+                            <td>".$muertes[$i]['caravana']."</td>
+                            <td>".$muertes[$i]['motivo']."</td>
+                            <td>
+                                
+                                <div class='btn-group'>
+                            
+                                    <button class='btn btn-warning btnEditarMuerte' idMuerte='".$muertes[$i]['id']."' style='margin-top:0px;' data-toggle='modal' data-target='#ventanaModalEditarMuertes'><i class='fa fa-pencil'></i></button>
+                            
+                                    <button class='btn btn-danger btnEliminarMuerte' type='button' idMuerte='".$muertes[$i]['id']."' style='margin-top:0px;'><i class='fa fa-times'></i></button>
+                                    
+                                </div>
+
+                            </td>
+
+                          </tr>";
+
+              }
+            ?>
 
         </tbody>
 
@@ -73,6 +86,9 @@
 </div>
 
 <?php
+
+$eliminarMuerte = new ControladorMuertes;
+$eliminarMuerte -> ctrEliminarMuerte();
 
 include "modales/editarMuertes.modal.php";
 

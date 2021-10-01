@@ -35,12 +35,20 @@
             <!-- Tab panes -->
             <div class="tab-content">
 
-                    <div role="tabpanel" class="tab-pane active" id="cerdo"><?php $item = 'animal'; $animal = 'cerdo'; include "tablas/sanidad.tabla.php";?></div>
-                    <div role="tabpanel" class="tab-pane" id="cordero"><?php $animal = 'cordero'; include "tablas/sanidad.tabla.php";?></div>
-                    <div role="tabpanel" class="tab-pane" id="chivo"><?php $animal = 'chivo'; include "tablas/sanidad.tabla.php";?></div>
-                    <div role="tabpanel" class="tab-pane" id="oveja"><?php $animal = 'oveja'; include "tablas/sanidad.tabla.php";?></div>
-                    <div role="tabpanel" class="tab-pane" id="vaca"><?php $animal = 'vaca'; include "tablas/sanidad.tabla.php";?></div>
-                    <div role="tabpanel" class="tab-pane" id="pollo"><?php $animal = 'pollo'; include "tablas/sanidad.tabla.php";?></div>
+                    <div role="tabpanel" class="tab-pane active" id="cerdo"><?php 
+                    
+                    $item = 'tipo'; 
+                    $animal = 'cerdo';
+                    $item2 = 'estado';
+                    $valor2 = '0';
+                    include "tablas/registroServicios.tabla.php";
+                    
+                    ?></div>
+                    <div role="tabpanel" class="tab-pane" id="cordero"><?php $animal = 'cordero'; include "tablas/registroServicios.tabla.php";?></div>
+                    <div role="tabpanel" class="tab-pane" id="chivo"><?php $animal = 'chivo'; include "tablas/registroServicios.tabla.php";?></div>
+                    <div role="tabpanel" class="tab-pane" id="oveja"><?php $animal = 'oveja'; include "tablas/registroServicios.tabla.php";?></div>
+                    <div role="tabpanel" class="tab-pane" id="vaca"><?php $animal = 'vaca'; include "tablas/registroServicios.tabla.php";?></div>
+                    <div role="tabpanel" class="tab-pane" id="pollo"><?php $animal = 'pollo'; include "tablas/registroServicios.tabla.php";?></div>
 
             </div>
 

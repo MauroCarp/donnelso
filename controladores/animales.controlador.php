@@ -3,76 +3,28 @@
 class ControladorAnimales{
 
     
-    static public function ctrNuevoAnimal(){
+    static public function ctrNuevoAnimal($datos){
 
-        if(isset($_POST['btnSanidad'])){
 
-            $tabla = 'sanidad';
-            
-            $caravana = ($_POST['caravanaSanidad'] == '') ? null : $_POST['caravanaSanidad'];
+        // SE CARGA EN TABLA ANIMALES
+        $tabla = 'animales';
 
-            $datos = array(
-            'animal'=>$_POST['animalSanidad'],
-            'fecha'=>$_POST['fechaSanidad'],
-            'motivo'=>$_POST['motivoSanidad'],
-            'aplicacion'=>$_POST['aplicacionSanidad'],
-            'caravana'=>$caravana,
-            'comentarios'=>$_POST['comentariosSanidad'],
-            'costoVeterinario'=>$_POST['costoVeterinario']
-            );
-
-            $respuesta = ModeloSanidad::mdlNuevoRegistro($tabla,$datos);
-
-            if($respuesta == 'ok'){
-                    
-                echo '<script>
-
-                   new  swal({
-
-                        type: "success",
-                        title: "El registro ha sido guardada correctamente!",
-                        showConfirmButton: true,
-                        confirmButtonText: "Cerrar"
-
-                    }).then(function(result){
-
-                        if(result.value){
-                        
-                            window.location = "sanidad";
-
-                        }
-
-                    });
-
-                </script>';
-
-            }else{
-        
-                echo '<script>
-
-               new swal({
-
-                    type: "error",
-                    title: "Hubo un error al cargar. Notificar a Mauro",
-                    showConfirmButton: true,
-                    confirmButtonText: "Cerrar"
-
-                }).then(function(result){
-
-                    if(result.value){
-                    
-                        window.location = "sanidad";
-
-                    }
-
-                });
-
-                </script>';
-            
-            }
-        }
-    }
+        $respuesta = ModeloAnimales::mdlNuevoAnimal($tabla,$datos);
     
-}   
+        // SE CARGA EN MACHO/HEMBRA SEGUN CORRESPONDA
+
+        $tabla = ($datos['sexo'] == 'H') ? 'hembras' : 'machos'; 
+
+        $respuesta = ModeloAnimales::mdlNuevoAnimal($tabla,$datos);
+        
+        // SE CARGA EN PROPIO
+        
+        $tabla = 'propios';
+        
+        $respuesta = ModeloAnimales::mdlNuevoAnimal($tabla,$datos);
+
+    }
+
+}
 
 ?>
