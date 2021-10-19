@@ -25,51 +25,69 @@
 
       <tbody>
 
-        <tr>
-            <td>10/3</td>
-            <td>29/07/2021</td>
-            <td>5.600</td>
-            <td>Engorde</td>
-            <td><input type="checkbox" class="checkboxEngorde" idAnimal="2"></td>
-            <td><button class="btn btn-primary btn-success btn-no-margintop"  data-toggle="modal" data-target="#ventanaModalVerAnimal" idAnimal="2"><i class="fa fa-eye"></i></button></td>
-  
-        </tr>
-        <tr>
-            <td>10/2</td>
-            <td>29/07/2021</td>
-            <td>5.600</td>
-            <td>Engorde</td>
-            <td><input type="checkbox" class="checkboxEngorde"  idAnimal="4"></td>
-            <td><button class="btn btn-primary btn-success btn-no-margintop"  data-toggle="modal" data-target="#ventanaModalVerAnimal" idAnimal="4"><i class="fa fa-eye"></i></button></td>
-  
-        </tr>
-        <tr>
-            <td>10/1</td>
-            <td>29/07/2021</td>
-            <td>5.600</td>
-            <td>Listo p/Venta</td>
-            <td><input type="checkbox" checked class="checkboxEngorde"  idAnimal="5"></td>
-            <td><button class="btn btn-primary btn-success btn-no-margintop"  data-toggle="modal" data-target="#ventanaModalVerAnimal" idAnimal="5"><i class="fa fa-eye"></i></button></td>
-  
-        </tr>
-        <tr>
-            <td>12</td>
-            <td>29/07/2021</td>
-            <td>5.600</td>
-            <td>Listo p/Venta</td>
-            <td><input type="checkbox" checked class="checkboxEngorde"  idAnimal="23"></td>
-            <td><button class="btn btn-primary btn-success btn-no-margintop"  data-toggle="modal" data-target="#ventanaModalVerAnimal" idAnimal="23"><i class="fa fa-eye"></i></button></td>
-  
-        </tr>
-        <tr>
-            <td>11</td>
-            <td>29/07/2021</td>
-            <td>5.600</td>
-            <td>Listo p/Venta</td>
-            <td><input type="checkbox" checked class="checkboxEngorde"  idAnimal="43"></td>
-            <td><button class="btn btn-primary btn-success btn-no-margintop"  data-toggle="modal" data-target="#ventanaModalVerAnimal" idAnimal="43"><i class="fa fa-eye"></i></button></td>
-  
-        </tr>
+      <?php
+
+        $item = 'tipo';
+
+        $inner = 'propios';
+
+        $respuesta = ControladorAnimales::ctrMostrarAnimal($item,$valor,$inner);
+
+        for ($i=0; $i < sizeof($respuesta) ; $i++) { 
+          
+          $check = '';
+          
+          if($respuesta[$i]['listo'] == 1){
+            
+            $estado = 'Listo p/ venta';
+
+            $check =  'checked';
+          
+          }else{
+
+            $estado = 'Engorde';
+          
+          }
+          
+
+          echo '
+          <tr>
+            <td>'.$respuesta[$i]['idAnimal'].'</td>
+            <td>'.$respuesta[$i]['fechaIngreso'].'</td>
+            <td>'.$respuesta[$i]['peso'].'</td>
+            <td>'.$estado.'</td>
+            <td><input type="checkbox" class="checkboxEngorde"  idAnimal="'.$respuesta[$i]['idAnimal'].'" '.$check.'></td>
+            <td><button class="btn btn-primary btn-success btn-no-margintop"  data-toggle="modal" data-target="#ventanaModalVerAnimal" idAnimal="'.$respuesta[$i]['idAnimal'].'"><i class="fa fa-eye"></i></button></td>
+          </tr>';
+
+        }
+
+        $inner = 'externos';
+
+        $respuesta = ControladorAnimales::ctrMostrarAnimal($item,$valor,$inner);
+
+        if(!empty($respuesta)){
+        
+          for ($i=0; $i < sizeof($respuesta) ; $i++) { 
+
+            $estado = ($respuesta[$i]['listo'] == 1) ? 'Listo p/ venta' : 'Engorde';
+
+            echo '
+            <tr>
+              <td>'.$respuesta[$i]['idAnimal'].'</td>
+              <td>'.$respuesta[$i]['fechaIngreso'].'</td>
+              <td>'.$respuesta[$i]['pesoPromedio'].'</td>
+              <td>'.$estado.'</td>
+              <td><input type="checkbox" class="checkboxEngorde"  idAnimal="'.$respuesta[$i]['idAnimal'].'"></td>
+              <td><button class="btn btn-primary btn-success btn-no-margintop"  data-toggle="modal" data-target="#ventanaModalVerAnimal" idAnimal="'.$respuesta[$i]['idAnimal'].'"><i class="fa fa-eye"></i></button></td>
+            </tr>';
+
+          }
+        
+        }
+      
+      ?>
+        
 
       </tbody>
 

@@ -100,8 +100,10 @@ $('#cantidadNacidos').change(function(){
 // PONER MAYUSCULAS 
 
 const capitalizarPrimeraLetra = (str)=>{
+
 	return str.charAt(0).toUpperCase() + str.slice(1);
-  }
+
+}
 
 //   CARGAR OPTION SELECTED
 
@@ -121,4 +123,15 @@ const optionSelected = (idSelect,optValue)=>{
 
 		}
 		
+}
+
+
+// FORMATEAR FECHA
+
+const convertirFecha = (string)=>{
+	
+	let fecha = string.split('-').reverse().join('-');
+	
+	return fecha;
+
 }

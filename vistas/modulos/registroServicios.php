@@ -29,7 +29,6 @@
                 <li role="presentation"><a href="#chivo"  id="tabChivo" aria-controls="chivo" role="tab" data-toggle="tab">Chivo</a></li>
                 <li role="presentation"><a href="#oveja"  id="tabOveja" aria-controls="oveja" role="tab" data-toggle="tab">Ovejas</a></li>
                 <li role="presentation"><a href="#vaca"  id="tabVaca" aria-controls="vaca" role="tab" data-toggle="tab">Vacas</a></li>
-                <li role="presentation"><a href="#pollo"  id="tabPollo" aria-controls="pollo" role="tab" data-toggle="tab">Pollos</a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -48,7 +47,6 @@
                     <div role="tabpanel" class="tab-pane" id="chivo"><?php $animal = 'chivo'; include "tablas/registroServicios.tabla.php";?></div>
                     <div role="tabpanel" class="tab-pane" id="oveja"><?php $animal = 'oveja'; include "tablas/registroServicios.tabla.php";?></div>
                     <div role="tabpanel" class="tab-pane" id="vaca"><?php $animal = 'vaca'; include "tablas/registroServicios.tabla.php";?></div>
-                    <div role="tabpanel" class="tab-pane" id="pollo"><?php $animal = 'pollo'; include "tablas/registroServicios.tabla.php";?></div>
 
             </div>
 

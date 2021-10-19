@@ -295,8 +295,13 @@ $("input[name='animalCompra']").on('change',function(){
 
         $('#cantidadCompra').show();
         $('#cantidadMHCompra').hide();
+        $('#engordeCompra').prop('checked', true);
+        $('#engordeCompra').prop('disabled', true);
+        
     }else{
         
+        $('#engordeCompra').prop('disabled', false);
+        $('#engordeCompra').prop('checked', false);
         $('#cantidadCompra').hide();
         $('#cantidadMHCompra').show();
 

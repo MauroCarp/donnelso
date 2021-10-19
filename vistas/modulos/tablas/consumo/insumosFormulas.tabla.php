@@ -98,8 +98,6 @@
 
               <td><input type="text" name="nombreInsumoNuevo" id="nombreInsumoNuevo"></td>
 
-              <!-- <td><input type="number" name="precioInsumoNuevo" id="precioInsumoNuevo"></td> -->
-
               <td><button id="cargarInsumo" class="btn btn-primary" style="margin-top:0px">Cargar Insumo</button></td>
             
             </tr>
@@ -182,7 +180,7 @@
               echo "<tr>
                 <td>".$insumos[$i]['nombre']."</td>
                 <td>".$insumos[$i]['precioKg']."</td>
-                <td>".$insumos[$i]['fecha']."</td>
+                <td>".formatearFecha($insumos[$i]['fecha'])."</td>
                 <td><button class='btn btn-danger btnEliminarRegistroInsumo' idRegistroInsumo='".$insumos[$i]['id']."' style='margin-top:0px;'><i class='fa fa-times'></i></button></td>
             </tr>";
             

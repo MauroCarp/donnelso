@@ -70,6 +70,17 @@
 
 						</li>
 
+						<li>
+
+							<a href="registroPartos">
+								
+								<i class="fa fa-circle-o"></i>
+								<span>Registros Partos</span>
+
+							</a>
+
+						</li>
+
 					</ul>
 
 				</li>
@@ -169,7 +180,7 @@
 					<a href="#" >
 
 						<i class="fa fa-cutlery"></i>
-						<span>Producci&oacute;n</span>
+						<span>Chazinados</span>
 						
 						<span class="pull-right-container">
 						
@@ -183,10 +194,10 @@
 
 						<li>
 
-							<a href="#" data-toggle="modal" data-target="#ventanaModalFaenar">
+							<a href="#" data-toggle="modal" data-target="#ventanaModalVentaChazinados">
 								
 								<i class="fa fa-circle-o"></i>
-								<span>Faenar</span>
+								<span>Venta</span>
 
 							</a>
 

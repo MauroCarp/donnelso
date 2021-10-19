@@ -7,8 +7,8 @@ class ControladorIngresos{
     =============================================*/
 
 	static public function ctrNuevoIngreso(){
-
-		if(isset($_POST["fechaCompra"])){
+        
+        if(isset($_POST["btnIngresarCompra"])){
 
 			if($_POST['precioTotalCompra'] != '' AND $_POST['precioTotalCompra'] != '' AND $_POST['fechaCompra'] != ''){
                 
@@ -55,7 +55,7 @@ class ControladorIngresos{
 
                 $tabla = 'animales';
 
-                $engorde = (isset($_POST['engordeCompra'])) ? 1 : 0;
+                $engorde = (isset($_POST['engordeCompra'])) ? 'Reproductor' : 'Engorde';
 
                 $datos = array("animal" => $_POST["animalCompra"],
                 "fecha" => $_POST["fechaCompra"],
@@ -109,6 +109,7 @@ class ControladorIngresos{
 
                 }
 
+                
                 if($_POST['cantidadCompra'] != 0){
                     
                     for ($i=0; $i < $_POST['cantidadCompra'] ; $i++) {
@@ -117,8 +118,8 @@ class ControladorIngresos{
 
                         $ultimoId++;
                         
-                        $respuestas[] = ModeloIngresos::mdlNuevoIngreso($tabla, $datos);
-
+                        $respuestas[] = ControladorAnimales::ctrNuevoAnimal($datos);
+                        
                         $respuestas[] = ControladorIngresos::ctrNuevoExterno($datos);
 
                     }
@@ -126,6 +127,7 @@ class ControladorIngresos{
                 }
 
 
+                // die();
                 if(!in_array('error',$respuestas)){
 
                     	echo '<script>
@@ -263,11 +265,11 @@ class ControladorIngresos{
     MOSTRAR COMPRAS
     =============================================*/
     
-    static public function ctrMostrarCompras($item,$valor,$orden){
+    static public function ctrMostrarCompras($item,$valor){
 
         $tabla = 'registroingresos';
 
-        return $resultado = ModeloIngresos::mdlMostrarCompras($tabla,$item,$valor,$orden);
+        return $resultado = ModeloIngresos::mdlMostrarCompras($tabla,$item,$valor);
 
     }
 
@@ -352,7 +354,7 @@ class ControladorIngresos{
 	BUSCAR MADRES
     =============================================*/
     
-    static public function ctrBuscarMadrePadre($valor,$item2,$valor2){
+    static public function ctrBuscarMadrePadre($valor,$item2,$valor2,$buscar){
 
         $tabla = 'animales';
 
@@ -360,9 +362,8 @@ class ControladorIngresos{
 
         $item = 'tipo';
 
-        $resultado = ModeloIngresos::mdlBuscarMadrePadre($tabla,$tabla2,$item,$valor,$item2,$valor2);
-
-        return $resultado; 
+        return $resultado = ModeloIngresos::mdlBuscarMadrePadre($tabla,$tabla2,$item,$valor,$item2,$valor2,$buscar);
+         
 
     }
 
@@ -390,7 +391,9 @@ class ControladorIngresos{
 
                 $valor2 = $_POST['caravanaParto'];
 
-                $caravanaMacho = ControladorIngresos::ctrBuscarMadrePadre($datosParto['animal'],$item2,$valor2);
+                $buscar = 'caravanaMacho';
+
+                $caravanaMacho = ControladorIngresos::ctrBuscarMadrePadre($datosParto['animal'],$item2,$valor2,$buscar);
 
                 $datosParto['caravanaMacho'] = $caravanaMacho[0][0];
 
@@ -420,148 +423,64 @@ class ControladorIngresos{
                         'caravana' => $_POST['caravanaNacido'.($i + 1)],
                         'complicacion' => $_POST['complicacionNacido'.($i + 1)]);
 
-                    $respuesta = ControladorAnimales::ctrNuevoAnimal($datosNacido);
+                    $respuestas[] = ControladorAnimales::ctrNuevoAnimal($datosNacido);
                     
                 }
 
-        }}
-    //             $ultimoId = ControladorIngresos::ctrObtenerUltimoId(); 
+                if(!in_array('error',$respuestas)){
 
-    //             $ultimoId = ($ultimoId) ? $ultimoId[0] : 1; 
-                
-    //             if($_POST['machosCompra'] != 0){
-                    
-    //                 $datos['sexo'] = 'M';
+                    	echo '<script>
 
-    //                 for ($i=0; $i < $_POST['machosCompra'] ; $i++) { 
-                        
-    //                     $datos['idAnimal'] = $ultimoId.$datos['animal'];
+                            new swal({
 
-    //                     $ultimoId++;
+                                icon: "success",
+                                title: "¡Los registros han sido guardados correctamente!",
+                                showConfirmButton: true,
+                                confirmButtonText: "Cerrar"
 
-    //                     $respuestas[] = ModeloIngresos::mdlNuevoIngreso($tabla, $datos);
+                            }).then(function(result){
 
-    //                     $respuestas[] = ControladorIngresos::ctrNuevoExterno($datos);
-
-    //                 }
-
-    //             }
-
-    //             if($_POST['hembrasCompra'] != 0){
-                    
-    //                 $datos['sexo'] = 'H';
-
-    //                 for ($i=0; $i < $_POST['hembrasCompra'] ; $i++) { 
-                                                
-    //                     $datos['idAnimal'] = $ultimoId.$datos['animal'];
-
-    //                     $ultimoId++;
-                        
-    //                     $respuestas[] = ModeloIngresos::mdlNuevoIngreso($tabla, $datos);
-
-    //                     $respuestas[] = ControladorIngresos::ctrNuevoExterno($datos);
-
-    //                 }
-
-    //             }
-
-    //             if($_POST['cantidadCompra'] != 0){
-                    
-    //                 for ($i=0; $i < $_POST['cantidadCompra'] ; $i++) {
-                               
-    //                     $datos['idAnimal'] = $ultimoId.$datos['animal'];
-
-    //                     $ultimoId++;
-                        
-    //                     $respuestas[] = ModeloIngresos::mdlNuevoIngreso($tabla, $datos);
-
-    //                     $respuestas[] = ControladorIngresos::ctrNuevoExterno($datos);
-
-    //                 }
-
-    //             }
-
-
-    //             if(!in_array('error',$respuestas)){
-
-    //                 	echo '<script>
-
-    //                         new swal({
-
-    //                             icon: "success",
-    //                             title: "¡La Compra ha sido guardada correctamente!",
-    //                             showConfirmButton: true,
-    //                             confirmButtonText: "Cerrar"
-
-    //                         }).then(function(result){
-
-    //                             if(result.value){
+                                if(result.value){
                                 
-    //                                 window.location = "registrosCompras";
+                                    window.location = "registroPartos";
 
-    //                             }
+                                }
 
-    //                         });
+                            });
 
-    //                     </script>';
+                        </script>';
 
-    //             }else{
+                }else{
                     
-    //                 echo '<script>
+                    echo '<script>
 
-    //                 new swal({
+                    new swal({
 
-    //                     icon: "error",
-    //                     title: "Hubo un error al cargar. Notificar a Mauro",
-    //                     showConfirmButton: true,
-    //                     confirmButtonText: "Cerrar"
+                        icon: "error",
+                        title: "Hubo un error al cargar. Notificar a Mauro",
+                        showConfirmButton: true,
+                        confirmButtonText: "Cerrar"
 
-    //                 }).then(function(result){
+                    }).then(function(result){
 
-    //                     if(result.value){
+                        if(result.value){
                         
-    //                         window.location = "registrosCompras";
+                            window.location = "registroPartos";
 
-    //                     }
+                        }
 
-    //                 });
+                    });
                 
 
-    //             </script>';
-
-    //             };  
-
-
-	// 	    }else{
-
-    //             echo '<script>
-
-    //                         new swal({
-
-    //                             icon: "error",
-    //                             title: "¡Hay campos que no pueden ir vacío!",
-    //                             showConfirmButton: true,
-    //                             confirmButtonText: "Cerrar"
-
-    //                         }).then(function(result){
-
-    //                             if(result.value){
-                                
-    //                                 window.location = "registrosCompras";
-
-    //                             }
-
-    //                         });
-                        
-
-    //                     </script>';
+                </script>';
+                };  
 
 
-    //         }
+		    
 
-	//     }
+	    }
 
-    // }
+    }
 
     static public function ctrNuevoRegParto($datos){
     
@@ -581,6 +500,17 @@ class ControladorIngresos{
 
     }
 
+    /*=============================================
+    MOSTRAR PARTOS
+    =============================================*/
+    
+    static public function ctrMostrarPartos($item,$valor){
+
+        $tabla = 'partos';
+
+        return $resultado = ModeloIngresos::mdlMostrarCompras($tabla,$item,$valor);
+
+    }
 }   
 
 ?>

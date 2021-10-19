@@ -178,7 +178,7 @@
 
                                 <div class="col-lg-12">
                                     
-                                    <button class="btn btn-primary btn-block" id="btnIngresarCompra">Ingresar</button>
+                                    <button class="btn btn-primary btn-block" type="submit" id="btnIngresarCompra" name="btnIngresarCompra">Ingresar</button>
 
                                 </div>
                             

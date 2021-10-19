@@ -22,8 +22,12 @@
 
   <section class="content">
 
-    <cajas-superiores></cajas-superiores>
+  <?php
+    
+    include 'inicio/cajas-superiores.php';
 
+  ?>
+  
     <div class="row">
       
       <div v-for="(boton, index) in btnPrincipales" :key="index" class="col-lg-2 col-xs-6">

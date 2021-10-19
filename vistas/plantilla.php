@@ -176,6 +176,7 @@ CUERPO DOCUMENTO
 
       if($_GET["ruta"] == "inicio" ||
          $_GET["ruta"] == "registrosCompras" ||
+         $_GET["ruta"] == "registroPartos" ||
          $_GET["ruta"] == "servicios" ||
          $_GET["ruta"] == "registroServicios" ||
          $_GET["ruta"] == "pre-ventas" ||
@@ -222,185 +223,6 @@ CUERPO DOCUMENTO
 
 <script>
 
-  Vue.component('cajas-superiores',{
-    
-    data: function (){
-      
-      return{
-        cajasSuperiores: [
-        
-        {tipo:'Lechones',idCantidad: 'cantidadCerdo',icono: 
-        'icon-cerdo', numeroCantidad: 23,numeroPrecio: 450,idPrecio: 'precioKgCerdo'},
-        
-        {tipo:'Chivos',idCantidad: 'cantidadChivo',icono: 
-        'icon-chivo', numeroCantidad: 12,numeroPrecio: 450,idPrecio: 'precioKgChivo'},
-        
-        {tipo:'Corderos',idCantidad: 'cantidadCordero',icono: 
-        'icon-cordero', numeroCantidad: 14,numeroPrecio: 450,idPrecio: 'precioKgCordero'},
-        
-        {tipo:'Pollos',idCantidad: 'cantidadPollo',icono: 
-        'icon-pollo', numeroCantidad: 23,numeroPrecio: 450,idPrecio: 'precioKgPollo'},
-        
-        {tipo:'Vacas',idCantidad: 'cantidadVaca',icono: 
-        'icon-vaca', numeroCantidad: 22,numeroPrecio: 450,idPrecio: 'precioKgVaca'},
-        ]
-    
-      }
-    
-    },
-    template: `
-      <div class="row">
-      
-        <caja-superior
-          v-for="(animal, index) in cajasSuperiores" 
-          :key="index" 
-          :tipo="animal.tipo"
-          :idCantidad="animal.idCantidad"
-          :icono="animal.icono"
-          :numeroCantidad="animal.numeroCantidad"
-          :numeroPrecio="animal.numeroPrecio"
-          :idPrecio="animal.idPrecio">
-
-        </caja-superior>
-      
-      </div>
-    `
-
-  })
-
-  Vue.component('caja-superior',{
-
-    props:{
-      tipo: String,
-      idCantidad: String,
-      idPrecio: String,
-      numeroCantidad: Number,
-      numeroPrecio: Number,
-      icono: String,
-    },
-    template: `
-    <div  class="col-lg-2 col-xs-6">
-
-      <div class="small-box bg-green">
-        
-        <div class="inner">
-          
-          <p style="font-size:150%;font-weight:bold;">{{ tipo }}<br>
-            <strong><span :id="idCantidad" style="font-size:1.3em;">{{numeroCantidad}}</span></strong> <br>
-            $ <span :id="idPrecio" style="font-size:.8em;">{{numeroPrecio}}</span> /Kg
-          </p>
-
-        </div>
-        
-        <div class="icon">
-          
-          <i :class="icono"></i>
-        
-        </div>
-
-      </div>
-    
-    </div>
-    `
-
-  })
-
-  Vue.component('stock-chazinados',{
-    
-    data: function (){
-      
-      return{
-        stockChazinados: [
-        
-        {tipo:'Salames',idCantidad: 'stockSalames',icono: 
-        '', numeroCantidad: '22 Kg',numeroPrecio: 450,idPrecio: 'precioKgSalame'},
-
-        {tipo:'Chorizos',idCantidad: 'stockChorizos',icono: 
-        '', numeroCantidad: '22 Kg',numeroPrecio: 450,idPrecio: 'precioKgChorizo'},
-
-        {tipo:'Morcillas',idCantidad: 'stockMorcillas',icono: 
-        '', numeroCantidad: '22 Kg',numeroPrecio: 450,idPrecio: 'precioKgMorcilla'},
-
-        {tipo:'Bondiola',idCantidad: 'stockBondiola',icono: 
-        '', numeroCantidad: '22 Kg',numeroPrecio: 450,idPrecio: 'precioKgBondiola'},
-
-        {tipo:'Jamon',idCantidad: 'stockJamon',icono: 
-        '', numeroCantidad: '22 Kg',numeroPrecio: 450,idPrecio: 'precioKgJamon'},
-
-        {tipo:'Codeguines',idCantidad: 'stockCodeguines',icono: 
-        '', numeroCantidad: '22 Kg',numeroPrecio: 450,idPrecio: 'precioKgCodeguin'},
-
-        {tipo:'Grasa',idCantidad: 'stockGrasa',icono: 
-        '', numeroCantidad: '22 Kg',numeroPrecio: 450,idPrecio: 'precioKgGrasa'},
-
-        {tipo:'Chicharron',idCantidad: 'stockChicharron',icono: 
-        '', numeroCantidad: '22 Kg',numeroPrecio: 450,idPrecio: 'precioKgChicharron'},
-
-        {tipo:'Carne',idCantidad: 'stockCarne',icono: 
-        '', numeroCantidad: '22 Kg',numeroPrecio: 450,idPrecio: 'precioKgCarne'},
-        ]
-    
-      }
-    
-    },
-    template: `
-      <div class="row">
-      
-        <caja-StockChazinados
-          v-for="(animal, index) in stockChazinados" 
-          :key="index" 
-          :tipo="animal.tipo"
-          :idCantidad="animal.idCantidad"
-          :icono="animal.icono"
-          :numeroCantidad="animal.numeroCantidad"
-          :numeroPrecio="animal.numeroPrecio"
-          :idPrecio="animal.idPrecio">
-
-          </caja-StockChazinados>
-      
-      </div>
-    `
-
-  })
-
-  Vue.component('caja-StockChazinados',{
-
-    props:{
-      tipo: String,
-      idCantidad: String,
-      idPrecio: String,
-      numeroCantidad: String,
-      numeroPrecio: Number,
-      icono: String,
-    },
-    template: `
-    <div  class="col-lg-4 col-xs-6">
-
-      <div class="small-box bg-green">
-        
-        <div class="inner">
-          
-          <p style="font-size:150%;font-weight:bold;">{{ tipo }}<br>
-            <strong><span :id="idCantidad" style="font-size:1.3em;">{{numeroCantidad}}</span></strong> <br>
-            $ <span :id="idPrecio" style="font-size:.8em;">{{numeroPrecio}}</span> /Kg
-          </p>
-
-        </div>
-        
-        <div class="icon">
-          
-          <i :class="icono"></i>
-        
-        </div>
-
-      </div>
-    
-    </div>
-    `
-
-  })
-
-
   const app = new Vue({
     el:'#app',
     data:{
@@ -427,6 +249,7 @@ CUERPO DOCUMENTO
 
 <script src="vistas/js/app.js"></script>
 <script src="vistas/js/plantilla.js"></script>
+<script src="vistas/js/inicio.js"></script>
 <script src="vistas/js/usuarios.js"></script>
 <script src="vistas/js/ventas.js"></script>
 <script src="vistas/js/reportes.js"></script>

@@ -10,24 +10,49 @@ class ControladorServicios{
             $tabla = 'rodeos';
 
             $caravanasHembras = implode('-',$_POST['caravanaHembras']);
+            $caravanasMachos = implode('-',$_POST['caravanaMachos']);
 
             $datos = array(
             'tipo'=>$_POST['animalServicio'],
             'fecha'=>$_POST['fechaServicio'],
             'numeroRodeo'=>$_POST['rodeoNumero'],
-            'caravanaMacho'=>$_POST['caravanaMachoRodeo'],
+            'caravanaMachos'=>$caravanasMachos,
             'caravanaHembras'=>$caravanasHembras);
 
             // CARGAR RODEO
             $respuesta = ModeloServicios::mdlNuevoRodeo($tabla,$datos);
 
             // MODIFICAR MACHO
-            // $tabla2 = 'machos';
             
-            // $item = 'idRodeo';
+                // OBTENGO EL ID DEL RODEO RECIEN CREADO
+                $item = 'idRodeo';
 
-            // $valor = ControladorServicios::ctrMostarRodeo();
-            // $respuesta = ControladorAnimales::ctrActualizarAnimal($tabla2);
+                $valor = "(SELECT MAX(idRodeo) FROM rodeos)";
+
+                $item2 = null;
+
+                $valor2 = null;
+
+                $idRodeo = ControladorServicios::ctrMostrarRodeo($item,$valor,$item2,$valor2);
+                
+
+                $idRodeo = $idRodeo[0]['idRodeo'];
+
+                // ACTUALIZO EL IDRODEO DEL MACHO
+                
+                $item = 'tipo';
+                
+                $item2 = 'caravana';
+                
+                for ($a=0; $a < sizeof($_POST['caravanaMachos']) ; $a++) { 
+                    
+                    $valor = $datos['tipo'];
+
+                    $valor2 = $_POST['caravanaMachos'][$a];
+
+                    $actualizarIdRodeo = ControladorServicios::ctrActualizarIdRodeoMacho($item,$valor,$item2,$valor2,$idRodeo);
+
+                }
 
             if($respuesta == 'ok'){
                     
@@ -228,6 +253,17 @@ class ControladorServicios{
         return $respuesta = ModeloServicios::mdlMostrarReproductor($tabla,$tabla2,$datos);
 
     }
+    
+    static public function ctrActualizarIdRodeoMacho($item,$valor,$item2,$valor2,$idRodeo){
+
+        $tabla1 = 'animales';
+
+        $tabla2 = 'machos';
+
+        return $respuesta = ModeloServicios::mdlActualizarIdRodeoMacho($tabla1,$tabla2,$item,$valor,$item2,$valor2,$idRodeo);
+
+    }
+
 
 }   
 

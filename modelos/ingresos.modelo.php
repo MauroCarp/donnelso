@@ -135,7 +135,7 @@ class ModeloIngresos{
 	MOSTRAR INGRESOS
 	=============================================*/
    
-	static public function mdlMostrarCompras($tabla,$item,$valor,$orden){
+	static public function mdlMostrarCompras($tabla,$item,$valor){
 
 		if($item != null){
 
@@ -210,15 +210,15 @@ class ModeloIngresos{
 	BUSCAR CARAVANA
 	=============================================*/
 
-	static public function mdlBuscarMadrePadre($tabla,$tabla2,$item,$valor,$item2,$valor2){
+	static public function mdlBuscarMadrePadre($tabla,$tabla2,$item,$valor,$item2,$valor2,$buscar){
 		
 		if($item2 == NULL){
 		
-			$stmt = Conexion::conectar()->prepare("SELECT caravana FROM $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal WHERE $tabla.$item = :$item AND estadoRodeo = 'Servida' ");
+			$stmt = Conexion::conectar()->prepare("SELECT $buscar FROM $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal WHERE $tabla.$item = :$item AND estadoRodeo = 'Servida' ");
 			
 		}else{
 			
-			$stmt = Conexion::conectar()->prepare("SELECT caravanaMacho FROM $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal WHERE $tabla.$item = :$item AND $tabla2.$item2 = :$item2");
+			$stmt = Conexion::conectar()->prepare("SELECT $buscar FROM $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal WHERE $tabla.$item = :$item AND $tabla2.$item2 = :$item2");
 
 			$stmt -> bindParam(":".$item2, $valor2, PDO::PARAM_STR);
 		}

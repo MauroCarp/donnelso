@@ -51,7 +51,32 @@ $(".tablaPreVentas").on("click", ".btnEliminarPreVenta", function(){
   
 	})
   
-  });
+});
+
+$(".tablaVentas").on("click", ".btnEliminarVenta", function(){
+
+	let idVenta = $(this).attr("idVenta");
+
+	new swal({
+	  title: '¿Está seguro de borrar la Venta?',
+	  text: "¡Si no lo está puede cancelar la accíón!",
+	  icon: 'warning',
+	  showCancelButton: true,
+	  confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		cancelButtonText: 'Cancelar',
+		confirmButtonText: 'Si, borrar venta!'
+	}).then(function(result){
+  
+	  if(result.value){
+  
+		window.location = `index.php?ruta=ventas&idVenta=${idVenta}`;
+  
+	  }
+  
+	})
+  
+});
 
 
 $('.tablaPreVentas').on('click','.btnFinalizarVenta',function(){
@@ -115,17 +140,17 @@ $('#kgFinal').on('change',function(){
 
 	let url = 'ajax/precios.ajax.php';
 
-	let data = `animal=${animal}`;
+	let data = `accion=cargarPrecios`;
 
 	$.ajax({
 		method:'post',
 		data,
 		url,
 		success:function(response){
-
-			let respuesta = JSON.parse(response);			
 			
-			let precioTotal = calcularPrecioTotal(kgTotal,respuesta[0]);
+			let respuesta = JSON.parse(response);			
+				
+			let precioTotal = calcularPrecioTotal(kgTotal,respuesta[animal]);
 	
 			let porcentajeEmpleado = respuesta.comisionEmpleado
 			

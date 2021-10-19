@@ -11,19 +11,23 @@ const cargarCaravana = (tipo)=>{
         url,
         data,
         success:(response)=>{
-
+            
             let caravanas = JSON.parse(response)
-            
-            if ($('#caravanaMachoRodeo').html() == '') {
-                
-                for (let index = 0; index < caravanas.machos.length; index++) {
-                    
-                    $('#caravanaMachoRodeo').append(`<option value="${caravanas.machos[index][0]}">${caravanas.machos[index][0]}</option>`)
-                    
-                }
-            
-            }
+             
+            $('.caravanaMachos').each(function(){
 
+                if($(this).html() == ''){
+
+                    for (let index = 0; index < caravanas.machos.length; index++) {
+                        
+                        $(this).append(`<option value="${caravanas.machos[index][0]}">${caravanas.machos[index][0]}</option>`)
+                
+                    }
+                
+                }
+                
+            })
+                
             $('.caravanaHembras').each(function(){
                     
                 if($(this).html() == ''){
@@ -58,11 +62,22 @@ $('input[name=animalServicio]').on('change',(evt)=>{
 // CONFIGURACION MODAL AGREGAR RODEO
 
 $('#agregarHembraRodeo').on('click',()=>{
+
+    $('#inputsHembras').append(generarInputCaravanas(propsServiciosHembras));
+
+    propsServiciosHembras.numero += 1;    
+
+    let tipo = $('input[name=animalServicio]:checked').val()
     
+    cargarCaravana(tipo);
+    
+});
 
-    $('#inputsHembras').append(generarInputCaravanas(propsServicios));
+$('#agregarMachoRodeo').on('click',()=>{
 
-    propsServicios.numero += 1;    
+    $('#inputsMachos').append(generarInputCaravanas(propsServiciosMachos));
+
+    propsServiciosMachos.numero += 1;    
 
     let tipo = $('input[name=animalServicio]:checked').val()
     
@@ -72,20 +87,32 @@ $('#agregarHembraRodeo').on('click',()=>{
 
 
 // GENERAR INPUTS CARAVANAS
-const propsServicios = {
+const propsServiciosHembras = {
     campo: 'caravanaHembras',
     numero: 1,
     idInput: 'inputsHembras',
     nombreIdInput: 'caravanaHembra',
     textContent: 'N° Caravana Hembra',
     rowId: 'rowHembra',
-    idEliminar: 'eliminarCampoSanidad',
+    idEliminar: 'eliminarCampoHembra',
+    nameSelect: 'caravanaHembras'
+}
+
+const propsServiciosMachos = {
+    campo: 'caravanaMachos',
+    numero: 1,
+    idInput: 'inputsMachos',
+    nombreIdInput: 'caravanaMacho',
+    textContent: 'N° Caravana Macho',
+    rowId: 'rowMacho',
+    idEliminar: 'eliminarCampoMacho',
+    nameSelect: 'caravanaMachos'
 }
 
 const generarInputCaravanas = (props)=>{
 
     let inputs = document.getElementById(props.idInput);
-
+    
     let lastChild = inputs.lastChild;
     
     if(lastChild.id)
@@ -117,7 +144,7 @@ const generarInputCaravanas = (props)=>{
     let input = document.createElement('select');
     input.setAttribute('id',`${props.nombreIdInput}${props.numero}`); 
     input.setAttribute('class',`form-control ${props.campo}`);
-    input.setAttribute('name',`caravanaHembras[]`);
+    input.setAttribute('name',`${props.nameSelect}[]`);
     input.setAttribute('required',`true`);
 
     formGroup.append(label);
@@ -165,8 +192,17 @@ const eliminarCampoServicio = (row)=>{
     
     rowNode.remove();
 
+    let hembraValido = row.indexOf('Hembra');
     
-    propsServicios.numero -= 1;
+    if(hembraValido != -1){
+
+        propsServiciosHembras.numero -= 1;
+        
+    }else{
+        
+        propsServiciosMachos.numero -= 1;
+
+    }   
 
 }
 
@@ -191,30 +227,59 @@ const generarItem = (leyendaText,dato)=>{
     // SOLO HEMBRAS
     if(hembraValido !== -1){
 
-        let formGroup = document.createElement('div')
-        formGroup.setAttribute('class','form-group')
-
-        let divCheckBox = document.createElement('div')
-        divCheckBox.setAttribute('class','custom-control custom-checkbox');
-
-        let label = document.createElement('label')
-        label.setAttribute('class','custom-control-label')
-        label.innerText = 'Servida'
+        let divContenedor = document.createElement('div')
+        divContenedor.setAttribute('class','custom-control');
     
-        let checkbox = document.createElement('input')
-        checkbox.setAttribute('type','checkbox')
-        checkbox.setAttribute('class',`custom-control-input`)
-        checkbox.setAttribute('caravana',dato)
-        checkbox.setAttribute('onchange',`hembraServida()`)
+        let formGroup = document.createElement('div')
+        formGroup.setAttribute('class','row madresRodeo')
+
+        let divRow = document.createElement('div')
+        divRow.setAttribute('class','row')
+
+        let divFecha = document.createElement('div')
+        divFecha.setAttribute('class','col-xs-4 col-lg-4')
+        
+        let fechaServida = document.createElement('input')
+        fechaServida.setAttribute('type','date')
+        fechaServida.setAttribute('class',`form-control`)
+        fechaServida.setAttribute('id',`fechaServida`)
+        
+        divFecha.append(fechaServida)
+        
+        let divMachos = document.createElement('div')
+        divMachos.setAttribute('class','col-xs-4 col-lg-4')
+        
+        let selectMachos = document.createElement('select')
+        selectMachos.setAttribute('class',`form-control`)
+        selectMachos.setAttribute('id',`selectMachos`)
+        
+        divMachos.append(selectMachos)
+        
+        let divButton = document.createElement('div')
+        divButton.setAttribute('class','col-xs-4 col-lg-4')
+        
+        let buttonServir = document.createElement('button')
+        // buttonServir.setAttribute('type','submit')
+        buttonServir.setAttribute('class',`btn btn-default btn-no-margintop`)
+        buttonServir.setAttribute('id',`btnServirHembra`)
+        buttonServir.setAttribute('caravana',dato)
+        buttonServir.innerText = 'Servir'
+
+        divButton.append(buttonServir)
+
+
+        // checkbox.setAttribute('onchange',`hembraServida()`)
 
         let tipo = localStorage.getItem('animalServicio')
 
-        caravanaServidaValida(tipo,dato,checkbox)
-        
-        divCheckBox.append(checkbox)
-        divCheckBox.append(label)
+        caravanaServidaValida(tipo,dato,buttonServir)
+      
 
-        formGroup.append(divCheckBox)
+        formGroup.append(divFecha)
+        formGroup.append(divMachos)
+        formGroup.append(divButton)
+
+        divContenedor.append(formGroup)
 
         item.append(formGroup)
 
@@ -261,8 +326,8 @@ const generarRodeo = (props)=>{
     let lista = document.createElement('ul');
     lista.setAttribute('class','nav nav-stacked');
 
-    let itemFecha = generarItem('Fecha de Rodeo',props.fecha)
-    let itemCaravanaMacho = generarItem('N° Caravana Macho:',props.caravanaMacho)
+    let itemFecha = generarItem('Fecha de Rodeo',convertirFecha(props.fecha))
+    let itemCaravanaMacho = generarItem('N° Caravana Machos:',props.caravanaMacho)
   
     let caravanasHembras = props.caravanasHembras.split('-');
 
@@ -277,6 +342,7 @@ const generarRodeo = (props)=>{
         
         lista.append(item)
         numero++;
+
     })
 
     cuerpo.append(lista)
@@ -329,27 +395,39 @@ $('.tabs-servicios li').on('click',(evt)=>{
     
 })
 
-const hembraServida = ()=>{
+// ACCION BTN SERVIR
 
-    let event = window.event.target
+setTimeout(() => {
     
-    let caravana = event.attributes.caravana.value
+    $('#btnServirHembra').on('click',(evt)=>{
+
+        let caravana = evt.target.attributes.caravana.nodeValue
+
+        let textButton = evt.target.innerText;
+        
+        hembraServida(caravana,textButton,evt)
+
+    })
+
+}, 200);
+
+const hembraServida = (caravana,textButton,evt)=>{
         
     let tipo = localStorage.getItem('animalServicio')
 
-    if (event.checked) {
+    if (textButton == 'Servir') {
 
-        servirHembra(caravana,tipo,'Servida')
+        servirHembra(caravana,tipo,'Servida',evt)
         
     }else{
         
-        servirHembra(caravana,tipo,'En rodeo')
+        servirHembra(caravana,tipo,'En rodeo',evt)
 
     }
     
 }
 
-const servirHembra = (caravana,tipo,estado)=>{
+const servirHembra = (caravana,tipo,estado,evt)=>{
 
     let url = 'ajax/servicios.ajax.php'
 
@@ -360,7 +438,6 @@ const servirHembra = (caravana,tipo,estado)=>{
         url,
         data,
         success:function(response){
-                console.log(response);
                 
             let Toast =  swal.mixin({
                 toast: true,
@@ -373,11 +450,15 @@ const servirHembra = (caravana,tipo,estado)=>{
             
             let avisoEstado = 'success'
             
+            evt.target.innerText = 'Cancelar Servicio'
+
             if(estado == 'En rodeo'){
                 
                 leyenda = 'Servicio Cancelado'; 
                 
                 avisoEstado = 'warning'
+
+                evt.target.innerText = 'Servir'
 
             }   
 
@@ -401,7 +482,7 @@ const servirHembra = (caravana,tipo,estado)=>{
 
 // ES CARAVANA SERVIDA 
 
-const caravanaServidaValida = (tipo,caravana,checkbox)=>{
+const caravanaServidaValida = (tipo,caravana,button)=>{
 
     let data = `validarServicio=true&tipo=${tipo}&caravana=${caravana}`;
 
@@ -416,7 +497,11 @@ const caravanaServidaValida = (tipo,caravana,checkbox)=>{
             
             if(response){
                 
-                checkbox.setAttribute('checked','true');
+                button.innerText = 'Cancelar Servicio';
+                
+            }else{
+                
+                button.innerText = 'Servir';
             
             }
 
@@ -466,7 +551,6 @@ const eliminarRodeo = ()=>{
 $('.tablaRegistrosServicios').on('click','.btnEliminarRegistroRodeo',function(){
 
     let idRodeo = $(this).attr('idRodeo');
-    console.log(idRodeo);
     
 });
 

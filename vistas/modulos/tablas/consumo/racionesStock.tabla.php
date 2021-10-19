@@ -42,7 +42,7 @@
                             
                                 <td>".$resultados[$i]['tipo']."</td>
                             
-                                <td>".$resultados[$i]['fecha']."</td>
+                                <td>".formatearFecha($resultados[$i]['fecha'])."</td>
                             
                                 <td>".$resultados[$i]['animal']."</td>
                             

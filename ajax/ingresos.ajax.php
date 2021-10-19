@@ -33,7 +33,9 @@ class AjaxIngresos{
         
         $valor2 = null;
 
-        $resultado = ControladorIngresos::ctrBuscarMadrePadre($valor,$item2,$valor2);
+        $buscar = 'caravana';
+        
+        $resultado = ControladorIngresos::ctrBuscarMadrePadre($valor,$item2,$valor2,$buscar);
 
         $this->caravanasMadre = $resultado;
 

@@ -35,12 +35,12 @@
             <!-- Tab panes -->
             <div class="tab-content">
 
-                    <div role="tabpane3" class="tab-pane active" id="cerdo"><?php include "tablas/engorde.tabla.php";?></div>
-                    <div role="tabpane3" class="tab-pane" id="cordero"><?php //include "tablas/engorde.tabla.php";?></div>
+                    <div role="tabpane3" class="tab-pane active" id="cerdo"><?php $valor = 'cerdo'; include "tablas/engorde.tabla.php";?></div>
+                    <div role="tabpane3" class="tab-pane" id="cordero"><?php  //$valor = 'pollo'; include "tablas/engorde.tabla.php";?></div>
                     <div role="tabpane3" class="tab-pane" id="chivo"><?php //include "tablas/engorde.tabla.php";?></div>
                     <div role="tabpane3" class="tab-pane" id="oveja"><?php //include "tablas/engorde.tabla.php";?></div>
                     <div role="tabpane3" class="tab-pane" id="vaca"><?php //include "tablas/engorde.tabla.php";?></div>
-                    <div role="tabpane3" class="tab-pane" id="pollo"><?php //include "tablas/engorde.tabla.php";?></div>
+                    <div role="tabpane3" class="tab-pane" id="pollo"><?php $valor = 'pollo'; include "tablas/engorde.tabla.php";?></div>
 
             </div>
 

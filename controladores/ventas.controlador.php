@@ -156,10 +156,10 @@ class ControladorVentas{
             $respuesta = ModeloVentas::mdlEliminarVenta($tabla, $item,$valor);
 
             if($respuesta == "ok"){
+                
+                echo'<script>
 
-				echo'<script>
-
-				swal({
+				new swal({
 					  icon: "success",
 					  title: "La Pre-Venta ha sido borrada correctamente",
 					  showConfirmButton: true,
@@ -175,7 +175,27 @@ class ControladorVentas{
 
 				</script>';
 
-			}		
+			}else{
+
+                echo'<script>
+
+			    new swal({
+					  icon: "error",
+					  title: "La Pre-Venta no ha sido borrada correctamente",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar",
+					  closeOnConfirm: false
+					  }).then(function(result) {
+								if (result.value) {
+
+								window.location = "pre-ventas";
+
+								}
+							})
+
+				</script>';
+
+            }		
 
 		}
     }

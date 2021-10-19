@@ -12,6 +12,7 @@ if(isset($_POST['accion'])){
         $respuesta = ControladorPrecios::ctrMostrarPrecios($item);
         
         print_r(json_encode($respuesta));
+        
     }
 
 }

@@ -11,7 +11,7 @@ class ModeloServicios{
 		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
 		$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
 		$stmt->bindParam(":numeroRodeo", $datos["numeroRodeo"], PDO::PARAM_STR);
-		$stmt->bindParam(":caravanaMacho", $datos["caravanaMacho"], PDO::PARAM_STR);
+		$stmt->bindParam(":caravanaMacho", $datos["caravanaMachos"], PDO::PARAM_STR);
 		$stmt->bindParam(":caravanasHembras", $datos["caravanaHembras"], PDO::PARAM_STR);
 
 		if($stmt->execute()){
@@ -43,14 +43,12 @@ class ModeloServicios{
 			
 		}else{
 			
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = $valor");
 			
-			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
-
 		}
-		
+				
         $stmt->execute();
-        
+
 		return $stmt->fetchAll();
 
         $stmt->close();
@@ -166,6 +164,30 @@ class ModeloServicios{
 		$stmt = null;
 
 	}
+
+	static public function mdlActualizarIdRodeoMacho($tabla1,$tabla2,$item,$valor,$item2,$valor2,$idRodeo){
+        
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla1 INNER JOIN $tabla2 ON $tabla1	.idAnimal = $tabla2.idAnimal SET 
+		$tabla2.idRodeo = :idRodeo
+		WHERE $tabla1.$item = :$item AND $tabla2.$item2 = :$item2 AND $tabla1.sexo = 'M'");
+		
+		$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+		$stmt->bindParam(":".$item2, $valor2, PDO::PARAM_STR);
+		$stmt->bindParam(":idRodeo", $idRodeo, PDO::PARAM_STR);
+
+		if($stmt->execute()){
+			
+			return "ok";	
+			
+		}else{
+			return $stmt ->errorInfo();
+
+			return 'error';
+			
+		}
+	
+
+    }
 	
 
 }

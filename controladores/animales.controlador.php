@@ -11,18 +11,39 @@ class ControladorAnimales{
 
         $respuesta = ModeloAnimales::mdlNuevoAnimal($tabla,$datos);
     
+
         // SE CARGA EN MACHO/HEMBRA SEGUN CORRESPONDA
 
-        $tabla = ($datos['sexo'] == 'H') ? 'hembras' : 'machos'; 
+        // if($datos['animal'] != 'pollo'){
+            
+        //     $tabla = ($datos['sexo'] == 'H') ? 'hembras' : 'machos'; 
 
-        $respuesta = ModeloAnimales::mdlNuevoAnimal($tabla,$datos);
+        //     $respuesta = ModeloAnimales::mdlNuevoAnimal($tabla,$datos);
         
-        // SE CARGA EN PROPIO
-        
-        $tabla = 'propios';
-        
-        $respuesta = ModeloAnimales::mdlNuevoAnimal($tabla,$datos);
+        // }     
 
+        // // SE CARGA EN PROPIO
+        
+        // $tabla = 'propios';
+        
+        // $respuesta = ModeloAnimales::mdlNuevoAnimal($tabla,$datos);
+
+    }
+
+    static public function ctrMostrarAnimal($item,$valor,$inner){
+
+        $tabla = 'animales';
+
+        return $respuesta = ModeloAnimales::mdlMostrarAnimal($tabla,$item,$valor,$inner);
+         
+    }
+
+    static public function ctrCambiarEstado($item,$valor,$item2,$valor2){
+
+        $tabla = 'animales';
+
+        return $respuesta = ModeloAnimales::mdlCambiarEstado($tabla,$item,$valor,$item2,$valor2);
+         
     }
 
 }

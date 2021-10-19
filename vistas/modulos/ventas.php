@@ -12,7 +12,7 @@
       
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
       
-      <li class="active">Pre-Ventas</li>
+      <li class="active">Ventas</li>
     
     </ol>
 
@@ -26,7 +26,7 @@
 
       <div class="box-body">
         
-       <table class="table table-bordered table-striped dt-responsive tablas tablaPreVentas" width="100%">
+       <table class="table table-bordered table-striped dt-responsive tablas tablaVentas" width="100%">
          
         <thead>
          
@@ -39,6 +39,7 @@
            <th>Kg Final</th>
            <th>$ Venta</th>
            <th>$ Empleado</th>
+  
         </tr> 
 
         </thead>

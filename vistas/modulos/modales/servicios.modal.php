@@ -84,22 +84,36 @@
                                 </div>
                             
                             </div>
-                            
-                            <div class="row">
 
-                                <div class="col-xs-12 col-lg-6">
-                                    
-                                    <div class="form-group">
-                                    
-                                        <label for="caravanaMachoRodeo">N° Caravana Macho:</label>
-                                    
-                                        <select id="caravanaMachoRodeo" name="caravanaMachoRodeo" class="form-control" required>
-                                        </select>
-                                    
+                            <div id="inputsMachos">
+
+                                <div class="row">
+    
+                                    <div class="col-xs-11 col-lg-5">
+                                        
+                                        <div class="form-group">
+                                        
+                                            <label for="caravanaMacho0">N° Caravana Macho:</label>
+                                        
+                                            <select id="caravanaMacho0" name="caravanaMachos[]" class="form-control caravanaMachos" required>
+                                            </select>
+                                        
+                                        </div>
+    
                                     </div>
 
+                                    <div class="col-xs-1 col-lg-1" style="padding-top:10px;">
+                                                                    
+                                        <button class="btn btn-default" id="agregarMachoRodeo" type="button">
+                                            
+                                            <i class="fa fa-plus"></i>
+                                        
+                                        </button>
+
+                                    </div>
+                                
                                 </div>
-                            
+
                             </div>
 
                             <div id="inputsHembras">
@@ -131,7 +145,6 @@
                                     </div>
                                 
                                 </div>
-
 
                             </div>
 
