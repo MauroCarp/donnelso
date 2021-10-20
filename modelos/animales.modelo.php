@@ -64,11 +64,19 @@ class ModeloAnimales{
 
 	}
 
-	static public function mdlMostrarAnimal($tabla,$item,$valor,$inner){
+	static public function mdlMostrarAnimal($tabla,$item,$valor,$item2,$valor2){
 
 		if($item != NULL){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla INNER JOIN $inner ON $tabla.idAnimal = $inner.idAnimal WHERE $item = :$item");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+			
+			if($item2 != NULL){
+				
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item AND $item2 = :$item2");
+				
+				$stmt-> bindParam(":".$item2, $valor2);
+
+			}
 
 			$stmt-> bindParam(":".$item, $valor);
 		
@@ -78,7 +86,7 @@ class ModeloAnimales{
 
 		}else{
 			
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla INNER JOIN $inner ON $tabla.idAnimal = $inner.idAnimal ORDER BY tipo ASC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY tipo ASC");
 		
 			$stmt->execute();
 	

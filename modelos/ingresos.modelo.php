@@ -10,21 +10,36 @@ class ModeloIngresos{
 
 	static public function mdlNuevoIngreso($tabla, $datos){
 		
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(idAnimal,tipo, fechaIngreso, proveedor, sexo, destino) VALUES (:idAnimal, :tipo, :fechaIngreso, :proveedor, :sexo, :destino)");
-
-		$stmt->bindParam(":idAnimal", $datos["idAnimal"], PDO::PARAM_STR);
-		$stmt->bindParam(":tipo", $datos["animal"], PDO::PARAM_STR);
-		$stmt->bindParam(":fechaIngreso", $datos["fecha"], PDO::PARAM_STR);
-		$stmt->bindParam(":proveedor", $datos["proveedorCompra"], PDO::PARAM_STR);
-		$stmt->bindParam(":sexo", $datos["sexo"], PDO::PARAM_STR);
-		$stmt->bindParam(":destino", $datos["engorde"], PDO::PARAM_STR);
+		if($tabla == 'animales'){
 		
-		if($stmt->execute()){
+			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(idAnimal,tipo,caravana,fecha, proveedor, sexo, destino,peso,precio,listoVenta) VALUES (:idAnimal, :tipo,:caravana,:fecha, :proveedor, :sexo, 'Engorde',:peso,:precio,:listoVenta)");
+
+			$stmt->bindParam(":idAnimal", $datos["idAnimal"], PDO::PARAM_STR);
+			$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
+			$stmt->bindParam(":caravana", $datos["caravana"], PDO::PARAM_STR);
+			$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
+			$stmt->bindParam(":proveedor", $datos["proveedor"], PDO::PARAM_STR);
+			$stmt->bindParam(":sexo", $datos["sexo"], PDO::PARAM_STR);
+			$stmt->bindParam(":peso", $datos["peso"], PDO::PARAM_STR);
+			$stmt->bindParam(":precio", $datos["precio"], PDO::PARAM_STR);
+			$stmt->bindParam(":listoVenta", $datos["listo"], PDO::PARAM_STR);
 			
+		}
+		
+		if($tabla == 'machos' OR $tabla == 'hembras'){
+
+			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(idAnimal) VALUES (:idAnimal)");
+	
+			$stmt->bindParam(":idAnimal", $datos["idAnimal"], PDO::PARAM_STR);
+
+		}
+
+		if($stmt->execute()){
 			return "ok";	
 			
 		}else{
 			
+			var_dump($stmt->errorInfo());
 			return 'error';
 			
 		}
@@ -99,12 +114,12 @@ class ModeloIngresos{
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(idcompra,tipo,fecha,cantidad,machos,hembras,proveedor,engorde,precioTotal,pesoTotal) VALUES(:idCompra,:tipo,:fecha,:cantidad,:machos,:hembras,:proveedor,:engorde,:precioTotal,:pesoTotal)");
 
 		$stmt->bindParam(":idCompra", $datos["idCompra"], PDO::PARAM_STR);
-		$stmt->bindParam(":tipo", $datos["animal"], PDO::PARAM_STR);
+		$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
 		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
-		$stmt->bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_STR);
+		$stmt->bindParam(":cantidad", $datos["totalAnimales"], PDO::PARAM_STR);
 		$stmt->bindParam(":machos", $datos["machos"], PDO::PARAM_STR);
 		$stmt->bindParam(":hembras", $datos["hembras"], PDO::PARAM_STR);
-		$stmt->bindParam(":proveedor", $datos["proveedorCompra"], PDO::PARAM_STR);
+		$stmt->bindParam(":proveedor", $datos["proveedor"], PDO::PARAM_STR);
 		$stmt->bindParam(":engorde", $datos["engorde"], PDO::PARAM_STR);
 		$stmt->bindParam(":precioTotal", $datos["precioTotal"], PDO::PARAM_STR);
 		$stmt->bindParam(":pesoTotal", $datos["kgTotal"], PDO::PARAM_STR);

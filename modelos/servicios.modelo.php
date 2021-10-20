@@ -124,20 +124,20 @@ class ModeloServicios{
 		
 		if($datos['sexo'] == 'M'){
 
-			$stmt = Conexion::conectar()->prepare("SELECT $tabla2.caravana FROM $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal WHERE
+			$stmt = Conexion::conectar()->prepare("SELECT $tabla.caravana FROM $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal WHERE
 			
 			$tabla.tipo = :tipo AND 
 			$tabla.destino  = :destino AND 
 			$tabla.sexo = :sexo AND 
 			$tabla2.idRodeo IS :idRodeo  
 			
-			ORDER BY $tabla2.caravana DESC");
+			ORDER BY $tabla.caravana DESC");
 			
 			$stmt->bindParam(":idRodeo", $datos['idRodeo'], PDO::PARAM_STR);
 			
 		}else{
 			
-			$stmt = Conexion::conectar()->prepare("SELECT $tabla2.caravana FROM $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal
+			$stmt = Conexion::conectar()->prepare("SELECT $tabla.caravana FROM $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal
 			 WHERE 
 			 
 			 $tabla.tipo = :tipo AND 
@@ -145,7 +145,7 @@ class ModeloServicios{
 			 $tabla.sexo = :sexo AND 
 			 $tabla2.estadoRodeo = :estadoRodeo  
 			 
-			 ORDER BY $tabla2.caravana DESC");
+			 ORDER BY $tabla.caravana DESC");
 			
 			$stmt->bindParam(":estadoRodeo", $datos['estadoRodeo'], PDO::PARAM_STR);
 

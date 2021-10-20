@@ -29,15 +29,17 @@
 
         $item = 'tipo';
 
-        $inner = 'propios';
+        $item2 = 'destino';
 
-        $respuesta = ControladorAnimales::ctrMostrarAnimal($item,$valor,$inner);
+        $valor2 = 'Engorde';
+
+        $respuesta = ControladorAnimales::ctrMostrarAnimal($item,$valor,$item2,$valor2);
 
         for ($i=0; $i < sizeof($respuesta) ; $i++) { 
           
           $check = '';
           
-          if($respuesta[$i]['listo'] == 1){
+          if($respuesta[$i]['listoVenta'] == 1){
             
             $estado = 'Listo p/ venta';
 
@@ -53,7 +55,7 @@
           echo '
           <tr>
             <td>'.$respuesta[$i]['idAnimal'].'</td>
-            <td>'.$respuesta[$i]['fechaIngreso'].'</td>
+            <td>'.$respuesta[$i]['fecha'].'</td>
             <td>'.$respuesta[$i]['peso'].'</td>
             <td>'.$estado.'</td>
             <td><input type="checkbox" class="checkboxEngorde"  idAnimal="'.$respuesta[$i]['idAnimal'].'" '.$check.'></td>
@@ -62,30 +64,6 @@
 
         }
 
-        $inner = 'externos';
-
-        $respuesta = ControladorAnimales::ctrMostrarAnimal($item,$valor,$inner);
-
-        if(!empty($respuesta)){
-        
-          for ($i=0; $i < sizeof($respuesta) ; $i++) { 
-
-            $estado = ($respuesta[$i]['listo'] == 1) ? 'Listo p/ venta' : 'Engorde';
-
-            echo '
-            <tr>
-              <td>'.$respuesta[$i]['idAnimal'].'</td>
-              <td>'.$respuesta[$i]['fechaIngreso'].'</td>
-              <td>'.$respuesta[$i]['pesoPromedio'].'</td>
-              <td>'.$estado.'</td>
-              <td><input type="checkbox" class="checkboxEngorde"  idAnimal="'.$respuesta[$i]['idAnimal'].'"></td>
-              <td><button class="btn btn-primary btn-success btn-no-margintop"  data-toggle="modal" data-target="#ventanaModalVerAnimal" idAnimal="'.$respuesta[$i]['idAnimal'].'"><i class="fa fa-eye"></i></button></td>
-            </tr>';
-
-          }
-        
-        }
-      
       ?>
         
 

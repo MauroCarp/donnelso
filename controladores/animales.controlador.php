@@ -30,11 +30,11 @@ class ControladorAnimales{
 
     }
 
-    static public function ctrMostrarAnimal($item,$valor,$inner){
+    static public function ctrMostrarAnimal($item,$valor,$item2,$valor2){
 
         $tabla = 'animales';
 
-        return $respuesta = ModeloAnimales::mdlMostrarAnimal($tabla,$item,$valor,$inner);
+        return $respuesta = ModeloAnimales::mdlMostrarAnimal($tabla,$item,$valor,$item2,$valor2);
          
     }
 

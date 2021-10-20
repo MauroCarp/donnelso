@@ -13,6 +13,7 @@ const cargarCaravana = (tipo)=>{
         success:(response)=>{
             
             let caravanas = JSON.parse(response)
+             console.log(caravanas);
              
             $('.caravanaMachos').each(function(){
 
@@ -50,7 +51,7 @@ const cargarCaravana = (tipo)=>{
 $('input[name=animalServicio]').on('change',(evt)=>{
 
     let tipo = evt.target.value
-            
+        
     $('#caravanaMachoRodeo').html('')
 
     $('.caravanaHembras').html('')

@@ -75,6 +75,8 @@ if(isset($_POST['cargarSelect'])){
 
         $respuesta['hembras'] = $hembras;
 
+        // print_r(json_encode($machos));
+
         print_r(json_encode($respuesta));
 
 }

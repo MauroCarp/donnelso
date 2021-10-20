@@ -234,11 +234,11 @@ CUERPO DOCUMENTO
         {titulo: 'Servicios',href:'#ventanaModalServicios',modal:true},
         {titulo: 'Engorde',href:'engorde',modal:false},
         {titulo: 'Sanidad',href:'sanidad',modal:false},
-        {titulo: 'Faenar',href:'#ventanaModalFaenar',modal:true},
         {titulo: 'Chazinados',href:'#ventanaModalChazinado',modal:true},
         {titulo: 'Stock Chazinados',href:'#ventanaModalStockChazinados',modal:true},
         {titulo: 'Consumo',href:'consumo',modal:false},
         {titulo: 'Muertes',href:'#ventanaModalMuertes',modal:true},
+        {titulo: 'Buscar',href:'#ventanaModalBuscar',modal:true},
       ]
 
     
