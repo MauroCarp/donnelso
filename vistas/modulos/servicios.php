@@ -25,7 +25,6 @@
                 <li role="presentation"><a href="#chivoServicio"  id="tabChivoServicio" aria-controls="chivoServicio" role="tab" data-toggle="tab">Chivo</a></li>
                 <li role="presentation"><a href="#ovejaServicio"  id="tabOvejaServicio" aria-controls="ovejaServicio" role="tab" data-toggle="tab">Ovejas</a></li>
                 <li role="presentation"><a href="#vacaServicio"  id="tabVacaServicio" aria-controls="vacaServicio" role="tab" data-toggle="tab">Vacas</a></li>
-                <li role="presentation"><a href="#polloServicio"  id="tabPolloServicio" aria-controls="polloServicio" role="tab" data-toggle="tab">Pollos</a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -36,8 +35,7 @@
                     <div role="tabpanel" class="tab-pane" id="chivoServicio"></div>
                     <div role="tabpanel" class="tab-pane" id="ovejaServicio"></div>
                     <div role="tabpanel" class="tab-pane" id="vacaServicio"></div>
-                    <div role="tabpanel" class="tab-pane" id="polloServicio"></div>
-
+            
             </div>
 
             </div> 

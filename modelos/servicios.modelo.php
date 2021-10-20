@@ -46,7 +46,8 @@ class ModeloServicios{
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = $valor");
 			
 		}
-				
+			// return $stmt;
+
         $stmt->execute();
 
 		return $stmt->fetchAll();
@@ -76,13 +77,19 @@ class ModeloServicios{
 		}
     }
 
-	static public function mdlServirHembra($tabla,$tabla2,$item,$valor,$item2,$valor2,$estadoRodeo){
+	static public function mdlServirHembra($tabla,$tabla2,$item,$item2,$datos){
         
-			$stmt = Conexion::conectar()->prepare("UPDATE $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal SET estadoRodeo = :estadoRodeo WHERE $tabla.$item = :$item AND $tabla2.$item2 = :$item2");
+			$stmt = Conexion::conectar()->prepare("UPDATE $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal SET 
+			$tabla2.estadoRodeo = :estadoRodeo,
+			$tabla2.fecha = :fecha,
+			$tabla2.caravanaMacho = :caravanaMacho
+			 WHERE $tabla.$item = :$item AND $tabla.$item2 = :$item2");
 
-			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
-			$stmt->bindParam(":".$item2, $valor2, PDO::PARAM_STR);
-			$stmt->bindParam(":estadoRodeo", $estadoRodeo, PDO::PARAM_STR);
+			$stmt->bindParam(":".$item, $datos['tipo'], PDO::PARAM_STR);
+			$stmt->bindParam(":".$item2, $datos['caravana'], PDO::PARAM_STR);
+			$stmt->bindParam(":estadoRodeo", $datos['estadoRodeo'], PDO::PARAM_STR);
+			$stmt->bindParam(":caravanaMacho", $datos['caravanaMacho'], PDO::PARAM_STR);
+			$stmt->bindParam(":fecha", $datos['fecha'], PDO::PARAM_STR);
 
 			if($stmt->execute()){
 				
@@ -104,7 +111,7 @@ class ModeloServicios{
 
 	static public function mdlServicioValido($tabla,$tabla2,$item,$valor,$item2,$valor2,$estadoRodeo){
         
-        $stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM  $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal WHERE estadoRodeo = :estadoRodeo AND $tabla.$item = :$item AND $tabla2.$item2 = :$item2");
+        $stmt = Conexion::conectar()->prepare("SELECT COUNT(*) as servicioValido, $tabla2.fecha, $tabla2.caravanaMacho FROM  $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal WHERE $tabla2.estadoRodeo = :estadoRodeo AND $tabla.$item = :$item AND $tabla.$item2 = :$item2");
 
         $stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
         $stmt->bindParam(":".$item2, $valor2, PDO::PARAM_STR);

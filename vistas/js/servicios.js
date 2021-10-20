@@ -13,8 +13,7 @@ const cargarCaravana = (tipo)=>{
         success:(response)=>{
             
             let caravanas = JSON.parse(response)
-             console.log(caravanas);
-             
+
             $('.caravanaMachos').each(function(){
 
                 if($(this).html() == ''){
@@ -52,7 +51,7 @@ $('input[name=animalServicio]').on('change',(evt)=>{
 
     let tipo = evt.target.value
         
-    $('#caravanaMachoRodeo').html('')
+    $('.caravanaMachos').html('')
 
     $('.caravanaHembras').html('')
 
@@ -208,8 +207,8 @@ const eliminarCampoServicio = (row)=>{
 }
 
 // GENERAR RODEOS
-const generarItem = (leyendaText,dato)=>{
-    
+const generarItem = (leyendaText,dato,machos)=>{
+
     let hembraValido = leyendaText.indexOf('Hembra');
     
     let item = document.createElement('li');
@@ -220,13 +219,20 @@ const generarItem = (leyendaText,dato)=>{
 
     let span = document.createElement('span');
     span.setAttribute('class','pull-right badge bg-blue')
+    span.setAttribute('style','font-size:1.2em')
     span.innerText = dato
+
+    let hr = document.createElement('hr')
 
     item.append(leyenda)
     item.append(span)
 
     // SOLO HEMBRAS
     if(hembraValido !== -1){
+
+        let  caravanasMachos = machos.split('-')
+
+        item.append(hr)
 
         let divContenedor = document.createElement('div')
         divContenedor.setAttribute('class','custom-control');
@@ -243,7 +249,7 @@ const generarItem = (leyendaText,dato)=>{
         let fechaServida = document.createElement('input')
         fechaServida.setAttribute('type','date')
         fechaServida.setAttribute('class',`form-control`)
-        fechaServida.setAttribute('id',`fechaServida`)
+        fechaServida.setAttribute('id',`fechaServida${dato}`)
         
         divFecha.append(fechaServida)
         
@@ -252,7 +258,17 @@ const generarItem = (leyendaText,dato)=>{
         
         let selectMachos = document.createElement('select')
         selectMachos.setAttribute('class',`form-control`)
-        selectMachos.setAttribute('id',`selectMachos`)
+        selectMachos.setAttribute('id',`selectMachos${dato}`)
+
+        caravanasMachos.map(caravana => {
+            
+            let opt = document.createElement('option')
+            opt.setAttribute('value',caravana)
+            opt.innerText = caravana 
+
+            selectMachos.append(opt)
+        
+        })
         
         divMachos.append(selectMachos)
         
@@ -260,16 +276,11 @@ const generarItem = (leyendaText,dato)=>{
         divButton.setAttribute('class','col-xs-4 col-lg-4')
         
         let buttonServir = document.createElement('button')
-        // buttonServir.setAttribute('type','submit')
-        buttonServir.setAttribute('class',`btn btn-default btn-no-margintop`)
-        buttonServir.setAttribute('id',`btnServirHembra`)
+        buttonServir.setAttribute('class',`btn btn-default btn-no-margintop btnServirHembra`)
         buttonServir.setAttribute('caravana',dato)
         buttonServir.innerText = 'Servir'
 
         divButton.append(buttonServir)
-
-
-        // checkbox.setAttribute('onchange',`hembraServida()`)
 
         let tipo = localStorage.getItem('animalServicio')
 
@@ -283,7 +294,6 @@ const generarItem = (leyendaText,dato)=>{
         divContenedor.append(formGroup)
 
         item.append(formGroup)
-
 
     }
 
@@ -327,8 +337,8 @@ const generarRodeo = (props)=>{
     let lista = document.createElement('ul');
     lista.setAttribute('class','nav nav-stacked');
 
-    let itemFecha = generarItem('Fecha de Rodeo',convertirFecha(props.fecha))
-    let itemCaravanaMacho = generarItem('N° Caravana Machos:',props.caravanaMacho)
+    let itemFecha = generarItem('Fecha de Rodeo',convertirFecha(props.fecha),null)
+    let itemCaravanaMacho = generarItem('N° Caravana Machos:',props.caravanaMacho,null)
   
     let caravanasHembras = props.caravanasHembras.split('-');
 
@@ -339,7 +349,7 @@ const generarRodeo = (props)=>{
 
     caravanasHembras.map(caravana => {
         
-        let item = generarItem(`Caravana Hembra ${numero}`,caravana)
+        let item = generarItem(`Caravana Hembra ${numero}`,caravana,props.caravanaMacho)
         
         lista.append(item)
         numero++;
@@ -394,45 +404,105 @@ $('.tabs-servicios li').on('click',(evt)=>{
 
     rodeos(idTab,tipo);
     
+    setTimeout(() => {
+        
+        $('.btnServirHembra').on('click',(evt)=>{
+                
+              accionBtnServir(evt);
+      
+          })
+
+    }, 200);
+    
 })
 
 // ACCION BTN SERVIR
 
-setTimeout(() => {
+// setTimeout(() => {
     
-    $('#btnServirHembra').on('click',(evt)=>{
+//     $('.btnServirHembra').on('click',(evt)=>{
 
+//         console.log('hola');
+        
+//         // let caravana = evt.target.attributes.caravana.nodeValue
+
+//         // let textButton = evt.target.innerText;
+        
+//         // let caravanaMacho = $(`#selectMachos${caravana}`).val()
+
+//         // let fecha = $(`#fechaServida${caravana}`).val()
+
+//         // if(fecha == ''){
+
+//         //     alert('El campo Fecha no puede ir Vacio')
+            
+//         //     return
+//         // }
+        
+//         // let tipo = localStorage.getItem('animalServicio')
+
+//         // let props = {
+//         //     caravana,
+//         //     textButton,
+//         //     caravanaMacho,
+//         //     fecha,
+//         //     evt,
+//         //     tipo
+//         // }
+
+//         // console.log(props);
+        
+//         // servirHembra(props)
+
+//     })
+
+// }, 1000);
+
+const accionBtnServir = (evt)=>{
+    
         let caravana = evt.target.attributes.caravana.nodeValue
 
         let textButton = evt.target.innerText;
         
-        hembraServida(caravana,textButton,evt)
+        let caravanaMacho = $(`#selectMachos${caravana}`).val()
 
-    })
+        let fecha = $(`#fechaServida${caravana}`).val()
 
-}, 200);
+        if(fecha == ''){
 
-const hembraServida = (caravana,textButton,evt)=>{
+            alert('El campo Fecha no puede ir Vacio')
+            
+            return
+        }
         
-    let tipo = localStorage.getItem('animalServicio')
+        let tipo = localStorage.getItem('animalServicio')
 
-    if (textButton == 'Servir') {
-
-        servirHembra(caravana,tipo,'Servida',evt)
+        let props = {
+            caravana,
+            textButton,
+            caravanaMacho,
+            fecha,
+            evt,
+            tipo
+        }
         
-    }else{
-        
-        servirHembra(caravana,tipo,'En rodeo',evt)
+        servirHembra(props)
 
-    }
-    
 }
 
-const servirHembra = (caravana,tipo,estado,evt)=>{
+const servirHembra = (props)=>{
+
+    props.estado = 'En rodeo'
+
+    if (props.textButton == 'Servir') {
+    
+       props.estado = 'Servida'
+        
+    }
 
     let url = 'ajax/servicios.ajax.php'
 
-    let data = `servirHembra=true&caravana=${caravana}&tipo=${tipo}&estadoRodeo=${estado}`
+    let data = `servirHembra=true&caravana=${props.caravana}&tipo=${props.tipo}&estadoRodeo=${props.estado}&caravanaMacho=${props.caravanaMacho}&fecha=${props.fecha}`
     
     $.ajax({
         method:'post',
@@ -451,15 +521,15 @@ const servirHembra = (caravana,tipo,estado,evt)=>{
             
             let avisoEstado = 'success'
             
-            evt.target.innerText = 'Cancelar Servicio'
+            props.evt.target.innerText = 'Cancelar Servicio'
 
-            if(estado == 'En rodeo'){
+            if(props.estado == 'En rodeo'){
                 
                 leyenda = 'Servicio Cancelado'; 
                 
                 avisoEstado = 'warning'
 
-                evt.target.innerText = 'Servir'
+                props.evt.target.innerText = 'Servir'
 
             }   
 
@@ -495,15 +565,26 @@ const caravanaServidaValida = (tipo,caravana,button)=>{
         url,
         data,
         success:(response)=>{
-            
-            if(response){
+
+            let respuesta = JSON.parse(response);
+
+            if(respuesta.servicioValido == 1){
                 
                 button.innerText = 'Cancelar Servicio';
+                
+                $(`#selectMachos${caravana} option[value='${respuesta.caravanaMacho}']`).attr("selected",true);
+                
+                $(`#fechaServida${caravana}`).val(respuesta.fecha)
+
                 
             }else{
                 
                 button.innerText = 'Servir';
-            
+                
+                $(`#selectMachos${caravana} option[0]`).attr("selected",true);
+                
+                $(`#fechaServida${caravana}`).val('')
+                
             }
 
         }
@@ -555,8 +636,6 @@ $('.tablaRegistrosServicios').on('click','.btnEliminarRegistroRodeo',function(){
     
 });
 
-
-
 $(()=>{
 
     let tipo = localStorage.getItem('animalServicio');
@@ -569,6 +648,15 @@ $(()=>{
 
     cargarCaravana('cerdo');
 
+    setTimeout(() => {
+        
+        $('.btnServirHembra').on('click',(evt)=>{
+                
+              accionBtnServir(evt);
+      
+          })
+          
+    }, 200);
 
 })
 

@@ -222,13 +222,13 @@ class ControladorServicios{
 		}
     }
 
-    static public function ctrServirHembra($item,$valor,$item2,$valor2,$estadoRodeo){
+    static public function ctrServirHembra($item,$item2,$datos){
 
         $tabla = 'animales';
 
         $tabla2 = 'hembras';
 
-        $respuesta = ModeloServicios::mdlServirHembra($tabla,$tabla2,$item,$valor,$item2,$valor2,$estadoRodeo);
+        $respuesta = ModeloServicios::mdlServirHembra($tabla,$tabla2,$item,$item2,$datos);
 
         return $respuesta;
 

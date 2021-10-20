@@ -4,18 +4,19 @@ require_once "../controladores/servicios.controlador.php";
 require_once "../modelos/servicios.modelo.php";
 
 if (isset($_POST['servirHembra'])) {
-
+        
         $item = 'tipo';
 
-        $valor = $_POST['tipo'];
-        
         $item2 = 'caravana';
 
-        $valor2 = $_POST['caravana'];
+        $datos = array(
+                'tipo'=>$_POST['tipo'],
+                'caravana'=>$_POST['caravana'],
+                'estadoRodeo'=>$_POST['estadoRodeo'],
+                'caravanaMacho'=>$_POST['caravanaMacho'],
+                'fecha'=>$_POST['fecha']);
 
-        $estadoRodeo = $_POST['estadoRodeo'];
-        
-        $respuesta = ControladorServicios::ctrServirHembra($item,$valor,$item2,$valor2,$estadoRodeo);
+        $respuesta = ControladorServicios::ctrServirHembra($item,$item2,$datos);
 
         print_r($respuesta);
 
@@ -52,7 +53,8 @@ if(isset($_POST['validarServicio'])){
 
         $respuesta = ControladorServicios::ctrServicioValido($item,$valor,$item2,$valor2,$estadoRodeo);
 
-        echo $valido = ($respuesta[0] == 1) ? true : false;
+        print_r(json_encode($respuesta));
+
 }
 
 if(isset($_POST['cargarSelect'])){

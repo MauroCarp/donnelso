@@ -43,6 +43,7 @@
                     include "tablas/registroServicios.tabla.php";
                     
                     ?></div>
+                    
                     <div role="tabpanel" class="tab-pane" id="cordero"><?php $animal = 'cordero'; include "tablas/registroServicios.tabla.php";?></div>
                     <div role="tabpanel" class="tab-pane" id="chivo"><?php $animal = 'chivo'; include "tablas/registroServicios.tabla.php";?></div>
                     <div role="tabpanel" class="tab-pane" id="oveja"><?php $animal = 'oveja'; include "tablas/registroServicios.tabla.php";?></div>
