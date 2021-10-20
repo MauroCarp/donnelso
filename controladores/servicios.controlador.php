@@ -46,8 +46,8 @@ class ControladorServicios{
                 
                 for ($a=0; $a < sizeof($_POST['caravanaMachos']) ; $a++) { 
                     
-                    $valor = $datos['tipo'];
-
+                    $valor = ($datos['tipo'] == 'ovino') ? 'cordero' : $datos['tipo'];
+                    
                     $valor2 = $_POST['caravanaMachos'][$a];
 
                     $actualizarIdRodeo = ControladorServicios::ctrActualizarIdRodeoMacho($item,$valor,$item2,$valor2,$idRodeo);

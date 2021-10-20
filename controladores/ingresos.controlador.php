@@ -238,210 +238,6 @@ class ControladorIngresos{
 
     }
 
-	// static public function ctrNuevoIngreso(){
-        
-    //     if(isset($_POST["btnIngresarCompra"])){
-
-	// 		if($_POST['precioTotalCompra'] != '' AND $_POST['precioTotalCompra'] != '' AND $_POST['fechaCompra'] != ''){
-                
-    //             // CARGAR NUEVO PROVEEDOR
-
-    //             if($_POST["proveedorCompra"] == 'otroProvCompra'){
-
-    //                 $proveedor = $_POST["nuevoProvCompra"];
-
-    //                 $respuesta = ControladorProveedores::ctrNuevoProveedor($proveedor);
-
-    //                 if($respesta != 'ok'){
-    //                     echo '<script>
-
-    //                     	    new swal({
-        
-    //                                 icon: "error",
-    //                                 title: "¡El Proveedor no ha sido guardado correctamente!",
-    //                                 showConfirmButton: true,
-    //                                 confirmButtonText: "Cerrar"
-        
-    //                     	        })
-    //                             .then(function(result){
-        
-    //                     		        if(result.value){
-                                
-    //                     			    window.location = "registroCompras";
-        
-    //                     		        }
-                                    
-    //                             });
-                            
-    //                         </script>';
-
-    //                 }
-
-    //             }else{
-
-    //                 $proveedor = $_POST["proveedorCompra"];
-
-    //             } 
-
-    //             // CARGA DE DATOS
-
-    //             $tabla = 'animales';
-
-    //             $engorde = (isset($_POST['engordeCompra'])) ? 'Engorde' : null;
-
-    //             $datos = array("animal" => $_POST["animalCompra"],
-    //             "fecha" => $_POST["fechaCompra"],
-    //             "proveedorCompra" => $proveedor,
-    //             "machos" => $_POST['machosCompra'],
-    //             "hembras" => $_POST['hembrasCompra'],
-    //             "cantidad" => $_POST['cantidadCompra'],
-    //             "engorde" => $engorde,
-    //             "precioTotal" => $_POST["precioTotalCompra"],
-    //             "kgTotal" => $_POST["kgTotalCompra"]);
-
-    //             $respuestas[] = ControladorIngresos::ctrRegistroCompras($datos);
-
-    //             $ultimoId = ControladorIngresos::ctrObtenerUltimoId(); 
-
-    //             $ultimoId = ($ultimoId) ? $ultimoId[0] : 1; 
-                
-    //             if($_POST['machosCompra'] != 0){
-                    
-    //                 $datos['sexo'] = 'M';
-
-    //                 for ($i=0; $i < $_POST['machosCompra'] ; $i++) { 
-                        
-    //                     $datos['idAnimal'] = $ultimoId.$datos['animal'];
-
-    //                     $ultimoId++;
-
-    //                     $respuestas[] = ModeloIngresos::mdlNuevoIngreso($tabla, $datos);
-
-    //                     $respuestas[] = ControladorIngresos::ctrNuevoExterno($datos);
-
-    //                 }
-
-    //             }
-
-    //             if($_POST['hembrasCompra'] != 0){
-                    
-    //                 $datos['sexo'] = 'H';
-
-    //                 for ($i=0; $i < $_POST['hembrasCompra'] ; $i++) { 
-                                                
-    //                     $datos['idAnimal'] = $ultimoId.$datos['animal'];
-
-    //                     $ultimoId++;
-                        
-    //                     $respuestas[] = ModeloIngresos::mdlNuevoIngreso($tabla, $datos);
-
-    //                     $respuestas[] = ControladorIngresos::ctrNuevoExterno($datos);
-
-    //                 }
-
-    //             }
-
-                
-    //             if($_POST['cantidadCompra'] != 0){
-                    
-    //                 for ($i=0; $i < $_POST['cantidadCompra'] ; $i++) {
-                               
-    //                     $datos['idAnimal'] = $ultimoId.$datos['animal'];
-
-    //                     $ultimoId++;
-                        
-    //                     $respuestas[] = ControladorAnimales::ctrNuevoAnimal($datos);
-                        
-    //                     $respuestas[] = ControladorIngresos::ctrNuevoExterno($datos);
-
-    //                 }
-
-    //             }
-
-    //             var_dump($datos);
-    //             die();
-
-    //             if(!in_array('error',$respuestas)){
-
-    //                 	echo '<script>
-
-    //                         new swal({
-
-    //                             icon: "success",
-    //                             title: "¡La Compra ha sido guardada correctamente!",
-    //                             showConfirmButton: true,
-    //                             confirmButtonText: "Cerrar"
-
-    //                         }).then(function(result){
-
-    //                             if(result.value){
-                                
-    //                                 window.location = "registrosCompras";
-
-    //                             }
-
-    //                         });
-
-    //                     </script>';
-
-    //             }else{
-                    
-    //                 echo '<script>
-
-    //                 new swal({
-
-    //                     icon: "error",
-    //                     title: "Hubo un error al cargar. Notificar a Mauro",
-    //                     showConfirmButton: true,
-    //                     confirmButtonText: "Cerrar"
-
-    //                 }).then(function(result){
-
-    //                     if(result.value){
-                        
-    //                         window.location = "registrosCompras";
-
-    //                     }
-
-    //                 });
-                
-
-    //             </script>';
-
-    //             };  
-
-
-	// 	    }else{
-
-    //             echo '<script>
-
-    //                         new swal({
-
-    //                             icon: "error",
-    //                             title: "¡Hay campos que no pueden ir vacío!",
-    //                             showConfirmButton: true,
-    //                             confirmButtonText: "Cerrar"
-
-    //                         }).then(function(result){
-
-    //                             if(result.value){
-                                
-    //                                 window.location = "registrosCompras";
-
-    //                             }
-
-    //                         });
-                        
-
-    //                     </script>';
-
-
-    //         }
-
-	//     }
-
-    // }
-
     /*=============================================
 	OBTENER ULTIMO ID
     =============================================*/
@@ -453,31 +249,7 @@ class ControladorIngresos{
         return $respuesta = ModeloIngresos::mdlObtenerUltimoId($tabla);
 
     }
-
-    /*=============================================
-	NUEVO INGRESO EXTERNO
-    =============================================*/
-    
-    static public function ctrNuevoExterno($datos){
-
-        $tabla = 'externos';
-
-        $cantidad = ($datos['animal'] == 'pollo') ? $datos['cantidad'] : ($datos['machos'] + $datos['hembras']);
-
-        $pesoPromedio = $datos['kgTotal'] / $cantidad;
-
-        $precioPromedio = $datos['precioTotal'] / $datos['kgTotal'];
-
-        $datos['pesoPromedio'] = str_replace(',','',number_format($pesoPromedio,2));
-
-        $datos['precioPromedio'] = str_replace(',','',number_format($precioPromedio,2));
-
-        $datos['idCompra'] = $datos['fecha']."-".$datos['animal']."-".$cantidad;
-
-        return $respuesta = ModeloIngresos::mdlNuevoExterno($tabla,$datos);
-
-    }
-    
+  
     /*=============================================
     CARGAR REGISTRO COMPRA
     =============================================*/
@@ -594,8 +366,8 @@ class ControladorIngresos{
 
     }
 
-    	/*=============================================
-	NUEVA PARTO
+    /*=============================================
+	NUEVO PARTO
     =============================================*/
 
 	static public function ctrNuevoParto(){
@@ -620,16 +392,16 @@ class ControladorIngresos{
 
                 $buscar = 'caravanaMacho';
 
-                $caravanaMacho = ControladorIngresos::ctrBuscarMadrePadre($datosParto['animal'],$item2,$valor2,$buscar);
+                // $caravanaMacho = ControladorIngresos::ctrBuscarMadrePadre($datosParto['animal'],$item2,$valor2,$buscar);
 
                 $datosParto['caravanaMacho'] = $caravanaMacho[0][0];
 
                 // SE CARGA REGISTRO DE PARTO
-                $respuestas[] = ControladorIngresos::ctrNuevoRegParto($datosParto);
+                // $respuestas[] = ControladorIngresos::ctrNuevoRegParto($datosParto);
 
                 // SE ACTUALIZA EL ESTADO DE LA HEMBRA
 
-                $actualizarHembra = ControladorServicios::ctrServirHembra('tipo',$datosParto['animal'],'caravana',$datosParto['caravanaMadre'],'Descanso');
+                // $actualizarHembra = ControladorServicios::ctrServirHembra('tipo',$datosParto['animal'],'caravana',$datosParto['caravanaMadre'],'Descanso');
 
                 $respuestas[] = $actualizarHembra;
                 
@@ -650,10 +422,10 @@ class ControladorIngresos{
                         'caravana' => $_POST['caravanaNacido'.($i + 1)],
                         'complicacion' => $_POST['complicacionNacido'.($i + 1)]);
 
-                    $respuestas[] = ControladorAnimales::ctrNuevoAnimal($datosNacido);
+                    // $respuestas[] = ControladorAnimales::ctrNuevoAnimal($datosNacido);
                     
                 }
-
+                die();
                 if(!in_array('error',$respuestas)){
 
                     	echo '<script>

@@ -23,7 +23,6 @@
                 <li role="presentation" class="active"><a href="#cerdoServicio"  id="tabCerdoServicio" aria-controls="cerdoServicio" role="tab" data-toggle="tab">Cerdo</a></li>
                 <li role="presentation"><a href="#corderoServicio"  id="tabCorderoServicio" aria-controls="corderoServicio" role="tab" data-toggle="tab">Cordero</a></li>
                 <li role="presentation"><a href="#chivoServicio"  id="tabChivoServicio" aria-controls="chivoServicio" role="tab" data-toggle="tab">Chivo</a></li>
-                <li role="presentation"><a href="#ovejaServicio"  id="tabOvejaServicio" aria-controls="ovejaServicio" role="tab" data-toggle="tab">Ovejas</a></li>
                 <li role="presentation"><a href="#vacaServicio"  id="tabVacaServicio" aria-controls="vacaServicio" role="tab" data-toggle="tab">Vacas</a></li>
             </ul>
 
@@ -33,7 +32,6 @@
                     <div role="tabpanel" class="tab-pane active" id="cerdoServicio"></div>
                     <div role="tabpanel" class="tab-pane" id="corderoServicio"></div>
                     <div role="tabpanel" class="tab-pane" id="chivoServicio"></div>
-                    <div role="tabpanel" class="tab-pane" id="ovejaServicio"></div>
                     <div role="tabpanel" class="tab-pane" id="vacaServicio"></div>
             
             </div>

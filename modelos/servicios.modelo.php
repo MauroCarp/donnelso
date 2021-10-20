@@ -174,9 +174,9 @@ class ModeloServicios{
 
 	static public function mdlActualizarIdRodeoMacho($tabla1,$tabla2,$item,$valor,$item2,$valor2,$idRodeo){
         
-        $stmt = Conexion::conectar()->prepare("UPDATE $tabla1 INNER JOIN $tabla2 ON $tabla1	.idAnimal = $tabla2.idAnimal SET 
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla1 INNER JOIN $tabla2 ON $tabla1.idAnimal = $tabla2.idAnimal SET 
 		$tabla2.idRodeo = :idRodeo
-		WHERE $tabla1.$item = :$item AND $tabla2.$item2 = :$item2 AND $tabla1.sexo = 'M'");
+		WHERE $tabla1.$item = :$item AND $tabla1.$item2 = :$item2 AND $tabla1.sexo = 'M'");
 		
 		$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
 		$stmt->bindParam(":".$item2, $valor2, PDO::PARAM_STR);

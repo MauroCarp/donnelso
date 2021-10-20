@@ -3,7 +3,7 @@
 const cargarCaravana = (tipo)=>{
     
     let data = `cargarSelect=true&tipo=${tipo}`
-
+    
     let url = 'ajax/servicios.ajax.php'
 
     $.ajax({
@@ -37,7 +37,8 @@ const cargarCaravana = (tipo)=>{
                    $(this).append(`<option value="${caravanas.hembras[index][0]}">${caravanas.hembras[index][0]}</option>`)
             
                 }
-            }                
+            }   
+            
             
         });
   
@@ -45,6 +46,39 @@ const cargarCaravana = (tipo)=>{
 
     })
 
+    if(tipo == 'ovino'){
+        
+        tipo = 'cordero'
+
+        let data = `cargarSelect=true&tipo=${tipo}`
+
+        $.ajax({
+            method: 'post',
+            url,
+            data,
+            success:(response)=>{
+                
+                let caravanas = JSON.parse(response)
+    
+                $('.caravanaMachos').each(function(){
+    
+                    if($(this).html() == ''){
+    
+                        for (let index = 0; index < caravanas.machos.length; index++) {
+                            
+                            $(this).append(`<option value="${caravanas.machos[index][0]}">${caravanas.machos[index][0]}</option>`)
+                    
+                        }
+                    
+                    }
+                    
+                })
+      
+            }
+    
+        })
+
+    }
 }
 
 $('input[name=animalServicio]').on('change',(evt)=>{
@@ -282,7 +316,7 @@ const generarItem = (leyendaText,dato,machos)=>{
 
         divButton.append(buttonServir)
 
-        let tipo = localStorage.getItem('animalServicio')
+        let tipo = (localStorage.getItem('animalServicio') == 'cordero') ? 'ovino' : localStorage.getItem('animalServicio') 
 
         caravanaServidaValida(tipo,dato,buttonServir)
       
@@ -371,7 +405,10 @@ const rodeos = (idTab,tipo)=>{
    
     let url = 'ajax/servicios.ajax.php';
     
+    tipo = (tipo == 'cordero') ? 'ovino' : tipo
+
     let data = `mostrarRodeos=true&tipo=${tipo}`;
+    console.log(data);
     
     $.ajax({
         method:'post',
@@ -381,6 +418,7 @@ const rodeos = (idTab,tipo)=>{
             
             let respuesta = JSON.parse(response)
 
+            console.log(respuesta);
             
             respuesta.map(rodeo=>{
                     
@@ -399,7 +437,7 @@ $('.tabs-servicios li').on('click',(evt)=>{
     let tipo = idTab.replace('Servicio','')
 
     localStorage.setItem('animalServicio',tipo)
-
+    
     $(`#${idTab}`).html('');
 
     rodeos(idTab,tipo);
@@ -475,8 +513,10 @@ const accionBtnServir = (evt)=>{
             return
         }
         
-        let tipo = localStorage.getItem('animalServicio')
-
+        let tipo = (localStorage.getItem('animalServicio') == 'cordero') ? 'ovino' : localStorage.getItem('animalServicio') 
+        
+        console.log(tipo);
+        
         let props = {
             caravana,
             textButton,
@@ -509,7 +549,9 @@ const servirHembra = (props)=>{
         url,
         data,
         success:function(response){
-                
+            
+            console.log(response);
+            
             let Toast =  swal.mixin({
                 toast: true,
                 position: 'top-end',
