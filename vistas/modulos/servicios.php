@@ -21,7 +21,7 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs tabs-servicios" role="tablist">
                 <li role="presentation" class="active"><a href="#cerdoServicio"  id="tabCerdoServicio" aria-controls="cerdoServicio" role="tab" data-toggle="tab">Cerdo</a></li>
-                <li role="presentation"><a href="#corderoServicio"  id="tabCorderoServicio" aria-controls="corderoServicio" role="tab" data-toggle="tab">Cordero</a></li>
+                <li role="presentation"><a href="#corderoServicio"  id="tabCorderoServicio" aria-controls="corderoServicio" role="tab" data-toggle="tab">Ovinos</a></li>
                 <li role="presentation"><a href="#chivoServicio"  id="tabChivoServicio" aria-controls="chivoServicio" role="tab" data-toggle="tab">Chivo</a></li>
                 <li role="presentation"><a href="#vacaServicio"  id="tabVacaServicio" aria-controls="vacaServicio" role="tab" data-toggle="tab">Vacas</a></li>
             </ul>

@@ -12,13 +12,6 @@ class TablaCompras{
         $orden = 'fecha';
 
         $compras = ControladorIngresos::ctrMostrarCompras($item,$valor,$orden);
-
-        // if(count($compras == 0)){
-
-        //     echo '{"data": []}';
-
-        //     return;
-        // }	
                 
         $datosJson = array();
 
@@ -32,8 +25,10 @@ class TablaCompras{
 
                 $boton = "<button class='btn btn-danger btnEliminarCompra btn-no-margintop' idCompra='".$compras[$i]['idCompra']."'><i class='fa fa-times'></i></button>";
 
+                $tipo = ($compras[$i]["tipo"] == 'cordero') ? 'ovino' : $compras[$i]["tipo"];
+
                 $datosJson['data'][$i][] = $fecha;
-                $datosJson['data'][$i][] = ucfirst($compras[$i]["tipo"]);
+                $datosJson['data'][$i][] = ucfirst($tipo);
                 $datosJson['data'][$i][] = $compras[$i]["proveedor"];
                 $datosJson['data'][$i][] = $compras[$i]["cantidad"];
                 $datosJson['data'][$i][] = $compras[$i]["pesoTotal"].' Kg';

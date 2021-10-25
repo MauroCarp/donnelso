@@ -78,34 +78,47 @@ class ModeloServicios{
     }
 
 	static public function mdlServirHembra($tabla,$tabla2,$item,$item2,$datos){
-        
+
+		if(isset($datos['cantidadNacidos'])){
+
+			$stmt = Conexion::conectar()->prepare("UPDATE $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal SET 
+			$tabla2.estadoRodeo = :estadoRodeo
+			 WHERE $tabla.$item = :$item AND $tabla.$item2 = :$item2");
+
+			$stmt->bindParam(":".$item2, $datos['caravanaMadre'], PDO::PARAM_STR);
+		
+		}else{
+
 			$stmt = Conexion::conectar()->prepare("UPDATE $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal SET 
 			$tabla2.estadoRodeo = :estadoRodeo,
 			$tabla2.fecha = :fecha,
 			$tabla2.caravanaMacho = :caravanaMacho
 			 WHERE $tabla.$item = :$item AND $tabla.$item2 = :$item2");
 
-			$stmt->bindParam(":".$item, $datos['tipo'], PDO::PARAM_STR);
-			$stmt->bindParam(":".$item2, $datos['caravana'], PDO::PARAM_STR);
-			$stmt->bindParam(":estadoRodeo", $datos['estadoRodeo'], PDO::PARAM_STR);
 			$stmt->bindParam(":caravanaMacho", $datos['caravanaMacho'], PDO::PARAM_STR);
 			$stmt->bindParam(":fecha", $datos['fecha'], PDO::PARAM_STR);
+			$stmt->bindParam(":".$item2, $datos['caravana'], PDO::PARAM_STR);
 
-			if($stmt->execute()){
-				
-				// print_r($stmt ->errorInfo());
-				return "ok";	
-				
-			}else{
+		}
+		
+		$stmt->bindParam(":".$item, $datos['tipo'], PDO::PARAM_STR);
+		$stmt->bindParam(":estadoRodeo", $datos['estadoRodeo'], PDO::PARAM_STR);
 
-				var_dump($stmt ->errorInfo());
-				return 'error';
-				
-			}
+		if($stmt->execute()){
 			
-			$stmt->close();
+			// print_r($stmt ->errorInfo());
+			return "ok";	
 			
-			$stmt = null;
+		}else{
+
+			var_dump($stmt ->errorInfo());
+			return 'error';
+			
+		}
+		
+		$stmt->close();
+		
+		$stmt = null;
 
     }
 

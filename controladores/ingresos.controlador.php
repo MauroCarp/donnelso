@@ -61,7 +61,9 @@ class ControladorIngresos{
 
                 $peso = ($_POST['kgTotalCompra'] / $totalAnimales);
 
-                $precio = ($_POST['precioTotalCompra'] / $_POST['kgTotalCompra']); 
+                $kgTotalCompra = ($_POST['kgTotalCompra'] = 0) ? 1  : $_POST['kgTotalCompra'];
+
+                $precio = ($_POST['precioTotalCompra'] == 0) ? 0 : ($_POST['precioTotalCompra'] / $kgTotalCompra); 
                 
                 $listoVenta = ($engorde == null) ? 1 : 0; 
 
@@ -85,6 +87,9 @@ class ControladorIngresos{
                 
                 $ultimoId = ($ultimoId) ? $ultimoId[0] : 1; 
 
+                $respuestas[] = ControladorIngresos::ctrRegistroCompras($datos);
+
+                
                 if($_POST['hembrasCompra'] != 0){
                     
                     $datos['sexo'] = 'H';
@@ -140,6 +145,8 @@ class ControladorIngresos{
                     $tabla = 'animales';
                     
                     $datos['engorde'] = 'Engorde';
+                    
+                    $datos['listo'] = '0';
 
                     for ($i=0; $i < $_POST['cantidadCompra'] ; $i++) {
                                
@@ -154,9 +161,6 @@ class ControladorIngresos{
                     }
 
                 }
-
-                $respuestas[] = ControladorIngresos::ctrRegistroCompras($datos);
-                var_dump($datos);
 
                 if(!in_array('error',$respuestas)){
 
@@ -378,7 +382,9 @@ class ControladorIngresos{
 
                 $mellizos = (isset($_POST['mellizos'])) ? $_POST['mellizos'] : 0; 
 
-                $datosParto = array("animal" => $_POST["animal"],
+                $valor = ($_POST['animal'] == 'cordero') ? 'ovino' : $_POST['animal'];
+                
+                $datosParto = array("tipo" => $valor,
                 "fechaParto" => $_POST["fechaParto"],
                 "caravanaMadre" => $_POST["caravanaParto"],
                 "cantidadNacidos" => $_POST['cantidadNacidos'],
@@ -392,28 +398,37 @@ class ControladorIngresos{
 
                 $buscar = 'caravanaMacho';
 
-                // $caravanaMacho = ControladorIngresos::ctrBuscarMadrePadre($datosParto['animal'],$item2,$valor2,$buscar);
+                $caravanaMacho = ControladorIngresos::ctrBuscarMadrePadre($valor,$item2,$valor2,$buscar);
 
                 $datosParto['caravanaMacho'] = $caravanaMacho[0][0];
 
+                $datosParto['idPadre'] = ($datosParto["tipo"] == 'ovino') ? 'cordero'.$datosParto['caravanaMacho'] : 'cordero'.$datosParto['caravanaMacho'];
+
+                $datosParto['idMadre'] = $datosParto["tipo"].$datosParto['caravanaMadre'];
+
                 // SE CARGA REGISTRO DE PARTO
-                // $respuestas[] = ControladorIngresos::ctrNuevoRegParto($datosParto);
+                $respuestas[] = ControladorIngresos::ctrNuevoRegParto($datosParto);
 
                 // SE ACTUALIZA EL ESTADO DE LA HEMBRA
+                $datosParto['estadoRodeo'] = 'Descanso';
 
-                // $actualizarHembra = ControladorServicios::ctrServirHembra('tipo',$datosParto['animal'],'caravana',$datosParto['caravanaMadre'],'Descanso');
+                $actualizarHembra = ControladorServicios::ctrServirHembra('tipo','caravana',$datosParto);
 
                 $respuestas[] = $actualizarHembra;
-                
+
                 // SE CARGAN LOS NACIDOS
 
                 for ($i=0; $i < $datosParto['cantidadNacidos'] ; $i++) { 
                     
-                    $idAnimal = ($_POST['animal'].$_POST['caravanaNacido'.($i + 1)]);
+                    $tipo = ($_POST['animal'] == 'cordero' AND $_POST['sexoNacido'.($i +1)] == 'H') ? 'ovino' : $_POST['animal'];
+                    
+                    $idAnimal = ($tipo.$_POST['caravanaNacido'.($i + 1)]);
                     
                     $datosNacido = array(
-                        'tipo' => $_POST['animal'],
+                        'tipo' => $tipo,
                         'idAnimal' => $idAnimal,
+                        'idPadre'=> $datosParto['idPadre'],
+                        'idMadre'=> $datosParto['idMadre'],
                         'peso' => $_POST['pesoNacido'.($i + 1)],
                         'fechaNacimiento' => $_POST['fechaParto'],
                         'sexo' => $_POST['sexoNacido'.($i + 1)],
@@ -422,10 +437,11 @@ class ControladorIngresos{
                         'caravana' => $_POST['caravanaNacido'.($i + 1)],
                         'complicacion' => $_POST['complicacionNacido'.($i + 1)]);
 
-                    // $respuestas[] = ControladorAnimales::ctrNuevoAnimal($datosNacido);
+                    $respuestas[] = ControladorAnimales::ctrNuevoAnimal($datosNacido);
                     
                 }
-                die();
+
+
                 if(!in_array('error',$respuestas)){
 
                     	echo '<script>
@@ -507,7 +523,7 @@ class ControladorIngresos{
 
         $tabla = 'partos';
 
-        return $resultado = ModeloIngresos::mdlMostrarCompras($tabla,$item,$valor);
+        return $resultado = ModeloIngresos::mdlMostrarPartos($tabla,$item,$valor);
 
     }
 }   

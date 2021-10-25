@@ -233,7 +233,7 @@ class ModeloIngresos{
 			
 		}else{
 			
-			$stmt = Conexion::conectar()->prepare("SELECT $buscar FROM $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal WHERE $tabla.$item = :$item AND $tabla2.$item2 = :$item2");
+			$stmt = Conexion::conectar()->prepare("SELECT $buscar FROM $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal WHERE $tabla.$item = :$item AND $tabla.$item2 = :$item2");
 
 			$stmt -> bindParam(":".$item2, $valor2, PDO::PARAM_STR);
 		}
@@ -241,6 +241,8 @@ class ModeloIngresos{
 		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 	
 		$stmt -> execute();
+		// var_dump($valor,$valor2,$buscar);
+		// return $stmt;
 
 		// var_dump($stmt ->errorInfo());
 
@@ -257,14 +259,11 @@ class ModeloIngresos{
 	=============================================*/
 	static public function mdlNuevoRegParto($tabla,$datos){
 		
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(idMadre,idPadre,fecha,cantidad,sexo,mellizo,complicacion) VALUES(:idMadre,:idPadre,:fecha,:cantidad,:sexo,:mellizo,:complicacion)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(tipo,idMadre,idPadre,fecha,cantidad,sexo,mellizo,complicacion) VALUES(:tipo,:idMadre,:idPadre,:fecha,:cantidad,:sexo,:mellizo,:complicacion)");
 
-		$idPadre = $datos["animal"].$datos['caravanaMacho'];
-
-		$idMadre = $datos["animal"].$datos['caravanaMadre'];
-
-		$stmt->bindParam(":idMadre", $idMadre, PDO::PARAM_STR);
-		$stmt->bindParam(":idPadre", $idPadre, PDO::PARAM_STR);
+		$stmt->bindParam(":tipo", $datos['tipo'], PDO::PARAM_STR);
+		$stmt->bindParam(":idMadre", $datos['idMadre'], PDO::PARAM_STR);
+		$stmt->bindParam(":idPadre", $datos['idPadre'], PDO::PARAM_STR);
 		$stmt->bindParam(":fecha", $datos["fechaParto"], PDO::PARAM_STR);
 		$stmt->bindParam(":cantidad", $datos["cantidadNacidos"], PDO::PARAM_STR);
 		$stmt->bindParam(":sexo", $datos["sexo"], PDO::PARAM_STR);
@@ -315,4 +314,36 @@ class ModeloIngresos{
 
 	}
 
+	
+    /*=============================================
+    MOSTRAR PARTOS
+    =============================================*/
+    
+    static public function mdlMostrarPartos($tabla,$item,$valor){
+
+		if($item != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY fecha ASC");
+			
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+			
+			$stmt -> execute();
+			
+			return $stmt -> fetch();
+			
+		}else{
+			
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY fecha ASC");
+			
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+			
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+    }
 }

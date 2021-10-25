@@ -9,25 +9,21 @@ class ControladorAnimales{
         // SE CARGA EN TABLA ANIMALES
         $tabla = 'animales';
 
-        $respuesta = ModeloAnimales::mdlNuevoAnimal($tabla,$datos);
+        $respuesta[] = ModeloAnimales::mdlNuevoAnimal($tabla,$datos);
     
 
         // SE CARGA EN MACHO/HEMBRA SEGUN CORRESPONDA
 
-        // if($datos['animal'] != 'pollo'){
+        if($datos['tipo'] != 'pollo'){
             
-        //     $tabla = ($datos['sexo'] == 'H') ? 'hembras' : 'machos'; 
+            $tabla = ($datos['sexo'] == 'H') ? 'hembras' : 'machos'; 
 
-        //     $respuesta = ModeloAnimales::mdlNuevoAnimal($tabla,$datos);
+            $respuesta[] = ModeloAnimales::mdlNuevoAnimal($tabla,$datos);
         
-        // }     
+        }     
 
-        // // SE CARGA EN PROPIO
+        return $respuesta;
         
-        // $tabla = 'propios';
-        
-        // $respuesta = ModeloAnimales::mdlNuevoAnimal($tabla,$datos);
-
     }
 
     static public function ctrMostrarAnimal($item,$valor,$item2,$valor2){

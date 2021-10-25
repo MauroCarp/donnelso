@@ -243,6 +243,8 @@ const eliminarCampoServicio = (row)=>{
 // GENERAR RODEOS
 const generarItem = (leyendaText,dato,machos)=>{
 
+    let tipo = (localStorage.getItem('animalServicio') == 'cordero') ? 'ovino' : localStorage.getItem('animalServicio') 
+
     let hembraValido = leyendaText.indexOf('Hembra');
     
     let item = document.createElement('li');
@@ -283,7 +285,7 @@ const generarItem = (leyendaText,dato,machos)=>{
         let fechaServida = document.createElement('input')
         fechaServida.setAttribute('type','date')
         fechaServida.setAttribute('class',`form-control`)
-        fechaServida.setAttribute('id',`fechaServida${dato}`)
+        fechaServida.setAttribute('id',`fechaServida${tipo}${dato}`)
         
         divFecha.append(fechaServida)
         
@@ -292,7 +294,7 @@ const generarItem = (leyendaText,dato,machos)=>{
         
         let selectMachos = document.createElement('select')
         selectMachos.setAttribute('class',`form-control`)
-        selectMachos.setAttribute('id',`selectMachos${dato}`)
+        selectMachos.setAttribute('id',`selectMachos${tipo}${dato}`)
 
         caravanasMachos.map(caravana => {
             
@@ -312,11 +314,10 @@ const generarItem = (leyendaText,dato,machos)=>{
         let buttonServir = document.createElement('button')
         buttonServir.setAttribute('class',`btn btn-default btn-no-margintop btnServirHembra`)
         buttonServir.setAttribute('caravana',dato)
+        buttonServir.setAttribute('tipo',tipo)
         buttonServir.innerText = 'Servir'
 
         divButton.append(buttonServir)
-
-        let tipo = (localStorage.getItem('animalServicio') == 'cordero') ? 'ovino' : localStorage.getItem('animalServicio') 
 
         caravanaServidaValida(tipo,dato,buttonServir)
       
@@ -417,8 +418,6 @@ const rodeos = (idTab,tipo)=>{
         success:function(response){
             
             let respuesta = JSON.parse(response)
-
-            console.log(respuesta);
             
             respuesta.map(rodeo=>{
                     
@@ -446,7 +445,7 @@ $('.tabs-servicios li').on('click',(evt)=>{
         
         $('.btnServirHembra').on('click',(evt)=>{
                 
-              accionBtnServir(evt);
+              accionBtnServir(evt,tipo);
       
           })
 
@@ -454,69 +453,26 @@ $('.tabs-servicios li').on('click',(evt)=>{
     
 })
 
-// ACCION BTN SERVIR
 
-// setTimeout(() => {
-    
-//     $('.btnServirHembra').on('click',(evt)=>{
+const accionBtnServir = (evt,tipo)=>{
 
-//         console.log('hola');
-        
-//         // let caravana = evt.target.attributes.caravana.nodeValue
+        tipo = (tipo == 'cordero') ? 'ovino' : tipo
 
-//         // let textButton = evt.target.innerText;
-        
-//         // let caravanaMacho = $(`#selectMachos${caravana}`).val()
-
-//         // let fecha = $(`#fechaServida${caravana}`).val()
-
-//         // if(fecha == ''){
-
-//         //     alert('El campo Fecha no puede ir Vacio')
-            
-//         //     return
-//         // }
-        
-//         // let tipo = localStorage.getItem('animalServicio')
-
-//         // let props = {
-//         //     caravana,
-//         //     textButton,
-//         //     caravanaMacho,
-//         //     fecha,
-//         //     evt,
-//         //     tipo
-//         // }
-
-//         // console.log(props);
-        
-//         // servirHembra(props)
-
-//     })
-
-// }, 1000);
-
-const accionBtnServir = (evt)=>{
-    
         let caravana = evt.target.attributes.caravana.nodeValue
 
         let textButton = evt.target.innerText;
         
-        let caravanaMacho = $(`#selectMachos${caravana}`).val()
+        let caravanaMacho = $(`#selectMachos${tipo}${caravana}`).val()
 
-        let fecha = $(`#fechaServida${caravana}`).val()
-
+        let fecha = $(`#fechaServida${tipo}${caravana}`).val()
+                
         if(fecha == ''){
 
             alert('El campo Fecha no puede ir Vacio')
             
             return
         }
-        
-        let tipo = (localStorage.getItem('animalServicio') == 'cordero') ? 'ovino' : localStorage.getItem('animalServicio') 
-        
-        console.log(tipo);
-        
+                        
         let props = {
             caravana,
             textButton,
@@ -614,9 +570,9 @@ const caravanaServidaValida = (tipo,caravana,button)=>{
                 
                 button.innerText = 'Cancelar Servicio';
                 
-                $(`#selectMachos${caravana} option[value='${respuesta.caravanaMacho}']`).attr("selected",true);
+                $(`#selectMachos${tipo}${caravana} option[value='${respuesta.caravanaMacho}']`).attr("selected",true);
                 
-                $(`#fechaServida${caravana}`).val(respuesta.fecha)
+                $(`#fechaServida${tipo}${caravana}`).val(respuesta.fecha)
 
                 
             }else{

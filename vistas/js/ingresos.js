@@ -92,7 +92,7 @@ const generarInputNacido = (campo,type,id)=>{
         input.setAttribute('name',id)
 
         if(type == 'number')
-            input.setAttribute('step','0.50')
+            input.setAttribute('step','0.05')
             input.setAttribute('required','required')
             input.setAttribute('name',id)
 
@@ -222,7 +222,7 @@ const btnCargarParto = ()=>{
     }
      
 $('#cantidadNacidos').on('change',()=>{
-
+    
     $('.rowNacidos').remove();
     $('.divBtnCargar').remove();
     
@@ -231,9 +231,10 @@ $('#cantidadNacidos').on('change',()=>{
     let caravanaMadre = $('#caravanaParto').val()
     
     let tipo = $('input[name=animal]').val();
-
+    
     const inputNacidos = document.getElementById('inputNacidos');
-
+    
+    console.log(cantidad,caravanaMadre,tipo,inputNacidos);
     // OBTENER CON AJAX LA ULTIMACARAVANA DE LA MADRE
 
     let data = `caravana=${caravanaMadre}&tipo=${tipo}`
@@ -248,10 +249,16 @@ $('#cantidadNacidos').on('change',()=>{
 
             // GENERO CAMPO NACIMIENTO
             let respuesta = JSON.parse(response);
+        
+            let caravanaHija = 1;
 
-            let caravanaHija = respuesta.ultimaCaravanaHija.caravana.split('/')
+            if(respuesta.ultimaCaravanaHija.caravana != null){
 
-            caravanaHija = caravanaHija[1]
+                caravanaHija = respuesta.ultimaCaravanaHija.caravana.split('/')
+    
+                caravanaHija = caravanaHija[1]
+
+            }
 
             for (let index = 0; index < cantidad; index++) {
             
@@ -353,7 +360,6 @@ $('.tablaCompras').DataTable({
 
 } );
 
-
 // ELIMINAR COMPRA
 
 $(".tablaCompras").on("click", ".btnEliminarCompra", function(){
@@ -382,6 +388,8 @@ $(".tablaCompras").on("click", ".btnEliminarCompra", function(){
 });
 
 const cargarCaravanaParto = (tipo)=>{
+    
+    tipo = (tipo == 'cordero') ? 'ovino' : tipo
 
     let url = 'ajax/ingresos.ajax.php'
 
@@ -392,6 +400,7 @@ const cargarCaravanaParto = (tipo)=>{
         url,
         data,
         success:(response)=>{
+          console.log(response);
           
                 let respuesta = JSON.parse(response);
 

@@ -25,9 +25,8 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs tabs-sanidad" role="tablist">
                 <li role="presentation" class="active"><a href="#cerdo"  id="tabCerdo" aria-controls="cerdo" role="tab" data-toggle="tab">Cerdo</a></li>
-                <li role="presentation"><a href="#cordero"  id="tabCordero" aria-controls="cordero" role="tab" data-toggle="tab">Cordero</a></li>
+                <li role="presentation"><a href="#cordero"  id="tabCordero" aria-controls="cordero" role="tab" data-toggle="tab">Ovinos</a></li>
                 <li role="presentation"><a href="#chivo"  id="tabChivo" aria-controls="chivo" role="tab" data-toggle="tab">Chivo</a></li>
-                <li role="presentation"><a href="#oveja"  id="tabOveja" aria-controls="oveja" role="tab" data-toggle="tab">Ovejas</a></li>
                 <li role="presentation"><a href="#vaca"  id="tabVaca" aria-controls="vaca" role="tab" data-toggle="tab">Vacas</a></li>
             </ul>
 
@@ -44,9 +43,8 @@
                     
                     ?></div>
                     
-                    <div role="tabpanel" class="tab-pane" id="cordero"><?php $animal = 'cordero'; include "tablas/registroServicios.tabla.php";?></div>
+                    <div role="tabpanel" class="tab-pane" id="cordero"><?php $animal = 'ovino'; include "tablas/registroServicios.tabla.php";?></div>
                     <div role="tabpanel" class="tab-pane" id="chivo"><?php $animal = 'chivo'; include "tablas/registroServicios.tabla.php";?></div>
-                    <div role="tabpanel" class="tab-pane" id="oveja"><?php $animal = 'oveja'; include "tablas/registroServicios.tabla.php";?></div>
                     <div role="tabpanel" class="tab-pane" id="vaca"><?php $animal = 'vaca'; include "tablas/registroServicios.tabla.php";?></div>
 
             </div>

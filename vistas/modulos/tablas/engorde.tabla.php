@@ -54,9 +54,9 @@
 
           echo '
           <tr>
-            <td>'.$respuesta[$i]['idAnimal'].'</td>
+            <td>'.$respuesta[$i]['caravana'].'</td>
             <td>'.$respuesta[$i]['fecha'].'</td>
-            <td>'.$respuesta[$i]['peso'].'</td>
+            <td>'.$respuesta[$i]['peso'].' Kg</td>
             <td>'.$estado.'</td>
             <td><input type="checkbox" class="checkboxEngorde"  idAnimal="'.$respuesta[$i]['idAnimal'].'" '.$check.'></td>
             <td><button class="btn btn-primary btn-success btn-no-margintop"  data-toggle="modal" data-target="#ventanaModalVerAnimal" idAnimal="'.$respuesta[$i]['idAnimal'].'"><i class="fa fa-eye"></i></button></td>
