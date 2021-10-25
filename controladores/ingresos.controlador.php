@@ -382,6 +382,8 @@ class ControladorIngresos{
 
                 $mellizos = (isset($_POST['mellizos'])) ? $_POST['mellizos'] : 0; 
 
+                var_dump($mellizos);
+
                 $valor = ($_POST['animal'] == 'cordero') ? 'ovino' : $_POST['animal'];
                 
                 $datosParto = array("tipo" => $valor,
@@ -402,7 +404,7 @@ class ControladorIngresos{
 
                 $datosParto['caravanaMacho'] = $caravanaMacho[0][0];
 
-                $datosParto['idPadre'] = ($datosParto["tipo"] == 'ovino') ? 'cordero'.$datosParto['caravanaMacho'] : 'cordero'.$datosParto['caravanaMacho'];
+                $datosParto['idPadre'] = ($datosParto["tipo"] == 'ovino') ? 'cordero'.$datosParto['caravanaMacho'] : $datosParto['tipo'].$datosParto['caravanaMacho'];
 
                 $datosParto['idMadre'] = $datosParto["tipo"].$datosParto['caravanaMadre'];
 
@@ -442,53 +444,53 @@ class ControladorIngresos{
                 }
 
 
-                if(!in_array('error',$respuestas)){
+                // if(!in_array('error',$respuestas)){
 
-                    	echo '<script>
+                //     	echo '<script>
 
-                            new swal({
+                //             new swal({
 
-                                icon: "success",
-                                title: "¡Los registros han sido guardados correctamente!",
-                                showConfirmButton: true,
-                                confirmButtonText: "Cerrar"
+                //                 icon: "success",
+                //                 title: "¡Los registros han sido guardados correctamente!",
+                //                 showConfirmButton: true,
+                //                 confirmButtonText: "Cerrar"
 
-                            }).then(function(result){
+                //             }).then(function(result){
 
-                                if(result.value){
+                //                 if(result.value){
                                 
-                                    window.location = "registroPartos";
+                //                     window.location = "registroPartos";
 
-                                }
+                //                 }
 
-                            });
+                //             });
 
-                        </script>';
+                //         </script>';
 
-                }else{
+                // }else{
                     
-                    echo '<script>
+                //     echo '<script>
 
-                    new swal({
+                //     new swal({
 
-                        icon: "error",
-                        title: "Hubo un error al cargar. Notificar a Mauro",
-                        showConfirmButton: true,
-                        confirmButtonText: "Cerrar"
+                //         icon: "error",
+                //         title: "Hubo un error al cargar. Notificar a Mauro",
+                //         showConfirmButton: true,
+                //         confirmButtonText: "Cerrar"
 
-                    }).then(function(result){
+                //     }).then(function(result){
 
-                        if(result.value){
+                //         if(result.value){
                         
-                            window.location = "registroPartos";
+                //             window.location = "registroPartos";
 
-                        }
+                //         }
 
-                    });
+                //     });
                 
 
-                </script>';
-                };  
+                // </script>';
+                // };  
 
 
 		    

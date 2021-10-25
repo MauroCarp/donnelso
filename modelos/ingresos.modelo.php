@@ -267,10 +267,11 @@ class ModeloIngresos{
 		$stmt->bindParam(":fecha", $datos["fechaParto"], PDO::PARAM_STR);
 		$stmt->bindParam(":cantidad", $datos["cantidadNacidos"], PDO::PARAM_STR);
 		$stmt->bindParam(":sexo", $datos["sexo"], PDO::PARAM_STR);
-		$stmt->bindParam(":mellizo", $datos["mellizo"], PDO::PARAM_STR);
+		$stmt->bindParam(":mellizo", $datos["mellizos"], PDO::PARAM_STR);
 		$stmt->bindParam(":complicacion", $datos["complicacionMadre"], PDO::PARAM_STR);
 	
-		
+		// return $datos;
+
 		if($stmt->execute()){
 
 			

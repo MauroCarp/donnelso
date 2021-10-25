@@ -39,12 +39,13 @@
 
       <div class="box-body">
         
-       <table class="table table-bordered table-striped dt-responsive tablaPartos" width="100%">
+       <table class="table table-bordered table-striped dt-responsive tablas tablaPartos" width="100%">
          
         <thead>
          
          <tr>
            
+           <th>Animal</th>
            <th>Fecha Parto</th>
            <th>Caravana Madre</th>
            <th>Caravana Padre</th>
@@ -71,29 +72,30 @@
 
             $valor2 = null;
 
-            for ($i=0; $i < sizeof($registros); $i++) { 
-                
-                $item = 'idAnimal';
+            for ($a=0; $a < sizeof($registros); $a++) { 
 
-                $valor = $registros[$i]['idMadre'];
+              $item = 'idAnimal';
+
+                $valor = $registros[$a]['idMadre'];
             
                 $caravanaMadre = ControladorAnimales::ctrMostrarAnimal($item,$valor,$item2,$valor2);
 
-                $valor = $registros[$i]['idPadre'];
+                $valor = $registros[$a]['idPadre'];
                 
                 $caravanaPadre = ControladorAnimales::ctrMostrarAnimal($item,$valor,$item2,$valor2);
                
-                $mellizos = ($registros[$i]['mellizo'] != null) ? '<button class="btn btn-success"><i class="fa fa-check"></i></button>" ' : '<button class="btn btn-danger btn-no-margintop"><i class="fa fa-times"></i></button>' ;
-                
+                $mellizos = ($registros[$a]['mellizo'] == 0 OR $registros[$a]['mellizo'] == null) ? '<button class="btn btn-danger btn-no-margintop"><i class="fa fa-times"></i></button>'  : '<button class="btn btn-success btn-no-margintop"><i class="fa fa-check"></i></button>'; 
+
                 echo "<tr>
-                            <td>".formatearFecha($registros[$i]['fecha'])."</td>
-                            <td>".$caravanaMadre[$i]['caravana']."</td>
-                            <td>".$caravanaPadre[$i]['caravana']."</td>
-                            <td>".$registros[$i]['cantidad']."</td>
-                            <td>".$registros[$i]['sexo']."</td>
+                            <td>".ucfirst($registros[$a]['tipo'])."</td>
+                            <td>".formatearFecha($registros[$a]['fecha'])."</td>
+                            <td>".$caravanaMadre[0]['caravana']."</td>
+                            <td>".$caravanaPadre[0]['caravana']."</td>
+                            <td>".$registros[$a]['cantidad']."</td>
+                            <td>".$registros[$a]['sexo']."</td>
                             <td>".$mellizos."</td>
-                            <td>".$registros[$i]['complicacion']."</td>
-                            <td><button class='btn btn-success btnVerParto btn-no-margintop' idParto=".$registros[$i]['idParto']."><i class='fa fa-eye'></i></button></td>
+                            <td>".$registros[$a]['complicacion']."</td>
+                            <td><button class='btn btn-success btnVerParto btn-no-margintop' idParto=".$registros[$a]['idParto']."><i class='fa fa-eye'></i></button></td>
                         </tr>
                 ";
 
