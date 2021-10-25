@@ -400,7 +400,6 @@ const cargarCaravanaParto = (tipo)=>{
         url,
         data,
         success:(response)=>{
-          console.log(response);
           
                 let respuesta = JSON.parse(response);
 

@@ -15,7 +15,7 @@ class AjaxEngorde{
         
         $valor = $this->idAnimal;
         
-        $item2 = 'listo';
+        $item2 = 'listoVenta';
         
         $valor2 = $this->estado;
         

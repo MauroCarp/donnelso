@@ -409,7 +409,6 @@ const rodeos = (idTab,tipo)=>{
     tipo = (tipo == 'cordero') ? 'ovino' : tipo
 
     let data = `mostrarRodeos=true&tipo=${tipo}`;
-    console.log(data);
     
     $.ajax({
         method:'post',

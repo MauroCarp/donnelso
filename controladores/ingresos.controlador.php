@@ -382,8 +382,6 @@ class ControladorIngresos{
 
                 $mellizos = (isset($_POST['mellizos'])) ? $_POST['mellizos'] : 0; 
 
-                var_dump($mellizos);
-
                 $valor = ($_POST['animal'] == 'cordero') ? 'ovino' : $_POST['animal'];
                 
                 $datosParto = array("tipo" => $valor,
@@ -411,6 +409,10 @@ class ControladorIngresos{
                 // SE CARGA REGISTRO DE PARTO
                 $respuestas[] = ControladorIngresos::ctrNuevoRegParto($datosParto);
 
+                $idParto = ControladorIngresos::ctrMostrarUltimoRegParto();
+
+                $idParto = $idParto['ultimoId'];
+
                 // SE ACTUALIZA EL ESTADO DE LA HEMBRA
                 $datosParto['estadoRodeo'] = 'Descanso';
 
@@ -431,6 +433,7 @@ class ControladorIngresos{
                         'idAnimal' => $idAnimal,
                         'idPadre'=> $datosParto['idPadre'],
                         'idMadre'=> $datosParto['idMadre'],
+                        'idParto'=> $idParto,
                         'peso' => $_POST['pesoNacido'.($i + 1)],
                         'fechaNacimiento' => $_POST['fechaParto'],
                         'sexo' => $_POST['sexoNacido'.($i + 1)],
@@ -506,6 +509,15 @@ class ControladorIngresos{
         return $respuesta = ModeloIngresos::mdlNuevoRegParto($tabla,$datos);
 
     }
+
+    static public function ctrMostrarUltimoRegParto(){
+
+        $tabla = 'partos';
+
+        return $respuesta = ModeloIngresos::mdlMostrarUltimoRegParto($tabla);
+
+    }
+
 
     static public function ctrUltimaCaravanaHija($item,$valor,$item2,$valor2){
 

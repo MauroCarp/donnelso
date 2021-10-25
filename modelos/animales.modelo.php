@@ -8,7 +8,7 @@ class ModeloAnimales{
 
 		if($tabla == 'animales'){
 
-			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(idAnimal,tipo,caravana,fecha,peso,proveedor,sexo,destino,idPadre,idMadre,complicacion) VALUES(:idAnimal,:tipo,:caravana,:fecha,:peso,'Propio',:sexo,:destino,:idPadre,:idMadre,:complicacion)"); 
+			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(idAnimal,tipo,caravana,fecha,peso,proveedor,sexo,destino,idParto,complicacion) VALUES(:idAnimal,:tipo,:caravana,:fecha,:peso,'Propio',:sexo,:destino,:idParto,:complicacion)"); 
 			
 			$stmt->bindParam(":idAnimal", $datos["idAnimal"], PDO::PARAM_STR);
 			$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_STR);
@@ -17,8 +17,7 @@ class ModeloAnimales{
 			$stmt->bindParam(":peso", $datos["peso"], PDO::PARAM_STR);
 			$stmt->bindParam(":sexo", $datos["sexo"], PDO::PARAM_STR);
 			$stmt->bindParam(":destino", $datos["destino"], PDO::PARAM_STR);
-			$stmt->bindParam(":idPadre", $datos["idPadre"], PDO::PARAM_STR);
-			$stmt->bindParam(":idMadre", $datos["idMadre"], PDO::PARAM_STR);
+			$stmt->bindParam(":idParto", $datos["idParto"], PDO::PARAM_STR);
 			$stmt->bindParam(":complicacion", $datos["complicacion"], PDO::PARAM_STR);
 	
 		}
@@ -43,10 +42,9 @@ class ModeloAnimales{
 		}
 
 		$stmt->bindParam(":idAnimal", $datos["idAnimal"], PDO::PARAM_STR);
-		// return $stmt;
+
 		if($stmt->execute()){
 			
-			// print_r($stmt ->errorInfo());
 			return "ok";	
 			
 		}else{

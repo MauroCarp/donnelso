@@ -293,6 +293,25 @@ class ModeloIngresos{
 	}
 
 	/*=============================================
+	BUSCAR ULTIMO REGISTRO PARTO
+	=============================================*/
+
+	static public function mdlMostrarUltimoRegParto($tabla){
+		
+		$stmt = Conexion::conectar()->prepare("SELECT MAX(idParto) as ultimoId FROM $tabla");
+
+		$stmt -> execute();
+
+		return $stmt -> fetch();
+
+		$stmt -> close();
+
+		$stmt = null;
+
+
+	}
+
+	/*=============================================
 	BUSCAR ULTIMA CARAVANA HIJA
 	=============================================*/
 

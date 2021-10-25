@@ -1,5 +1,6 @@
 
 $('.tablas').on('click','.checkboxEngorde',function(){
+console.log('hola');
 
     let node = $(this)[0];
     
@@ -23,7 +24,8 @@ $('.tablas').on('click','.checkboxEngorde',function(){
             data,
             method:'post',
             success:(response)=>{
-
+                console.log(response);
+                
                 let Toast =  swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -61,7 +63,8 @@ $('.tablas').on('click','.checkboxEngorde',function(){
             data,
             method:'post',
             success:(response)=>{
-              
+                console.log(response);
+
                 let Toast =  swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -92,8 +95,6 @@ $('.tablas').on('click','.checkboxEngorde',function(){
         
     } 
         
-
-
 });
 
 $('#produccionChazinados').on('click',()=>{
