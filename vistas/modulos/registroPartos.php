@@ -95,7 +95,7 @@
                             <td>".$registros[$a]['sexo']."</td>
                             <td>".$mellizos."</td>
                             <td>".$registros[$a]['complicacion']."</td>
-                            <td><button class='btn btn-success btnVerParto btn-no-margintop' idParto=".$registros[$a]['idParto']."><i class='fa fa-eye'></i></button></td>
+                            <td><button class='btn btn-success btnVerParto btn-no-margintop' idParto='".$registros[$a]['idParto']."' data-toggle='modal' data-target='#ventanaModalVerParto'><i class='fa fa-eye'></i></button></td>
                         </tr>
                 ";
 
@@ -114,3 +114,10 @@
   </section>
 
 </div>
+
+
+<?php
+
+include 'modales/verParto.modal.php';
+
+?>

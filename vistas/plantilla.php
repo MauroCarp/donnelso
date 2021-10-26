@@ -255,6 +255,7 @@ CUERPO DOCUMENTO
 <script src="vistas/js/reportes.js"></script>
 <script src="vistas/js/archivos.js"></script>
 <script src="vistas/js/ingresos.js"></script>
+<script src="vistas/js/partos.js"></script>
 <script src="vistas/js/faenar.js"></script>
 <script src="vistas/js/servicios.js"></script>
 <script src="vistas/js/chazinados.js"></script>
