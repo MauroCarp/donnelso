@@ -35,27 +35,27 @@ const cargarPrecioCajas = ()=>{
 
 }
 
-const cargarCantidadCajas = ()=>{
+const cargarStockCajas = ()=>{
 
 
 	let url = 'ajax/precios.ajax.php';
 
-	let data = `accion=cargarCantidad`;
+	let data = `accion=cargarStock`;
 
 	$.ajax({
 		method:'post',
 		data,
 		url,
 		success:function(response){
-            console.log('hola');
             
-            // let respuesta = JSON.parse(response)
+            let respuesta = JSON.parse(response)
+// console.log(respuesta);
 
-            $('#cantidadCerdo').html(10)
-            $('#cantidadChivo').html(10)
-            $('#cantidadCordero').html(10)
-            $('#cantidadPollo').html(10)
-            $('#cantidadVaca').html(10)
+            $('#cantidadCerdo').html(respuesta.cerdo)
+            $('#cantidadChivo').html(respuesta.chivo)
+            $('#cantidadCordero').html(respuesta.cordero)
+            $('#cantidadPollo').html(respuesta.pollo)
+            $('#cantidadVaca').html(respuesta.vaca)
         
         }
 
@@ -69,7 +69,7 @@ if(pathname.find(element => element == 'inicio')){
    
     cargarPrecioCajas();
     
-    cargarCantidadCajas();
+    cargarStockCajas();
 
 }    
 

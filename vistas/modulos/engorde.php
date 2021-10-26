@@ -23,7 +23,7 @@
             <div class="col-md-12">
 
             <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
+            <ul class="nav nav-tabs tabs-engorde" role="tablist">
                 <li role="engorde" class="active"><a href="#cerdo" aria-controls="cerdo" role="tab" data-toggle="tab">Cerdo</a></li>
                 <li role="engorde"><a href="#cordero" aria-controls="cordero" role="tab" data-toggle="tab">Cordero</a></li>
                 <li role="engorde"><a href="#chivo" aria-controls="chivo" role="tab" data-toggle="tab">Chivo</a></li>

@@ -1,6 +1,14 @@
+$('.tabs-engorde li').on('click',(evt)=>{
+    
+    let idTab = evt.target.hash.replace('#','');
+    
+    localStorage.setItem('animalEngorde',idTab)
+    
+})
+
+
 
 $('.tablas').on('click','.checkboxEngorde',function(){
-console.log('hola');
 
     let node = $(this)[0];
     
@@ -13,7 +21,9 @@ console.log('hola');
 
     let idAnimal = $(this).attr('idanimal')
     
-    let data = `idAnimal=${idAnimal}`
+    let tipo = localStorage.getItem('animalEngorde')
+
+    let data = `idAnimal=${idAnimal}&tipo=${tipo}`
     
    if ( $(this).is(':checked') ){
         
