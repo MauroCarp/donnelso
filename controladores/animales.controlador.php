@@ -42,6 +42,13 @@ class ControladorAnimales{
          
     }
 
+    static public function ctrCaravanaValida($item,$valor,$item2,$valor2){
+        
+        $tabla = 'animales';
+
+        return $respuesta = ModeloAnimales::mdlCaravanaValida($tabla,$item,$valor,$item2,$valor2);
+
+    }
 }
 
 ?>

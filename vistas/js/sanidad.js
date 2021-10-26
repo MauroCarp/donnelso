@@ -8,10 +8,27 @@ const showHideCaravana = (idAplicacion,idCaravana)=>{
     
             let value = inputAplicacion.value;
             
-            if(value != 'general')
+            let inputCaravana = idCaravana.replace('input','').replace('C','c')
+
+            let editarValido = inputCaravana.indexOf('Editar')
+            
+            let btnSanidad = (editarValido == -1) ? 'btnSanidad' : 'btnSanidadEditar'
+            
+            if(value != 'general'){
+
                 $(`#${idCaravana}`).show();
-            else
+
+                $(`#${inputCaravana}`).attr('required','true');
+
+            }else{
+
+                $(`#${inputCaravana}`).removeAttr('required')
+                $(`#${inputCaravana}`).val('')
                 $(`#${idCaravana}`).hide();
+                $(`#${btnSanidad}`).removeAttr('disabled')
+
+            }
+
     
         });
 
@@ -101,6 +118,68 @@ $('.tabs-sanidad li a').on('click',(evt)=>{
     localStorage.setItem('animalSanidad',animal)
     
 });
+
+$('.caravanaSanidad').on('change',(evt)=>{
+
+    let caravana = evt.target.value
+
+    comprobarCaravana(caravana);
+    
+})
+
+const comprobarCaravana = (caravana,editar)=>{
+
+    let url = 'ajax/sanidad.ajax.php'
+
+    let tipo = localStorage.getItem('animalSanidad')
+
+    let data = `tipo=${tipo}&caravana=${caravana}`
+    
+    let idAplicacion = 'aplicacionSanidad'
+    let idBtn = 'btnSanidad'
+
+    if(editar){
+        
+         idAplicacion = 'aplicacionSanidadEditar'
+         idBtn = 'btnSanidadEditar'
+        
+    } 
+    
+    $.ajax({
+        method:'post',
+        url,
+        data,
+        success:(response)=>{
+
+            response = JSON.parse(response);
+
+            if($(`#${idAplicacion}`).val() == 'individual' && response.caravanaValida == 0){
+
+                new swal({
+    
+                    icon: "error",
+                    title: `Caravana Invalida. Esta caravana de ${capitalizarPrimeraLetra(tipo)} no esta registrada`,
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+        
+                })
+                .then(()=>{
+
+                    $(`#${idBtn}`).attr('disabled','true')
+                    
+                });
+                
+            }else{
+                
+                $(`#${idBtn}`).removeAttr('disabled')
+            
+            }
+
+        }
+
+    })
+
+}
 
 $(()=>{
         

@@ -91,7 +91,7 @@
                     
                                             <span class="input-group-addon"><strong>N°</strong></span>
 
-                                            <input type="text" class="form-control" id="caravanaSanidadEditar" name="caravanaSanidadEditar">
+                                            <input type="text" class="form-control caravanaSanidad" id="caravanaSanidadEditar" name="caravanaSanidadEditar">
 
                                         </div>
                                     

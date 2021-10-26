@@ -90,7 +90,7 @@
                     
                                             <span class="input-group-addon"><strong>N°</strong></span>
 
-                                            <input type="text" class="form-control" id="caravanaSanidad" name="caravanaSanidad">
+                                            <input type="text" class="form-control caravanaSanidad" id="caravanaSanidad" name="caravanaSanidad">
 
                                         </div>
                                     
