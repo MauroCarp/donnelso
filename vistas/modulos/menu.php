@@ -174,6 +174,16 @@
 
 				</li>
 
+				<li>
+
+					<a href="muertes">
+
+						<i class="icon-muertes"></i>
+						<span>Muertes</span>
+
+					</a>
+
+				</li>
 
 				<li class="treeview">
 
@@ -229,17 +239,6 @@
 
 				</li>
 
-				<li>
-
-					<a href="muertes">
-
-						<i class="icon-muertes"></i>
-						<span>Muertes</span>
-
-					</a>
-
-				</li>
-				
 				<li class="treeview">
 
 					<a href="#" >

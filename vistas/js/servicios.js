@@ -128,7 +128,7 @@ const propsServiciosHembras = {
     nombreIdInput: 'caravanaHembra',
     textContent: 'N° Caravana Hembra',
     rowId: 'rowHembra',
-    idEliminar: 'eliminarCampoHembra',
+    funcionEliminar: 'eliminarCampoServicio',
     nameSelect: 'caravanaHembras'
 }
 
@@ -139,7 +139,7 @@ const propsServiciosMachos = {
     nombreIdInput: 'caravanaMacho',
     textContent: 'N° Caravana Macho',
     rowId: 'rowMacho',
-    idEliminar: 'eliminarCampoMacho',
+    funcionEliminar: 'eliminarCampoServicio',
     nameSelect: 'caravanaMachos'
 }
 
@@ -186,7 +186,7 @@ const generarInputCaravanas = (props)=>{
     divInput.append(formGroup);
     row.append(divInput);
 
-    let divDelete = generarDeleteBtn(rowId);
+    let divDelete = generarDeleteBtn(rowId,props.funcionEliminar);
 
     row.append(divDelete);
         
@@ -194,7 +194,7 @@ const generarInputCaravanas = (props)=>{
 
 }
 
-const generarDeleteBtn = (row)=>{
+const generarDeleteBtn = (row,funcionEliminar)=>{
 
     let divDelete = document.createElement('div');
     divDelete.setAttribute('class','col-xs-1 col-lg-1');
@@ -203,7 +203,8 @@ const generarDeleteBtn = (row)=>{
     let btnDelete = document.createElement('button');
     btnDelete.setAttribute('class','btn btn-danger');
     btnDelete.setAttribute('type','button');
-    btnDelete.setAttribute('onClick',`eliminarCampoServicio('${row}')`);
+    // btnDelete.setAttribute('onClick',`eliminarCampoServicio('${row}')`);
+    btnDelete.setAttribute('onClick',`${funcionEliminar}('${row}','${funcionEliminar}')`);
 
     let deleteIcon = document.createElement('i');
     deleteIcon.setAttribute('class','fa fa-trash');
@@ -215,14 +216,14 @@ const generarDeleteBtn = (row)=>{
 
 }
 
-const eliminarCampoServicio = (row)=>{
+const eliminarCampoServicio = (row,funcionEliminar)=>{
     
     let rowNode = document.getElementById(row);
 
     let previousNode = rowNode.previousSibling;
         
     if(previousNode.id)
-        $(`#${previousNode.id}`).append(generarDeleteBtn(previousNode.id));
+        $(`#${previousNode.id}`).append(generarDeleteBtn(previousNode.id,funcionEliminar));
     
     rowNode.remove();
 

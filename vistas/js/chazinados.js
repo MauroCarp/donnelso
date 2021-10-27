@@ -17,23 +17,96 @@ $("#propioChazinado").on('change',()=>{
 
 })
 
+
+const generarInputCaravanasChazinados = (props)=>{
+
+    let inputs = document.getElementById(props.idInput);
+    
+    let lastChild = inputs.lastChild;
+    
+    if(lastChild.id)
+        lastChild.lastChild.remove();
+
+
+    let row = document.createElement('div');
+    
+    row.setAttribute('class','row');
+
+    let rowId = `${props.rowId}${props.numero}`;
+
+    row.setAttribute('id',`${props.rowId}${props.numero}`);
+    
+    // GENERO CAMPOS INPUT
+    
+    let divInput = document.createElement('div');
+    divInput.setAttribute('class','col-xs-11 col-lg-5');
+    
+    // CREO FORM GROUP
+    let formGroup = document.createElement('div');
+    formGroup.setAttribute('class','form-group');
+    
+    // CREO LABEL
+    let label = document.createElement('label');
+    label.setAttribute('for',`${props.nombreIdInput}${props.numero}`);
+    label.textContent = `${props.textContent} ${props.numero + 1}:`;
+
+    let input = document.createElement('select');
+    input.setAttribute('id',`${props.nombreIdInput}${props.numero}`); 
+    input.setAttribute('class',`form-control ${props.campo}`);
+    input.setAttribute('name',`${props.nameSelect}[]`);
+    input.setAttribute('required',`true`);
+
+    input.append(selectCaravanaChazinados(`${props.nombreIdInput}${props.numero}`))
+
+    formGroup.append(label);
+    formGroup.append(input);
+    divInput.append(formGroup);
+    row.append(divInput);
+
+    let divDelete = generarDeleteBtn(rowId,props.funcionEliminar);
+
+    row.append(divDelete);
+        
+    return row;
+
+}
+
+const eliminarCampoChazinados = (row,funcionEliminar)=>{
+    
+    let rowNode = document.getElementById(row);
+
+    let previousNode = rowNode.previousSibling;
+        
+    if(previousNode.id)
+        $(`#${previousNode.id}`).append(generarDeleteBtn(previousNode.id,funcionEliminar));
+            
+    rowNode.remove();
+
+    propsChazinados.numero -= 1
+
+}
+
 const propsChazinados = {
     campo: 'caravanaChazinados',
     numero: 1,
-    idInput: 'agregarCaravanaChazinado',
+    idInput: 'caravanaChazinadoInput',
     nombreIdInput: 'caravanaChazinado',
+    nameSelect: 'caravanaChazinado',
     textContent: 'N° Caravana',
     rowId: 'rowCaravana',
+    funcionEliminar:'eliminarCampoChazinados'
 }
+
 
 $('#agregarCaravanaChazinado').on('click',()=>{
     
 
-    $('#caravanaChazinadoInput').append(generarInputCaravanas(propsChazinados));
+    $('#caravanaChazinadoInput').append(generarInputCaravanasChazinados(propsChazinados));
 
     propsChazinados.numero += 1;
 
 });
+
 
 const productos = ['salame','chorizo','morcilla','codeguin','jamon','bondiola','chicharron','grasa','carne']
 
@@ -212,3 +285,21 @@ $('.tablaVentasChazinados').on('click','.btnPedidoRealizado',function(){
     
 
 });
+
+const selectCaravanaChazinados = (idSelect)=>{
+
+    let url = 'ajax/chazinados.ajax.php'
+
+    let data = 'accion=cargarSelect&tipo=cerdo'
+
+    $.ajax({
+        method:'post',
+        data,
+        url,
+        success:(response)=>{
+
+            $(`#${idSelect}`).append(response)
+
+        }
+    })
+}
