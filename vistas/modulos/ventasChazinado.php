@@ -4,7 +4,7 @@
     
     <h1>
       
-      Pre-Ventas
+      Ventas Chazinados
     
     </h1>
 
@@ -34,12 +34,10 @@
            
            <th>Vendedor</th>
            <th>Comprador</th>
-           <th>Animal</th>
-           <th>Porci&oacute;n / Cantidad</th>
            <th>Fecha</th>
-           <th>Kg Final</th>
-           <th>$ Venta</th>
-           <th>$ Empleado</th>
+           <th>Producto</th>
+           <th>Kg</th>
+           <th>Precio</th>
   
         </tr> 
 
@@ -49,26 +47,26 @@
 
         <?php
 
-        $item = 'preventa';
+        $item = 'chazinados';
 
-        $valor = 0;
-        
+        $valor = null;
+
         $respuesta = ControladorVentas::ctrMostrarVentas($item,$valor);
 
         for ($i=0; $i < sizeOf($respuesta) ; $i++) { 
 
-          $seccionCantidad = ($respuesta[$i]['animal'] == 'pollo' OR $respuesta[$i]['animal'] == 'vaca') ? $respuesta[$i]['cantidad'] : ucfirst($respuesta[$i]['seccion']); 
+            $precioProducto = ControladorPrecios::ctrMostrarPrecios($respuesta[$i]['producto']);
 
-          echo "<tr>
-                      <td>".$respuesta[$i]['vendedor']."</td>
-                      <td>".$respuesta[$i]['comprador']."</td>
-                      <td>".ucfirst($respuesta[$i]['animal'])."</td>
-                      <td>".$seccionCantidad."</td>
-                      <td>".$respuesta[$i]['fecha']."</td>
-                      <td>".$respuesta[$i]['kgFinal']."</td>
-                      <td>".$respuesta[$i]['precioVenta']."</td>
-                      <td>".$respuesta[$i]['comisionEmpleado']."</td>
-                  </tr>";
+            $precioTotal = $precioProducto[0] * $respuesta[$i]['kg'];
+
+            echo "<tr>
+                        <td>".$respuesta[$i]['vendedor']."</td>
+                        <td>".$respuesta[$i]['comprador']."</td>
+                        <td>".formatearFecha($respuesta[$i]['fecha'])."</td>
+                        <td>".ucfirst($respuesta[$i]['producto'])."</td>
+                        <td>".$respuesta[$i]['kg']." Kg</td>
+                        <td>$ ".$precioTotal."</td>
+                    </tr>";
        
         }
 

@@ -185,6 +185,7 @@ CUERPO DOCUMENTO
          $_GET["ruta"] == "sanidad" ||
          $_GET["ruta"] == "consumo" ||
          $_GET["ruta"] == "chazinados" ||
+         $_GET["ruta"] == "ventasChazinado" ||
          $_GET["ruta"] == "muertes" ||
          $_GET["ruta"] == "usuarios" ||
          $_GET["ruta"] == "salir"){
@@ -228,13 +229,13 @@ CUERPO DOCUMENTO
     data:{
       btnPrincipales:[
         {titulo: 'Pre-Venta',href:'#ventanaModalPreVenta',modal:true},
-        {titulo: 'Venta',href:'pre-ventas',modal:false},
+        {titulo: 'Ventas Animal',href:'pre-ventas',modal:false},
         {titulo: 'Parto',href:'#ventanaModalParto',modal:true},
         {titulo: 'Ingreso',href:'#ventanaModalCompra',modal:true},
         {titulo: 'Servicios',href:'#ventanaModalServicios',modal:true},
         {titulo: 'Engorde',href:'engorde',modal:false},
         {titulo: 'Sanidad',href:'sanidad',modal:false},
-        {titulo: 'Chazinados',href:'#ventanaModalChazinado',modal:true},
+        {titulo: 'Venta Chazinados',href:'#ventanaModalVentaChazinados',modal:true},
         {titulo: 'Stock Chazinados',href:'#ventanaModalStockChazinados',modal:true},
         {titulo: 'Consumo',href:'consumo',modal:false},
         {titulo: 'Muertes',href:'#ventanaModalMuertes',modal:true},

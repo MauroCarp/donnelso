@@ -191,24 +191,35 @@
 					</a>
 
 					<ul class="treeview-menu">
+					
+						<li>
+						
+						<a href="chazinados">
+						
+						<i class="icon-cerdo"></i>
+						<span>Chazinados</span>
+						
+						</a>
+						
+						</li>
 
 						<li>
 
 							<a href="#" data-toggle="modal" data-target="#ventanaModalVentaChazinados">
 								
-								<i class="fa fa-circle-o"></i>
+								<i class="fa fa-dollar"></i>
 								<span>Venta</span>
 
 							</a>
 
 						</li>
-
+					
 						<li>
 
-							<a href="chazinados">
-							
-								<i class="icon-cerdo"></i>
-								<span>Chazinados</span>
+							<a href="ventasChazinado">
+								
+								<i class="fa fa-list-alt"></i>
+								<span>Lista Ventas</span>
 
 							</a>
 
@@ -322,6 +333,7 @@
     include "modales/faena.modal.php";
     include "modales/servicios.modal.php";
     include "modales/chazinado.modal.php";
+    include "modales/ventaChazinados.modal.php";
     include "modales/stockChazinado.modal.php";
     include "modales/muertes.modal.php";
     include "modales/precios.modal.php";

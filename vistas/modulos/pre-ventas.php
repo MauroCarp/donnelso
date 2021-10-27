@@ -32,6 +32,7 @@
          
          <tr>
            
+           <th>Vendedor</th>
            <th>Comprador</th>
            <th>Animal</th>
            <th>Porci&oacute;n / Cantidad</th>
@@ -54,6 +55,7 @@
         for ($i=0; $i < sizeOf($respuesta) ; $i++) { 
           $seccionCantidad = ($respuesta[$i]['animal'] == 'pollo' OR $respuesta[$i]['animal'] == 'vaca') ? $respuesta[$i]['cantidad'] : ucfirst($respuesta[$i]['seccion']); 
           echo "<tr>
+                      <td>".$respuesta[$i]['vendedor']."</td>
                       <td>".$respuesta[$i]['comprador']."</td>
                       <td>".ucfirst($respuesta[$i]['animal'])."</td>
                       <td>".$seccionCantidad."</td>

@@ -11,6 +11,7 @@ class ControladorVentas{
             $fecha = date('Y-m-d');
 
             $datos = array('comprador'=>$_POST['comprador'],
+            'vendedor'=>$_SESSION['nombre'],
             'animal'=>$_POST['animal'],
             'seccion'=>$_POST['seccion'],
             'cantidad'=>$_POST['cantidad'],
@@ -69,7 +70,7 @@ class ControladorVentas{
             }
         }
     }
-
+  
     static public function ctrActualizarVenta(){
 
         if(isset($_POST['actualizarVenta'])){
@@ -137,7 +138,7 @@ class ControladorVentas{
 
     static public function ctrMostrarVentas($item,$valor){
 
-        $tabla = 'ventas';
+        $tabla = ($item == 'chazinados') ? 'ventaschazinados' : 'ventas';
 
         return $respuesta = ModeloVentas::mdlMostrarVentas($tabla,$item,$valor);
 
@@ -199,6 +200,84 @@ class ControladorVentas{
 
 		}
     }
+
+    static public function ctrNuevaVentaChazinado(){
+
+        if(isset($_POST['cargarVentaChazinado'])){
+
+            $tabla = 'ventaschazinados';
+            
+            $fecha = date('Y-m-d');
+
+            $datos = array('comprador'=>$_POST['comprador'],
+            'vendedor'=>$_SESSION['nombre'],
+            'fecha'=>$fecha);
+            
+            $productos = $_POST['productos'];
+            $kilos = $_POST['kg'];
+
+            for ($i=0; $i < sizeof($productos); $i++) { 
+
+                $datos['producto'] = $productos[$i];
+
+                $datos['kg'] = $kilos[$i];
+
+                $respuesta = ModeloVentas::mdlNuevaVentaChazinado($tabla,$datos);
+
+            }
+
+
+            if($respuesta == 'ok'){
+                    
+                echo '<script>
+
+                    new swal({
+
+                        icon: "success",
+                        title: "La Venta ha sido registrada correctamente!",
+                        showConfirmButton: true,
+                        confirmButtonText: "Cerrar"
+
+                    }).then(function(result){
+
+                        if(result.value){
+                        
+                            window.location = "ventasChazinado";
+
+                        }
+
+                    });
+
+                </script>';
+
+            }else{
+        
+                echo '<script>
+
+                swal({
+
+                    icon: "error",
+                    title: "Hubo un error al cargar. Notificar a Mauro",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+
+                }).then(function(result){
+
+                    if(result.value){
+                    
+                        window.location = "ventasChazinado";
+
+                    }
+
+                });
+
+                </script>';
+            
+            }
+        }
+    }
+
+
 }   
 
 ?>
