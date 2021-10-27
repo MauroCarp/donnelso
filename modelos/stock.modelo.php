@@ -39,7 +39,6 @@ class ModeloStock{
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
 			
 		}
-			// return $stmt;
 
         $stmt->execute();
 

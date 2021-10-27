@@ -11,8 +11,8 @@ class ControladorStock{
     }
 
     static public function ctrMostrarStock($item,$valor){
-
-        $tabla = 'stockVenta';
+        
+        $tabla = 'stockventa';
 
         $respuesta = ModeloStock::mdlMostrarStock($tabla,$item,$valor);
 
@@ -25,6 +25,15 @@ class ControladorStock{
         }
 
         return $datos;
+
+    }
+
+    static public function ctrMostrarStockChazinado($item,$valor){
+
+        $tabla = 'stockchazinados';
+
+        return $respuesta = ModeloStock::mdlMostrarStock($tabla,$item,$valor);
+
     }
 
 }   

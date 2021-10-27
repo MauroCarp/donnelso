@@ -17,7 +17,6 @@ $("#propioChazinado").on('change',()=>{
 
 })
 
-
 const propsChazinados = {
     campo: 'caravanaChazinados',
     numero: 1,
@@ -162,3 +161,4 @@ const eliminarCampoProducto = (row)=>{
     contadorVenta -= 1;
 
 }
+

@@ -25,7 +25,15 @@ if(isset($_POST['accion'])){
 
         $valor = null;
 
-        $respuesta = ControladorStock::ctrMostrarStock($item,$valor);
+        if($_POST['tabla'] == 'chazinados'){
+            
+            $respuesta = ControladorStock::ctrMostrarStockChazinado($item,$valor);
+            
+        }else{
+            
+            $respuesta = ControladorStock::ctrMostrarStock($item,$valor);
+        
+        }
         
         print_r(json_encode($respuesta));
 
