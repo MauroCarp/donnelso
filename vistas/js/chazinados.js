@@ -162,3 +162,53 @@ const eliminarCampoProducto = (row)=>{
 
 }
 
+$('.tablaVentasChazinados').on('click','.btnPedidoRealizado',function(){
+
+
+    let idPedido = $(this).attr('idPedido')
+
+    let estado = ($(this).attr('estado') == 0) ? 1 : 0
+
+    let url = 'ajax/chazinados.ajax.php'
+
+    let data = `idPedido=${idPedido}&estado=${estado}`
+
+    let icon = document.createElement('i')
+
+    $.ajax({
+        method:'post',
+        url,
+        data,
+        success:(response)=>{
+
+            response = JSON.parse(response);
+            
+            let title = "El pedido ha sido realizado"
+            let icon = 'success'
+            
+            if(response.estado == 0){
+                
+                title = "El pedido no esta realizado"
+                icon = 'error'
+            
+            }
+
+                new swal({
+
+                    icon,
+                    title,
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+
+                }).then(function(result){
+
+                    window.location = 'ventasChazinado'
+
+                });
+               
+        }
+
+    })
+    
+
+});

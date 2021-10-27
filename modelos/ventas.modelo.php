@@ -137,6 +137,32 @@ class ModeloVentas{
 		$stmt = null;
 
 	}
+
+	static public function mdlCambiarEstado($tabla,$item,$valor,$item2,$valor2){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET 
+		$item = :$item WHERE $item2 = :$item2");
+
+		$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+		$stmt->bindParam(":".$item2, $valor2, PDO::PARAM_STR);
+
+		if($stmt->execute()){
+			
+			return "ok";	
+			
+		}else{
+
+			var_dump($stmt ->errorInfo());
+			return 'error';
+			
+		}
+		
+		$stmt->close();
+		
+		$stmt = null;
+
+
+	}
 }
 
 ?>

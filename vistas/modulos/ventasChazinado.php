@@ -26,7 +26,7 @@
 
       <div class="box-body">
         
-       <table class="table table-bordered table-striped dt-responsive tablas tablaVentas" width="100%">
+       <table class="table table-bordered table-striped dt-responsive tablas tablaVentasChazinados" width="100%">
          
         <thead>
          
@@ -38,6 +38,7 @@
            <th>Producto</th>
            <th>Kg</th>
            <th>Precio</th>
+           <th>Pedido Realizado</th>
   
         </tr> 
 
@@ -59,15 +60,17 @@
 
             $precioTotal = $precioProducto[0] * $respuesta[$i]['kg'];
 
+            $realizado = ($respuesta[$i]['realizado'])  ? "<button class='btn btn-success btnPedidoRealizado' estado=1 idPedido='".$respuesta[$i]['id']."' style='margin-top:0px;'><i class='fa fa-check'></i></button>" : " <button class='btn btn-danger btnPedidoRealizado' estado=0 idPedido='".$respuesta[$i]['id']."' style='margin-top:0px;'><i class='fa fa-times'></i></button>";
+
             echo "<tr>
                         <td>".$respuesta[$i]['vendedor']."</td>
                         <td>".$respuesta[$i]['comprador']."</td>
                         <td>".formatearFecha($respuesta[$i]['fecha'])."</td>
                         <td>".ucfirst($respuesta[$i]['producto'])."</td>
                         <td>".$respuesta[$i]['kg']." Kg</td>
-                        <td>$ ".$precioTotal."</td>
+                        <td><b>$</b> ".$precioTotal."</td>
+                        <td>".$realizado."</td>
                     </tr>";
-       
         }
 
 

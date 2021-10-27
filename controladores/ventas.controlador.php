@@ -201,6 +201,7 @@ class ControladorVentas{
 		}
     }
 
+    
     static public function ctrNuevaVentaChazinado(){
 
         if(isset($_POST['cargarVentaChazinado'])){
@@ -209,7 +210,7 @@ class ControladorVentas{
             
             $fecha = date('Y-m-d');
 
-            $datos = array('comprador'=>$_POST['comprador'],
+            $datos = array('comprador'=>$_POST['compradorChazinado'],
             'vendedor'=>$_SESSION['nombre'],
             'fecha'=>$fecha);
             
@@ -275,6 +276,14 @@ class ControladorVentas{
             
             }
         }
+    }
+
+    static public function ctrCambiarEstado($item,$valor,$item2,$valor2){
+        
+        $tabla = 'ventaschazinados';
+
+        return $respuesta = ModeloVentas::mdlCambiarEstado($tabla,$item,$valor,$item2,$valor2);
+
     }
 
 

@@ -28,9 +28,9 @@
                                 
                                     <div class="form-group">
 
-                                        <label for="comprador">Comprador</label>
+                                        <label for="compradorChazinado">Comprador</label>
                                     
-                                        <input type="text" class="form-control" id="comprador" name="comprador" placeholder="Comprador">  
+                                        <input type="text" class="form-control" id="compradorChazinado" name="compradorChazinado" placeholder="Comprador">  
 
                                     </div>
 
