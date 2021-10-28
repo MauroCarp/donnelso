@@ -22,7 +22,7 @@
 
       <div class="box-body">
 
-        <button class="btn btn-primary" data-toggle="modal" data-target="#ventanaModalChazinado">Cargar Registro</button><br><br>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#ventanaModalChazinado">Cargar Carneada</button><br><br>
 
        <table class="table table-bordered table-striped dt-responsive tablaCarneadas tablas" width="100%">
          

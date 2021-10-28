@@ -32,8 +32,67 @@ class ControladorChazinados{
 
             $respuesta = ModeloChazinados::mdlNuevaCarneada($tabla,$datos);
 
-            var_dump($respuesta);
+            // ELIMINAR ANIMALES 
 
+            $caravanas = explode('-',$caravanas);
+
+            $item = 'caravana';
+
+            $item2 = 'tipo';
+
+            $valor2 = 'cerdo';
+
+            for ($i=0; $i < sizeof($caravanas); $i++) { 
+                
+                $valor = $caravanas[$i];
+
+                $respuesta = ControladorAnimales::ctrEliminarAnimal($item,$valor,$item2,$valor2);
+                var_dump($respuesta);
+            }
+
+            die();
+
+            if($respuesta == "ok"){
+                
+                echo'<script>
+
+				new swal({
+					  icon: "success",
+					  title: "La Carneada ha sido cargada correctamente",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar",
+					  closeOnConfirm: false
+					  }).then(function(result) {
+								if (result.value) {
+
+								window.location = "chazinados";
+
+								}
+							})
+
+				</script>';
+
+			}else{
+
+                echo'<script>
+
+			    new swal({
+					  icon: "error",
+					  title: "La Carneada no ha sido cargada correctamente.Informar a Mauro",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar",
+					  closeOnConfirm: false
+					  }).then(function(result) {
+								if (result.value) {
+
+								window.location = "chazinados";
+
+								}
+							})
+
+				</script>';
+
+            }		
         }
         
     }

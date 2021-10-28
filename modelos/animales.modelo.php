@@ -132,6 +132,27 @@ class ModeloAnimales{
 
 	}
 
+	static public function mdlEliminarAnimal($tabla,$item,$valor){
+	
+		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE $item = :$item");
+		
+		$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+		if($stmt->execute()){
+			
+			return "ok";	
+			
+		}else{
+
+			var_dump($stmt ->errorInfo());
+
+			return 'error';
+			
+		}
+	
+	}
+
+
 }
 
 ?>
