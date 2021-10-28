@@ -224,7 +224,14 @@ class ControladorVentas{
                 $datos['kg'] = $kilos[$i];
 
                 $respuesta = ModeloVentas::mdlNuevaVentaChazinado($tabla,$datos);
+                
+                $operador = '-';
 
+                $item = 'kg'.ucfirst($productos[$i]);
+
+                $respuesta = ControladorStock::ctrActualizarStockChazinadosSumarRestar($item,$kilos[$i],$operador);
+
+                // var_dump($respuesta);
             }
 
 

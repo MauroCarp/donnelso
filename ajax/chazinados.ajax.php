@@ -16,6 +16,8 @@ class AjaxChazinados{
     public $idPedido;
 
     public $idCarneada;
+    
+    public $idVenta;
 
     public function ajaxActualizarEstado(){
 
@@ -60,11 +62,24 @@ class AjaxChazinados{
 
         $valor = $this->idCarneada;
 
-        $resultado = ControladorChazinados::ctrMostrarCarneada($item,$valor);
+        $resultado = ControladorChazinados::ctrMostrarChazinado($item,$valor);
 
         print_r(json_encode($resultado));
         
     }
+
+    public function ajaxMostrarVenta(){
+
+        $item = 'id';
+
+        $valor = $this->idVenta;
+
+        $resultado = ControladorChazinados::ctrMostrarChazinado($item,$valor);
+
+        print_r(json_encode($resultado));
+        
+    }
+
 
 }
 
@@ -94,11 +109,21 @@ if(isset($_POST['accion'])){
 
     if($_POST['accion'] == 'cargarDataEditar'){
 
-        $cargarSelect = new AjaxChazinados();
+        $cargarData = new AjaxChazinados();
     
-        $cargarSelect -> idCarneada = $_POST['idCarneada'];
+        $cargarData -> idCarneada = $_POST['idCarneada'];
     
-        $cargarSelect -> ajaxMostrarCarneada();
+        $cargarData -> ajaxMostrarCarneada();
+    
+    }
+
+    if($_POST['accion'] == 'cargarDataVenta'){
+
+        $cargarDataVenta = new AjaxChazinados();
+    
+        $cargarDataVenta -> idVenta = $_POST['idVenta'];
+    
+        $cargarDataVenta -> ajaxMostrarVenta();
     
     }
 

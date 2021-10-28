@@ -21,7 +21,9 @@
                     <div class='box-header with-border' id='filtros'>    
 
                         <form method="post">
-                        
+
+                            <input type="hidden" name="idVentaChazinado" id="idVentaChazinado">
+                            
                             <div class='row'>
                                 
                                 <div class="col-lg-12">
@@ -40,34 +42,15 @@
 
                             <div id="selectsChazinadosEditar">
 
-                                <!-- <div class="row">
+                                <div class="row">
 
                                     <div class="col-xs-5 col-lg-5">
                                         
                                         <div class="form-group">
                                         
-                                            <label for="producto0">Producto:</label>
+                                            <label for="productoEditar">Producto:</label>
                                         
-                                            <select  id="producto0" name="productos[]" class="form-control productos" required>
-                                                   
-                                                    <option value="salame">Salame</option>
-                                                   
-                                                    <option value="chorizo">Chorizo</option>
-                                                   
-                                                    <option value="morcilla">Morcilla</option>
-                                                   
-                                                    <option value="codeguin">Codeguin</option>
-                                                   
-                                                    <option value="jamon">Jamon</option>
-                                                   
-                                                    <option value="bondiola">Bondiola</option>
-                                                   
-                                                    <option value="chicharron">Chicharron</option>
-                                                   
-                                                    <option value="grasa">Grasa</option>
-                                                   
-                                                    <option value="carne">Carne</option>
-                                                    
+                                            <select  id="productoEditar" name="productoEditar" class="form-control productosEditar" required>
                                             </select>
 
                                         </div>
@@ -78,13 +61,13 @@
                                         
                                         <div class="form-group">
                                         
-                                            <label for="kg0">Kg:</label>
+                                            <label for="kgEditar">Kg:</label>
                                             
-                                            <input type="number" name="kg[]" id="kg0" class="form-control kilos" required>
+                                            <input type="number" name="kgEditar" id="kgEditar" class="form-control kilosEditar" required>
                                             
                                         </div>
 
-                                    </div> -->
+                                    </div>
 
                                 </div>
 
@@ -117,9 +100,9 @@
 
 <?php
 
-$nuevaVenta = new ControladorVentas;
+$nuevaVenta = new ControladorChazinados;
 
-$nuevaVenta -> ctrNuevaVentaChazinado();
+$nuevaVenta -> ctrEditarVentaChazinados();
 
 ?>
 

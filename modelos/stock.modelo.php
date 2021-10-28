@@ -50,6 +50,43 @@ class ModeloStock{
 
     }
 	
+	static public function mdlActualizarStockChazinados($tabla,$item,$diferencia,$operador){
+		
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET $item = (SELECT $item FROM $tabla) $operador :$item");
+
+		$stmt->bindParam(":".$item, $diferencia, PDO::PARAM_STR);
+	
+        if($stmt->execute()){
+            
+            return "ok";	
+            
+        }else{
+            return $stmt ->errorInfo();
+
+            return 'error';
+            
+        }
+        
+	}
+
+    static public function mdlActualizarStockChazinadosEliminar($tabla,$item,$valor,$operador){
+		
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET $item = (SELECT $item FROM $tabla) $operador :$item");
+
+		$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+	
+        if($stmt->execute()){
+            
+            return "ok";	
+            
+        }else{
+            return $stmt ->errorInfo();
+
+            return 'error';
+            
+        }
+        
+	}
 
 }
 

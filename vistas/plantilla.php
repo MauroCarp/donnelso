@@ -8,6 +8,14 @@ function formatearFecha($fecha){
   return $nuevaFecha;
 }
 
+function esPositivo($number){
+  
+  $positivo = ($number >= 0) ? true : false;
+
+  return $positivo;
+
+}
+
 ?>
 <!DOCTYPE html>
 <html>

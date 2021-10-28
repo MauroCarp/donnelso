@@ -134,6 +134,8 @@ const selectCaravanaChazinados = (idSelect)=>{
     })
 }
 
+// EDITAR CARNEADA
+
 $('.tablaCarneadas').on('click','.btnEditarCarneada',function(){
 
     let idCarneada = $(this).attr('idcarneada')
@@ -176,6 +178,41 @@ $('.tablaCarneadas').on('click','.btnEditarCarneada',function(){
 
         }
     })
+})
+
+// VER CHAZINADOS
+
+$('.tablaCarneadas').on('click','.modalVerChazinados',function(){
+
+    console.log('hola');
+    
+    let idCarneada = $(this).attr('idcarneada')
+
+    let url = 'ajax/chazinados.ajax.php'
+
+    let data = `accion=cargarDataEditar&idCarneada=${idCarneada}`
+
+    $.ajax({
+        method: 'post',
+        url,
+        data,
+        success:(response)=>{
+
+            response = JSON.parse(response);
+
+            $('#verKgChorizos').val(response.chorizo)
+            $('#verKgMorcillas').val(response.morcilla)
+            $('#verKgSalames').val(response.salame)
+            $('#verKgBondiolas').val(response.bondiola)
+            $('#verKgJamon').val(response.jamon)
+            $('#verKgGrasa').val(response.codeguin)
+            $('#verKgCodeguin').val(response.grasa)
+            $('#verKgChicharron').val(response.chicharron)
+            $('#verKgCarne').val(response.carne)
+
+        }
+    })
+
 })
  
 //---------------------------///
@@ -246,6 +283,7 @@ const agregarProducto = (numero)=>{
     inputKg.setAttribute('name',`kg[]`)
     inputKg.setAttribute('type',`number`)
     inputKg.setAttribute('class',`form-control kilos`)
+    inputKg.setAttribute('step',`0.01`)
     inputKg.setAttribute('required',`required`)
 
     divFormProductos.append(labelProductos)
@@ -370,6 +408,10 @@ $('.tablaVentasChazinados').on('click','.btnEliminarVentaChazinado',function(){
 
     let idVenta = $(this).attr('idventachazinado');
 
+    let producto = $(this).attr('producto')
+    
+    let kg = $(this).attr('kg')
+
     new swal({
         title: '¿Está seguro de borrar la Venta?',
         text: "¡Si no lo está puede cancelar la accíón!",
@@ -383,10 +425,55 @@ $('.tablaVentasChazinados').on('click','.btnEliminarVentaChazinado',function(){
     
         if(result.value){
     
-          window.location = `index.php?ruta=ventasChazinado&idVentaChazinado=${idVenta}`;
+          window.location = `index.php?ruta=ventasChazinado&idVentaChazinado=${idVenta}&producto=${producto}&kg=${kg}`;
     
         }
     
       })
+
+})
+
+// EDITAR VENTA CHAZINADO
+
+$('.tablaVentasChazinados').on('click','.btnEditarVentaChazinado',function(){
+
+    let idVenta = $(this).attr('idventachazinado')
+
+    let url = 'ajax/chazinados.ajax.php'
+
+    let data = `accion=cargarDataVenta&idVenta=${idVenta}`
+
+    $.ajax({
+        method: 'post',
+        url,
+        data,
+        success:(response)=>{
+
+            response = JSON.parse(response);
+
+            $('#idVentaChazinado').val(response.id)
+            $('#compradorChazinadoEditar').val(response.comprador)
+            
+            productos.map(producto => {
+
+                let opt = `<option value='${producto}'>${capitalizarPrimeraLetra(producto)}</option>`
+                
+                if(producto == response.producto){
+                    
+                    opt = `<option value='${producto}' selected>${capitalizarPrimeraLetra(producto)}</option>`
+                
+                }
+
+                $('#productoEditar').append(opt)
+
+            })
+
+            $('#kgEditar').val(response.kg)
+
+
+           
+
+        }
+    })
 
 })

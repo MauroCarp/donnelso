@@ -49,7 +49,7 @@
 
               $valor = null;
 
-              $respuesta = ControladorChazinados::ctrMostrarCarneada($item,$valor);
+              $respuesta = ControladorChazinados::ctrMostrarChazinado($item,$valor);
 
               for ($i=0; $i < sizeof($respuesta) ; $i++) { 
                 
@@ -61,7 +61,7 @@
                               <td>'.$propio.'</td>
                               <td>'.$respuesta[$i]['kgVivo'].'</td>
                               <td>'.$respuesta[$i]['kgLimpio'].'</td>
-                              <td><button class="btn btn-default modalVerChazinados btn-no-margintop" idCarneada="'.$respuesta[$i]['idCarneada'].'"><b>Chazinado</b></button></td>
+                              <td><button class="btn btn-default modalVerChazinados btn-no-margintop" idCarneada="'.$respuesta[$i]['idCarneada'].'" data-toggle="modal" data-target="#ventanaModalVerChazinados"><b>Chazinado</b></button></td>
                               <td>
                                   
                                   <div class="btn-group">
@@ -93,5 +93,6 @@
 <?php
 
 include "modales/editarChazinado.modal.php";
+include "modales/verChazinados.modal.php";
 
 ?>

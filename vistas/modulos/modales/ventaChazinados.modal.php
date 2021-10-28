@@ -30,7 +30,7 @@
 
                                         <label for="compradorChazinado">Comprador</label>
                                     
-                                        <input type="text" class="form-control" id="compradorChazinado" name="compradorChazinado" placeholder="Comprador">  
+                                        <input type="text" class="form-control" id="compradorChazinado" name="compradorChazinado" placeholder="Comprador" required>  
 
                                     </div>
 
@@ -80,7 +80,7 @@
                                         
                                             <label for="kg0">Kg:</label>
                                             
-                                            <input type="number" name="kg[]" id="kg0" class="form-control kilos" required>
+                                            <input type="number" step="0.01" name="kg[]" id="kg0" class="form-control kilos" required>
                                             
                                         </div>
 

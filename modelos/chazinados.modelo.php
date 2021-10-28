@@ -41,7 +41,7 @@ class ModeloChazinados{
 
 	}
 
-	static public function mdlMostrarCarneada($tabla,$item,$valor){
+	static public function mdlMostrarChazinado($tabla,$item,$valor){
 
 		if($item != NULL){
 
@@ -118,42 +118,38 @@ class ModeloChazinados{
 
 	}
 
-	// static public function mdlCambiarEstado($tabla,$item,$valor,$item2,$valor2){
-
-	// 	$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET $item2 = :$item2 WHERE $item = :$item");
-		
-	// 	$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
-	// 	$stmt->bindParam(":".$item2, $valor2, PDO::PARAM_STR);
-
-	// 	if($stmt->execute()){
-			
-	// 		return "ok";	
-			
-	// 	}else{
-	// 		print_r($stmt ->errorInfo());
-
-	// 		return 'error';
-			
-	// 	}
+	static public function mdlEditarVentaChazinados($tabla,$datos){
 	
-	// }
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET 
+		comprador = :comprador,
+		producto = :producto,
+		kg = :kg
+		WHERE id = :id");
 
-	// static public function mdlCaravanaValida($tabla,$item,$valor,$item2,$valor2){
-	
-	// 	$stmt = Conexion::conectar()->prepare("SELECT COUNT($item) as caravanaValida FROM $tabla WHERE $item = :$item AND $item2 = :$item2");
+		$stmt->bindParam(":comprador", $datos["comprador"], PDO::PARAM_STR);
+		$stmt->bindParam(":producto", $datos["producto"], PDO::PARAM_STR);
+		$stmt->bindParam(":kg", $datos["kg"], PDO::PARAM_STR);
+		$stmt->bindParam(":id", $datos["idVenta"], PDO::PARAM_STR);
 		
-	// 	$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
-	// 	$stmt->bindParam(":".$item2, $valor2, PDO::PARAM_STR);
-		
-	// 	$stmt->execute();	
+		// return $datos;
+		if($stmt->execute()){
+			
+			// print_r($stmt ->errorInfo());
+			return "ok";	
+			
+		}else{
 
-	// 	return $stmt->fetch();
-				
-	// 	$stmt->close();
+			var_dump($stmt ->errorInfo());
+			return 'error';
+			
+		}
 		
-	// 	$stmt = null;
+		$stmt->close();
+		
+		$stmt = null;
 
-	// }
+
+	}
 
 }
 

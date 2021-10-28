@@ -4,7 +4,7 @@ class ControladorStock{
 
     static public function ctrActualizarStock($item,$valor,$sumaResta){
 
-            $tabla = 'stockVenta';
+            $tabla = 'stockventa';
 
             $respuesta = ModeloStock::mdlActualizarStock($tabla,$item,$valor,$sumaResta);
         
@@ -33,6 +33,53 @@ class ControladorStock{
         $tabla = 'stockchazinados';
 
         return $respuesta = ModeloStock::mdlMostrarStock($tabla,$item,$valor);
+
+    }
+
+    static public function ctrActualizarStockChazinados($productoOriginal,$kgOriginal,$productoNuevo,$kgNuevo){
+
+        $tabla = 'stockchazinados';
+
+        if($productoOriginal == $productoNuevo){
+
+            $diferencia = $kgNuevo - $kgOriginal;
+
+            $operador = (esPositivo($diferencia)) ? '-' : '+';
+
+            $diferencia = (esPositivo($diferencia)) ? $diferencia : str_replace('-','',$diferencia);
+
+            $item = 'kg'.ucfirst($productoOriginal);
+
+            $respuesta = ModeloStock::mdlActualizarStockChazinados($tabla,$item,$diferencia,$operador);
+
+        }else{
+
+            $operador = '+';
+
+            $item = 'kg'.ucfirst($productoOriginal);
+
+            $respuesta = ModeloStock::mdlActualizarStockChazinados($tabla,$item,$kgOriginal,$operador);
+
+            $operador = '-';
+
+            $item = 'kg'.ucfirst($productoNuevo);
+            
+            $respuesta = ModeloStock::mdlActualizarStockChazinados($tabla,$item,$kgNuevo,$operador);
+
+
+        }
+        
+        return $respuesta;
+        // return $diferencia;
+
+
+    }
+
+    static public function ctrActualizarStockChazinadosSumarRestar($producto,$kg,$operador){
+
+        $tabla = 'stockchazinados';
+
+        return $respuesta = ModeloStock::mdlActualizarStockChazinadosEliminar($tabla,$producto,$kg,$operador);
 
     }
 

@@ -38,15 +38,14 @@ class ControladorChazinados{
         
     }
 
-    static public function ctrMostrarCarneada($item,$valor){
+    static public function ctrMostrarChazinado($item,$valor){
 
-        $tabla = 'carneadas';
+        $tabla = ($item == 'idCarneada' OR $item == null) ? 'carneadas' : 'ventaschazinados';
 
-        return $respuesta = ModeloChazinados::mdlMostrarCarneada($tabla,$item,$valor);
+        return $respuesta = ModeloChazinados::mdlMostrarChazinado($tabla,$item,$valor);
          
     }
 
-      
     static public function ctrEditarCarneada(){
 
         if(isset($_POST['btnEditarChazinado'])){
@@ -72,9 +71,89 @@ class ControladorChazinados{
             'carne'=>$_POST['editarKgCarne']);
 
             $respuesta = ModeloChazinados::mdlEditarCarneada($tabla,$datos);
+
+            if($respuesta == 'ok'){
+                    
+                echo '<script>
+
+                    new swal({
+
+                        icon: "success",
+                        title: "La carneada ha sido editada correctamente!",
+                        showConfirmButton: true,
+                        confirmButtonText: "Cerrar"
+
+                    }).then(function(result){
+
+                        if(result.value){
+                        
+                            window.location = "chazinados";
+
+                        }
+
+                    });
+
+                </script>';
+
+            }else{
+        
+                echo '<script>
+
+                swal({
+
+                    icon: "error",
+                    title: "Hubo un error al cargar. Notificar a Mauro",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+
+                }).then(function(result){
+
+                    if(result.value){
+                    
+                        window.location = "chazinados";
+
+                    }
+
+                });
+
+                </script>';
             
-//             var_dump($respuesta);
-// die();
+            }
+        }
+    }
+
+    static public function ctrEditarVentaChazinados(){
+
+        if(isset($_POST['editarVentaChazinado'])){
+
+            $tabla = 'ventaschazinados';
+
+            $item = 'id';
+
+            $valor = $_POST['idVentaChazinado'];
+            
+            $datosOriginales = ControladorChazinados::ctrMostrarChazinado($item,$valor);
+
+            $productoOriginal = $datosOriginales['producto'];
+            
+            $kgOriginal = $datosOriginales['kg'];
+
+            $datos = array(
+            'idVenta'=>$_POST['idVentaChazinado'],
+            'comprador'=>$_POST['compradorChazinadoEditar'],
+            'producto'=>$_POST['productoEditar'],
+            'kg'=>$_POST['kgEditar']);
+
+            $productoNuevo = $datos['producto'];
+
+            $kgNuevo = $datos['kg'];
+
+            $actualizarStock = ControladorStock::ctrActualizarStockChazinados($productoOriginal,$kgOriginal,$productoNuevo,$kgNuevo);
+        
+            $respuesta = ModeloChazinados::mdlEditarVentaChazinados($tabla,$datos);
+            
+            die();
+
             if($respuesta == 'ok'){
                     
                 echo '<script>
@@ -128,13 +207,21 @@ class ControladorChazinados{
     static public function ctrEliminarVenta(){
         
         if(isset($_GET["idVentaChazinado"])){
+            
+            $producto = 'kg'.ucfirst($_GET['producto']);
+
+            $kg = $_GET['kg'];
+
+            $operador = '+';
+            
+            $respuesta = ControladorStock::ctrActualizarStockChazinadosSumarRestar($producto,$kg,$operador);
 
 			$tabla ="ventaschazinados";
-
+            
             $item = 'id';
 
             $valor = $_GET['idVentaChazinado'];
-
+            
             $respuesta = ModeloVentas::mdlEliminarVenta($tabla, $item,$valor);
 
             if($respuesta == "ok"){
@@ -182,22 +269,8 @@ class ControladorChazinados{
 		}
     }
 
+    
 
-    // static public function ctrCambiarEstado($item,$valor,$item2,$valor2){
-
-    //     $tabla = 'animales';
-
-    //     return $respuesta = ModeloAnimales::mdlCambiarEstado($tabla,$item,$valor,$item2,$valor2);
-         
-    // }
-
-    // static public function ctrCaravanaValida($item,$valor,$item2,$valor2){
-        
-    //     $tabla = 'animales';
-
-    //     return $respuesta = ModeloAnimales::mdlCaravanaValida($tabla,$item,$valor,$item2,$valor2);
-
-    // }
 }
 
 ?>
