@@ -24,7 +24,7 @@
 
         <button class="btn btn-primary" data-toggle="modal" data-target="#ventanaModalChazinado">Cargar Registro</button><br><br>
 
-       <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
+       <table class="table table-bordered table-striped dt-responsive tablaCarneadas tablas" width="100%">
          
         <thead>
          
@@ -35,52 +35,48 @@
            <th>Propio</th>
            <th>Kg Vivo</th>
            <th>Kg Limpio</th>
+           <th>Chazinados</th>
            <th></th>
         </tr> 
 
         </thead>
 
         <tbody>
-       
-            <tr>
-                <td>27/07/2021</td>
-                <td>10/4</td>
-                <td><button class="btn btn-danger btn-no-margintop"><i class="fa fa-times"></i></button></td>
-                <td>200 Kg</td>
-                <td>148 Kg</td>
-                <td>
-                    
-                    <div class="btn-group">
+          
+          <?php
+              
+              $item = null;
+
+              $valor = null;
+
+              $respuesta = ControladorChazinados::ctrMostrarCarneada($item,$valor);
+
+              for ($i=0; $i < sizeof($respuesta) ; $i++) { 
                 
-                        <button class="btn btn-warning btnEditarChazinado" idChazinado="2" style="margin-top:0px;" data-toggle="modal" data-target="#ventanaModalEditarChazinado"><i class="fa fa-pencil"></i></button>
-                
-                        <button class="btn btn-danger btnEliminarChazinado" idChazinado="2" style="margin-top:0px;"><i class="fa fa-times"></i></button>
-                        
-                    </div>
+                $propio = (!$respuesta[$i]['propio']) ? '<button class="btn btn-danger btn-no-margintop"><i class="fa fa-times"></i></button>' : '<button class="btn btn-success btn-no-margintop"><i class="fa fa-check"></i></button>';
 
-                </td>
+                echo '<tr>
+                              <td>'.formatearFecha($respuesta[$i]['fecha']).'</td>
+                              <td>'.$respuesta[$i]['caravanas'].'</td>
+                              <td>'.$propio.'</td>
+                              <td>'.$respuesta[$i]['kgVivo'].'</td>
+                              <td>'.$respuesta[$i]['kgLimpio'].'</td>
+                              <td><button class="btn btn-default modalVerChazinados btn-no-margintop" idCarneada="'.$respuesta[$i]['idCarneada'].'"><b>Chazinado</b></button></td>
+                              <td>
+                                  
+                                  <div class="btn-group">
+                              
+                                      <button class="btn btn-warning btnEditarCarneada" idCarneada="'.$respuesta[$i]['idCarneada'].'" style="margin-top:0px;" data-toggle="modal" data-target="#ventanaModalEditarCarneada"><i class="fa fa-pencil"></i></button>
+                                      
+                                  </div>
 
-            </tr>
+                              </td>
 
-            <tr>
-                <td>20/06/2021</td>
-                <td>8</td>
-                <td><button class="btn btn-success btn-no-margintop"><i class="fa fa-check"></i></button></td>
-                <td>250 Kg</td>
-                <td>210 Kg</td>
-                <td>
-                    
-                    <div class="btn-group">
-                
-                        <button class="btn btn-warning btnEditarChazinado" idChazinado="2" style="margin-top:0px;" data-toggle="modal" data-target="#ventanaModalEditarChazinado"><i class="fa fa-pencil"></i></button>
-                
-                        <button class="btn btn-danger btnEliminarChazinado" idChazinado="2" style="margin-top:0px;"><i class="fa fa-times"></i></button>
-                        
-                    </div>
+                          </tr>';
 
-                </td>
+              }
 
-            </tr>
+          ?>
 
         </tbody>
 

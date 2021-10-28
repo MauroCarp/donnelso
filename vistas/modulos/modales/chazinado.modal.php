@@ -80,7 +80,7 @@
 
                                                 for ($i=0; $i < sizeof($resultado) ; $i++) { 
                                                     
-                                                    echo "<option value='".$resultado[$i]['caravana'].">".$resultado[$i]['caravana']."</option>";
+                                                    echo "<option value='".$resultado[$i]['caravana']."'>".$resultado[$i]['caravana']."</option>";
                                                 }
                                                 
                                             ?>
@@ -116,7 +116,7 @@
                                     
                                         <label for="kgVivoChazinado">Kg Vivo:</label>
                                     
-                                        <input type="number" step="0.01" id="kgVivoChazinado" class="form-control" required>
+                                        <input type="number" step="0.01" id="kgVivoChazinado" name="kgVivoChazinado" class="form-control" required>
                                     
                                     </div>
 
@@ -129,7 +129,7 @@
                                     
                                         <label for="kgLimpioChazinado">Kg Limpio:</label>
                                     
-                                        <input type="number" step="0.01" id="kgLimpioChazinado" class="form-control" required>
+                                        <input type="number" step="0.01" id="kgLimpioChazinado" name="kgLimpioChazinado" class="form-control" required>
                                     
                                     </div>
 

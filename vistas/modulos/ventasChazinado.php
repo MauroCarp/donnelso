@@ -39,6 +39,7 @@
            <th>Kg</th>
            <th>Precio</th>
            <th>Pedido Realizado</th>
+           <th></th>
   
         </tr> 
 
@@ -60,7 +61,7 @@
 
             $precioTotal = $precioProducto[0] * $respuesta[$i]['kg'];
 
-            $realizado = ($respuesta[$i]['realizado'])  ? "<button class='btn btn-success btnPedidoRealizado' estado=1 idPedido='".$respuesta[$i]['id']."' style='margin-top:0px;'><i class='fa fa-check'></i></button>" : " <button class='btn btn-danger btnPedidoRealizado' estado=0 idPedido='".$respuesta[$i]['id']."' style='margin-top:0px;'><i class='fa fa-times'></i></button>";
+            $realizado = ($respuesta[$i]['realizado'])  ? "<button class='btn btn-success btnPedidoRealizado' estado=1 idPedido='".$respuesta[$i]['id']."' style='margin-top:0px;'><b>Pedido Realizado</b></button>" : " <button class='btn btn-danger btnPedidoRealizado' estado=0 idPedido='".$respuesta[$i]['id']."' style='margin-top:0px;'><b>Pedido Pendiente</b></i></button>";
 
             echo "<tr>
                         <td>".$respuesta[$i]['vendedor']."</td>
@@ -70,6 +71,16 @@
                         <td>".$respuesta[$i]['kg']." Kg</td>
                         <td><b>$</b> ".$precioTotal."</td>
                         <td>".$realizado."</td>
+                        <td>
+                          <div class='btn-group'>
+                        
+                                <button class='btn btn-warning btnEditarVentaChazinado' idVentaChazinado='".$respuesta[$i]['id']."' style='margin-top:0px;' data-toggle='modal' data-target='#ventanaModalEditarVentaChazinado'><i class='fa fa-pencil'></i></button>
+                        
+                                <button class='btn btn-danger btnEliminarVentaChazinado' idVentaChazinado='".$respuesta[$i]['id']."' style='margin-top:0px;'><i class='fa fa-times'></i></button>
+                                
+                            </div>
+                        </td>
+                        
                     </tr>";
         }
 
@@ -87,3 +98,12 @@
   </section>
 
 </div>
+
+<?php
+
+$eliminarVentaChazinado = new ControladorChazinados;
+$eliminarVentaChazinado -> ctrEliminarVenta();
+
+include "modales/editarVentaChazinados.modal.php";
+
+?>

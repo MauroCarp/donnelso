@@ -1,3 +1,10 @@
+ 
+//---------------------------///
+                        //CARNEADA
+                                                    //---------------------------///
+
+// CAMBIAR INPUTS DEPENDIENDO CHECKBOX
+
 $("#propioChazinado").on('change',()=>{
 
     let checkboxPropio = document.getElementById('propioChazinado');
@@ -17,6 +24,7 @@ $("#propioChazinado").on('change',()=>{
 
 })
 
+// AGREGAR CARAVANAS A CARNEADA
 
 const generarInputCaravanasChazinados = (props)=>{
 
@@ -97,9 +105,7 @@ const propsChazinados = {
     funcionEliminar:'eliminarCampoChazinados'
 }
 
-
 $('#agregarCaravanaChazinado').on('click',()=>{
-    
 
     $('#caravanaChazinadoInput').append(generarInputCaravanasChazinados(propsChazinados));
 
@@ -108,8 +114,78 @@ $('#agregarCaravanaChazinado').on('click',()=>{
 });
 
 
-const productos = ['salame','chorizo','morcilla','codeguin','jamon','bondiola','chicharron','grasa','carne']
+// GENERAR SELECTS CARAVANAS
 
+const selectCaravanaChazinados = (idSelect)=>{
+
+    let url = 'ajax/chazinados.ajax.php'
+
+    let data = 'accion=cargarSelect&tipo=cerdo'
+
+    $.ajax({
+        method:'post',
+        data,
+        url,
+        success:(response)=>{
+
+            $(`#${idSelect}`).append(response)
+
+        }
+    })
+}
+
+$('.tablaCarneadas').on('click','.btnEditarCarneada',function(){
+
+    let idCarneada = $(this).attr('idcarneada')
+
+    let url = 'ajax/chazinados.ajax.php'
+
+    let data = `accion=cargarDataEditar&idCarneada=${idCarneada}`
+
+    $.ajax({
+        method: 'post',
+        url,
+        data,
+        success:(response)=>{
+
+            response = JSON.parse(response);
+
+            $('#idCarneada').val(response.idCarneada)
+
+            $('#editarFechaChazinado').val(response.fecha)
+
+            $('#editarCaravanaChazinado').val(response.caravanas)
+
+            if(response.propio == 1) 
+                $('#editarPropioChazinado').attr('checked','true') 
+            else 
+                $('#editarPropioChazinado').removeAttr('checked')
+            
+
+            $('#editarKgVivoChazinado').val(response.kgVivo)
+            $('#editarKgLimpioChazinado').val(response.kgLimpio)
+            $('#editarKgChorizos').val(response.chorizo)
+            $('#editarKgMorcillas').val(response.morcilla)
+            $('#editarKgSalames').val(response.salame)
+            $('#editarKgBondiolas').val(response.bondiola)
+            $('#editarKgJamon').val(response.jamon)
+            $('#editarKgCodeguines').val(response.codeguin)
+            $('#editarKgGrasa').val(response.grasa)
+            $('#editarKgChicharron').val(response.chicharron)
+            $('#editarKgCarne').val(response.carne)
+
+        }
+    })
+})
+ 
+//---------------------------///
+                        //VENTA CHAZINADOS
+                                                    //---------------------------///
+
+
+// AGREGAR PRODUCTO A VENTA
+
+const productos = ['salame','chorizo','morcilla','codeguin','jamon','bondiola','chicharron','grasa','carne']
 
 let contadorVenta = 1
 
@@ -235,6 +311,8 @@ const eliminarCampoProducto = (row)=>{
 
 }
 
+// ACCION PEDIDO REALIZADO PEDIDO PENDIENTE
+
 $('.tablaVentasChazinados').on('click','.btnPedidoRealizado',function(){
 
 
@@ -286,20 +364,29 @@ $('.tablaVentasChazinados').on('click','.btnPedidoRealizado',function(){
 
 });
 
-const selectCaravanaChazinados = (idSelect)=>{
+// ELIMINAR VENTA CHAZINADO
 
-    let url = 'ajax/chazinados.ajax.php'
+$('.tablaVentasChazinados').on('click','.btnEliminarVentaChazinado',function(){
 
-    let data = 'accion=cargarSelect&tipo=cerdo'
+    let idVenta = $(this).attr('idventachazinado');
 
-    $.ajax({
-        method:'post',
-        data,
-        url,
-        success:(response)=>{
-
-            $(`#${idSelect}`).append(response)
-
+    new swal({
+        title: '¿Está seguro de borrar la Venta?',
+        text: "¡Si no lo está puede cancelar la accíón!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'Cancelar',
+          confirmButtonText: 'Si, borrar venta!'
+      }).then(function(result){
+    
+        if(result.value){
+    
+          window.location = `index.php?ruta=ventasChazinado&idVentaChazinado=${idVenta}`;
+    
         }
-    })
-}
+    
+      })
+
+})

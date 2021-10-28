@@ -6,11 +6,16 @@ require_once "../modelos/ventas.modelo.php";
 require_once "../controladores/animales.controlador.php";
 require_once "../modelos/animales.modelo.php";
 
+require_once "../controladores/chazinados.controlador.php";
+require_once "../modelos/chazinados.modelo.php";
+
 class AjaxChazinados{
 
     public $estado;
 
     public $idPedido;
+
+    public $idCarneada;
 
     public function ajaxActualizarEstado(){
 
@@ -38,11 +43,26 @@ class AjaxChazinados{
 
         $resultado = ControladorAnimales::ctrMostrarAnimal($item,$valor,$item2,$valor2);
 
+        $opts = array();
         for ($i=0; $i < sizeof($resultado) ; $i++) { 
                                                     
-            echo "<option value='".$resultado[$i]['caravana'].">".$resultado[$i]['caravana']."</option>";
+            $opts[] = "<option value='".$resultado[$i]['caravana']."'>".$resultado[$i]['caravana']."</option>";
             
         }
+
+        print_r(implode('',$opts));
+        
+    }
+
+    public function ajaxMostrarCarneada(){
+
+        $item = 'idCarneada';
+
+        $valor = $this->idCarneada;
+
+        $resultado = ControladorChazinados::ctrMostrarCarneada($item,$valor);
+
+        print_r(json_encode($resultado));
         
     }
 
@@ -69,6 +89,16 @@ if(isset($_POST['accion'])){
         $cargarSelect = new AjaxChazinados();
     
         $cargarSelect -> ajaxCargarSelect();
+    
+    }
+
+    if($_POST['accion'] == 'cargarDataEditar'){
+
+        $cargarSelect = new AjaxChazinados();
+    
+        $cargarSelect -> idCarneada = $_POST['idCarneada'];
+    
+        $cargarSelect -> ajaxMostrarCarneada();
     
     }
 
