@@ -4,10 +4,10 @@ require_once "conexion.php";
 
 class ModeloStock{
 
-    static public function mdlActualizarStock($tabla,$item,$valor,$sumaResta){
+    static public function mdlActualizarStock($tabla,$item,$valor,$sumaResta,$cantidad){
         
         $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET 
-        stock = (SELECT stock FROM $tabla WHERE $item = :$item) $sumaResta 1
+        stock = (SELECT stock FROM $tabla WHERE $item = :$item) $sumaResta $cantidad
         WHERE $item = :$item");
         
         $stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);

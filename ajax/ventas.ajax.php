@@ -3,6 +3,9 @@
 require_once "../controladores/ventas.controlador.php";
 require_once "../modelos/ventas.modelo.php";
 
+require_once "../controladores/animales.controlador.php";
+require_once "../modelos/animales.modelo.php";
+
 if(isset($_POST['idVenta'])){
     
     $item = 'id';
@@ -14,3 +17,31 @@ if(isset($_POST['idVenta'])){
     print_r(json_encode($respuesta));
 
 }
+
+if(isset($_POST['tipo'])){
+    
+    $item = 'tipo';
+    
+    $valor = $_POST['tipo'];
+    
+    $item2 = 'listoVenta';
+    
+    $valor2 = 1;
+
+    $respuesta = ControladorAnimales::ctrMostrarAnimal($item,$valor,$item2,$valor2);
+    
+    $opts = array();
+
+    for ($i=0; $i < sizeof($respuesta); $i++) { 
+        
+        $caravana = $respuesta[$i]['caravana'];
+
+        $opts[] = "<option value='$caravana'>$caravana</option>";
+
+    }
+
+    echo implode('',$opts);
+
+}
+
+

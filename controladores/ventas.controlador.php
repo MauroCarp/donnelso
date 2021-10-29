@@ -77,7 +77,8 @@ class ControladorVentas{
 
             $tabla = 'ventas';
         
-            $datos = array('fecha'=>$_POST['fechaVenta'],
+            $datos = array('id'=>$_POST['idVenta'],
+            'fecha'=>$_POST['fechaVenta'],
             'preventa'=>0,
             'kgFinal'=>$_POST['kgFinal'],
             'precioFinal'=>$_POST['precioTotalVenta'],
@@ -86,6 +87,56 @@ class ControladorVentas{
 
             $respuesta = ModeloVentas::mdlActualizarVenta($tabla,$datos);
             
+            // ELIMINAR ANIMAL FAENADO
+            
+            if($_POST['animalFaenar'] != 'pollo'){
+            
+                $item = 'tipo'; 
+
+                $valor = $_POST['animalFaenar'];
+                
+                $item2 = 'caravana';
+
+                $valor2 = $_POST['caravanaFaenar'];
+
+                $respuesta = ControladorAnimales::ctrEliminarAnimal($item,$valor,$item2,$valor2);
+            }
+
+            // ELIMNAR POLLOS
+
+            // ACTUALIZAR STOCK
+            $cantidad = 0;
+
+            switch ($_POST['seccionFaenar']) {
+                case 'entero':
+                        $cantidad = 1;
+                    break;
+                
+                case 'medio':
+                        $cantidad = 0.5;
+                    break;
+                
+                case 'cuartoDel':
+                        $cantidad = 0.25;
+                    break;
+                
+                case 'cuartoTra':
+                        $cantidad = 0.25;
+                    break;
+                
+                default:
+                    # code...
+                    break;
+            }
+
+            $item = 'animal';
+
+            $valor = $_POST['animalFaenar'];
+            
+            $operador = '-';
+
+            $respuesta = ControladorStock::ctrActualizarStock($item,$valor,$operador,$cantidad);
+
             if($respuesta == 'ok'){
                     
                 echo '<script>

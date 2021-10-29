@@ -95,10 +95,15 @@ $('.tablaPreVentas').on('click','.btnFinalizarVenta',function(){
 
 			let respuesta = JSON.parse(response);
 			
+			$('#idVenta').val(respuesta[0].id);
 			$('#fechaVenta').val(respuesta[0].fecha);
 			$('#compradorVenta').val(respuesta[0].comprador);
-			$('#animal').html(capitalizarPrimeraLetra(respuesta[0].animal));
-			$('#animal').next('i').attr('class',`icon icon-${respuesta[0].animal}`);
+			$('#animalFaenarText').html(capitalizarPrimeraLetra(respuesta[0].animal));
+			$('#animalFaenarText').next('i').attr('class',`icon icon-${respuesta[0].animal}`);
+			
+			$('#animalFaenar').val(respuesta[0].animal);
+
+			cargarSelectListosVenta(respuesta[0].animal);
 
 			if(respuesta[0].animal ==  'pollo' ||  respuesta[0].animal ==  'vaca'){
 				
@@ -107,16 +112,20 @@ $('.tablaPreVentas').on('click','.btnFinalizarVenta',function(){
 				$('#inputCantidadFinalizar').removeClass('hide');
 				
 				$('#cantidadFinalizar').html(respuesta[0].cantidad);
-			
+				
+				
 			}else{
 				
 				$('#seccionFinalizar').html(capitalizarPrimeraLetra(respuesta[0].seccion));	
-			
+				
+				$('#seccionFaenar').val(respuesta[0].seccion);
+				
 			}
 			
 		}
 
 	});
+
 
 });
 
@@ -136,7 +145,7 @@ $('#kgFinal').on('change',function(){
 
 	let kgTotal = $(this).val();
 
-	let animal = $('#animal').html().toLowerCase();
+	let animal = $('#animalFaenar').val();
 
 	let url = 'ajax/precios.ajax.php';
 
@@ -163,3 +172,24 @@ $('#kgFinal').on('change',function(){
 	});
 
 });
+
+const cargarSelectListosVenta = (tipo)=>{
+	
+	$('#caravanaFaenar').html('')
+
+	let data = `tipo=${tipo}`;
+
+	let url = 'ajax/ventas.ajax.php';
+
+	$.ajax({
+		method: 'post',
+		url,
+		data,
+		success:function(response){
+
+			$('#caravanaFaenar').append(response);
+			
+		}
+	})
+
+}

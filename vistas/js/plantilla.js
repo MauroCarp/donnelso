@@ -135,3 +135,29 @@ const convertirFecha = (string)=>{
 	return fecha;
 
 }
+
+
+// CARGAR ANIMAL AL LOCALSTORAGE SEGUN SECCION
+
+$('.sidebar ul li a').on('click',(evt)=>{
+
+	let seccion = evt.currentTarget.href.replace('http://localhost/donnelso/','')
+
+	switch (seccion) {
+		case 'engorde':
+				localStorage.setItem('animalEngorde','cerdo')
+			break;
+	
+		case 'sanidad':
+				localStorage.setItem('animalSanidad','cerdo')
+			break;
+	
+		case 'servicios':
+				localStorage.setItem('animalServicio','cerdo')
+			break;
+	
+		default:
+			break;
+	}
+	
+});

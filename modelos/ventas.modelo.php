@@ -42,8 +42,10 @@ class ModeloVentas{
 		preventa = :preventa,
 		precioVenta = :precioVenta,
 		kgFinal = :kgFinal,
-		comisionEmpleado = :comisionEmpleado");
+		comisionEmpleado = :comisionEmpleado
+		WHERE id = :id");
 
+		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR);
 		$stmt->bindParam(":fecha", $datos["fecha"], PDO::PARAM_STR);
 		$stmt->bindParam(":preventa", $datos["preventa"], PDO::PARAM_STR);
 		$stmt->bindParam(":kgFinal", $datos["kgFinal"], PDO::PARAM_STR);

@@ -20,7 +20,7 @@
                     
                     <div class='box-header with-border'>    
                         <form method="post">
-
+                            <input type="hidden" name="idVenta" id="idVenta">
                             <div class='row'>
                                 
                                 <div class="col-xs-12 col-lg-6">
@@ -53,18 +53,22 @@
 
                                 <div class="col-lg-6  callout callout-success">
                                 
-                                        <label for="animal">Animal:</label><br>
+                                    <label for="animalFaenar">Animal:</label><br>
 
-                                            <strong id="animal" style="font-size:1.4em;"></strong>
-                                            <i style="font-size:1.5em"></i>
-                
-                                </div>
+                                    <strong id="animalFaenarText" style="font-size:1.4em;"></strong>
+                                    <i style="font-size:1.5em"></i>
 
-                                <div class="col-lg-6 callout callout-success" id="inputSeccionFinalizar">
+                                    <input type="hidden" name="animalFaenar" id="animalFaenar">                
                                 
+                                </div>
+                                    
+                                <div class="col-lg-6 callout callout-success" id="inputSeccionFinalizar">
+                                        
                                     <label for="seccionFinalizar">Secci&oacute;n:</label><br>
-
+                                        
                                     <strong id="seccionFinalizar" style="font-size:1.4em;"></strong>
+                                    
+                                    <input type="hidden" name="seccionFaenar" id="seccionFaenar">                
                                 
                                 </div>
 
@@ -79,7 +83,45 @@
                             </div>
                             
                             <div class="row">
+                                
+                                <div class="col-xs-12 col-lg-12" style="text-align:center;font-size:1.5em;">
+                                    
+                                    <strong>Faenar</strong>
+                                
+                                </div>
 
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-xs-12 col-lg-6">
+                                
+                                    <div class="form-group">
+
+                                        <label for="caravanaFaenar">Caravana:</label>
+                                        
+                                            <select name="caravanaFaenar" id="caravanaFaenar" class="form-control">
+
+                                            <?php
+                                                
+                                                $item = 'tipo';
+
+                                                $valor = '';
+
+                                                $item2 = 'listoVenta';
+
+                                                $valor2 = 1;
+
+                                                $caravanasListasVenta = ControladorAnimales::ctrMostrarAnimal($item,$valor,$item2,$valor2);
+
+                                            ?>
+                                            
+                                            </select>
+
+                                    </div>
+                                
+                                </div>
+                            
                                 <div class="col-xs-12 col-lg-6">
                                 
                                     <div class="form-group">
@@ -97,7 +139,7 @@
                                     </div>
                                 
                                 </div>
-                            
+
                             </div>
                             
                             <div class="row">
@@ -144,7 +186,7 @@
                             
                                 <div class="col-lg-12">
                                     
-                                    <button class="btn btn-primary btn-block" name="actualizarVenta" type="submit">Cargar Venta</button>
+                                    <button class="btn btn-primary btn-block" name="actualizarVenta" type="submit">Finalizar Venta</button>
 
                                 </div>
 

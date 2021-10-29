@@ -329,7 +329,6 @@
     include "modales/preVenta.modal.php";
     include "modales/parto.modal.php";
     include "modales/compra.modal.php";
-    include "modales/faena.modal.php";
     include "modales/servicios.modal.php";
     include "modales/chazinado.modal.php";
     include "modales/ventaChazinados.modal.php";

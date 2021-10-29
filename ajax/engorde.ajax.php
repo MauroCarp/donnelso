@@ -34,7 +34,7 @@ class AjaxEngorde{
 
         $tipo = $this->tipo;
 
-        $actualizarStock = ControladorStock::ctrActualizarStock($item,$tipo,$sumaResta);
+        $actualizarStock = ControladorStock::ctrActualizarStock($item,$tipo,$sumaResta,1);
 
         echo json_encode($resultado);
 

@@ -2,11 +2,11 @@
 
 class ControladorStock{
 
-    static public function ctrActualizarStock($item,$valor,$sumaResta){
+    static public function ctrActualizarStock($item,$valor,$sumaResta,$cantidad){
 
             $tabla = 'stockventa';
 
-            $respuesta = ModeloStock::mdlActualizarStock($tabla,$item,$valor,$sumaResta);
+            return $respuesta = ModeloStock::mdlActualizarStock($tabla,$item,$valor,$sumaResta,$cantidad);
         
     }
 
