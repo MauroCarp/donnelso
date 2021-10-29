@@ -49,7 +49,7 @@ class ModeloConsumo{
 
 		}else{
 			
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY nombre asc");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY fecha DESC");
 		
 			$stmt->execute();
 	

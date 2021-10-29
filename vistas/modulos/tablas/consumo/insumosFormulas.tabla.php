@@ -39,21 +39,21 @@
               echo "<tr>
 
                 <td>".$formulas[$i]['nombre']."</td>
-                <td>".$formulas[$i]['precioKg']."</td>
+                <td>".number_format($formulas[$i]['precioKg'],2,',','.')."</td>
                 <td>
 
                   <div class='btn-group'>
                                     
-                      <button class='btn btn-warning btnEditarFormula' idFormula='".$formulas[$i]['id']."' style='margin-top:0px;' id='modalEditarFormula'  data-toggle='modal' data-target='#ventanaModalEditarFormula'><span class='fa fa-pencil'></span></button>
-                      <button class='btn btn-danger btnEliminarFormula' idFormula='".$formulas[$i]['id']."' style='margin-top:0px;'><i class='fa fa-times'></i></button>
-                      
+                    <button class='btn btn-danger btnEliminarFormula' idFormula='".$formulas[$i]['id']."' style='margin-top:0px;'><i class='fa fa-times'></i></button>
+                  
                   </div>
-
-                </td>
-
-              </tr>";
-
-
+                  
+                  </td>
+                  
+                  </tr>";
+                  
+                  
+                  // <button class='btn btn-warning btnEditarFormula' idFormula='".$formulas[$i]['id']."' style='margin-top:0px;' id='modalEditarFormula'  data-toggle='modal' data-target='#ventanaModalEditarFormula'><span class='fa fa-pencil'></span></button>
               }
 
               ?>
