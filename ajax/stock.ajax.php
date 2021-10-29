@@ -29,6 +29,19 @@ if(isset($_POST['accion'])){
             
             $respuesta = ControladorConsumo::ctrActualizarStock($datos,$operador);
 
+            // ACTUALIZAR  PRECIO INSUMO
+
+            $item = 'precioKg';
+
+            $valor = $_POST['precio'];
+
+            $item2 = 'nombre';
+
+            $valor2 = $_POST['insumo'];
+            
+            $respuesta = ControladorConsumo::ctrActualizarInsumo($item,$valor,$item2,$valor2);
+
+            // 
             $respuesta = ControladorConsumo::ctrNuevoRegistroInsumo($datos);
 
             echo $respuesta;

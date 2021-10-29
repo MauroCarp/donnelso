@@ -118,6 +118,14 @@ class ControladorConsumo{
         return $resultado = ModeloConsumo::mdlMostrarInsumo($tabla,$item,$valor);
     }
 
+    static public function ctrActualizarInsumo($item,$valor,$item2,$valor2){
+
+        $tabla = 'insumos';
+
+       return  $respuesta = ModeloConsumo::mdlActualizarInsumo($tabla,$item,$valor,$item2,$valor2);
+        
+    }
+
     static public function ctrEliminarInsumo(){
         
 		if(isset($_GET["idInsumo"])){
@@ -570,8 +578,6 @@ class ControladorConsumo{
 		}
     
     }
-
-
 
 }   
 

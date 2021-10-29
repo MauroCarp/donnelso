@@ -259,11 +259,11 @@ class ModeloIngresos{
 	=============================================*/
 	static public function mdlNuevoRegParto($tabla,$datos){
 		
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(tipo,idMadre,idPadre,fecha,cantidad,sexo,mellizo,complicacion) VALUES(:tipo,:idMadre,:idPadre,:fecha,:cantidad,:sexo,:mellizo,:complicacion)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(tipo,caravanaMadre,caravanaPadre,fecha,cantidad,sexo,mellizo,complicacion) VALUES(:tipo,:caravanaMadre,:caravanaPadre,:fecha,:cantidad,:sexo,:mellizo,:complicacion)");
 
 		$stmt->bindParam(":tipo", $datos['tipo'], PDO::PARAM_STR);
-		$stmt->bindParam(":idMadre", $datos['idMadre'], PDO::PARAM_STR);
-		$stmt->bindParam(":idPadre", $datos['idPadre'], PDO::PARAM_STR);
+		$stmt->bindParam(":caravanaMadre", $datos['caravanaMadre'], PDO::PARAM_STR);
+		$stmt->bindParam(":caravanaPadre", $datos['caravanaPadre'], PDO::PARAM_STR);
 		$stmt->bindParam(":fecha", $datos["fechaParto"], PDO::PARAM_STR);
 		$stmt->bindParam(":cantidad", $datos["cantidadNacidos"], PDO::PARAM_STR);
 		$stmt->bindParam(":sexo", $datos["sexo"], PDO::PARAM_STR);

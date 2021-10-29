@@ -59,6 +59,32 @@ class ModeloConsumo{
 		
 	}
 
+	static public function mdlActualizarInsumo($tabla,$item,$valor,$item2,$valor2){
+		
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET $item = :$item WHERE  $item2 = :$item2"); 
+        
+        $stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+		$stmt->bindParam(":".$item2, $valor2, PDO::PARAM_STR);
+
+		// return $stmt;
+
+		if($stmt->execute()){
+			
+			// print_r($stmt ->errorInfo());
+			return "ok";	
+			
+		}else{
+
+			var_dump($stmt ->errorInfo());
+			return 'error';
+			
+		}
+		
+		$stmt->close();
+		
+		$stmt = null;
+	}
+
 	static public function mdlInsumoValido($tabla,$item,$valor){
 
 		$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) FROM $tabla WHERE $item = :$item");

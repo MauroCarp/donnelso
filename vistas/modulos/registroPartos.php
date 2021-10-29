@@ -75,29 +75,21 @@
             for ($a=0; $a < sizeof($registros); $a++) { 
 
               $item = 'idAnimal';
-
-                $valor = $registros[$a]['idMadre'];
             
-                $caravanaMadre = ControladorAnimales::ctrMostrarAnimal($item,$valor,$item2,$valor2);
+              $mellizos = ($registros[$a]['mellizo'] == 0 OR $registros[$a]['mellizo'] == null) ? '<button class="btn btn-danger btn-no-margintop"><i class="fa fa-times"></i></button>'  : '<button class="btn btn-success btn-no-margintop"><i class="fa fa-check"></i></button>'; 
 
-                $valor = $registros[$a]['idPadre'];
-                
-                $caravanaPadre = ControladorAnimales::ctrMostrarAnimal($item,$valor,$item2,$valor2);
-               
-                $mellizos = ($registros[$a]['mellizo'] == 0 OR $registros[$a]['mellizo'] == null) ? '<button class="btn btn-danger btn-no-margintop"><i class="fa fa-times"></i></button>'  : '<button class="btn btn-success btn-no-margintop"><i class="fa fa-check"></i></button>'; 
-
-                echo "<tr>
-                            <td>".ucfirst($registros[$a]['tipo'])."</td>
-                            <td>".formatearFecha($registros[$a]['fecha'])."</td>
-                            <td>".$caravanaMadre[0]['caravana']."</td>
-                            <td>".$caravanaPadre[0]['caravana']."</td>
-                            <td>".$registros[$a]['cantidad']."</td>
-                            <td>".$registros[$a]['sexo']."</td>
-                            <td>".$mellizos."</td>
-                            <td>".$registros[$a]['complicacion']."</td>
-                            <td><button class='btn btn-success btnVerParto btn-no-margintop' idParto='".$registros[$a]['idParto']."' data-toggle='modal' data-target='#ventanaModalVerParto'><i class='fa fa-eye'></i></button></td>
-                        </tr>
-                ";
+              echo "<tr>
+                          <td>".ucfirst($registros[$a]['tipo'])."</td>
+                          <td>".formatearFecha($registros[$a]['fecha'])."</td>
+                          <td>".$registros[$a]['caravanaMadre']."</td>
+                          <td>".$registros[$a]['caravanaPadre']."</td>
+                          <td>".$registros[$a]['cantidad']."</td>
+                          <td>".$registros[$a]['sexo']."</td>
+                          <td>".$mellizos."</td>
+                          <td>".$registros[$a]['complicacion']."</td>
+                          <td><button class='btn btn-success btnVerParto btn-no-margintop' idParto='".$registros[$a]['idParto']."' data-toggle='modal' data-target='#ventanaModalVerParto'><i class='fa fa-eye'></i></button></td>
+                      </tr>
+              ";
 
             }
 
