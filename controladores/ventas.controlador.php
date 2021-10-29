@@ -88,21 +88,24 @@ class ControladorVentas{
             $respuesta = ModeloVentas::mdlActualizarVenta($tabla,$datos);
             
             // ELIMINAR ANIMAL FAENADO
+            if($_POST['caravanaFaenar'] != 'frizado'){
             
-            if($_POST['animalFaenar'] != 'pollo'){
-            
-                $item = 'tipo'; 
-
-                $valor = $_POST['animalFaenar'];
+                if($_POST['animalFaenar'] != 'pollo'){
                 
-                $item2 = 'caravana';
+                    $item = 'tipo'; 
 
-                $valor2 = $_POST['caravanaFaenar'];
+                    $valor = $_POST['animalFaenar'];
+                    
+                    $item2 = 'caravana';
 
-                $respuesta = ControladorAnimales::ctrEliminarAnimal($item,$valor,$item2,$valor2);
+                    $valor2 = $_POST['caravanaFaenar'];
+
+                    $respuesta = ControladorAnimales::ctrEliminarAnimal($item,$valor,$item2,$valor2);
+                }
+            
             }
-
             // ELIMNAR POLLOS
+
 
             // ACTUALIZAR STOCK
             $cantidad = 0;

@@ -34,7 +34,6 @@ class ModeloVentas{
 
 	}
 
-
 	static public function mdlActualizarVenta($tabla,$datos){
         
         $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET 

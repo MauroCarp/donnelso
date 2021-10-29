@@ -35,6 +35,48 @@ const cargarPrecioCajas = ()=>{
 
 }
 
+const renderizarStock = (stock)=>{
+
+    let stockExplode = stock.split('.') 
+
+    if(stockExplode.length > 1){
+        
+        let decimal = stockExplode[1]
+
+        let fraccion = '';
+
+        switch (decimal) {
+            case '5':
+                fraccion = '½'        
+                break;
+        
+            case '25':
+                fraccion = '¼'        
+                break;
+        
+            case '75':
+                fraccion = '¾'        
+                break;
+        
+            default:
+                break;
+        }
+
+        if(stockExplode[0] == 0)
+            return fraccion
+        else
+            return `${stockExplode[0]} ${fraccion}`
+        
+
+    }else{
+
+        return stock
+
+    }
+        
+  
+}
+
 const cargarStockCajas = ()=>{
 
 
@@ -50,11 +92,17 @@ const cargarStockCajas = ()=>{
 
             let respuesta = JSON.parse(response)
 
-            $('#cantidadCerdo').html(respuesta.cerdo)
-            $('#cantidadChivo').html(respuesta.chivo)
-            $('#cantidadCordero').html(respuesta.cordero)
-            $('#cantidadPollo').html(respuesta.pollo)
-            $('#cantidadVaca').html(respuesta.vaca)
+            let stockCerdo = renderizarStock(respuesta.cerdo)
+            let stockChivo = renderizarStock(respuesta.chivo)
+            let stockCordero = renderizarStock(respuesta.cordero)
+            let stockPollo = renderizarStock(respuesta.pollo)
+            let stockVaca = renderizarStock(respuesta.vaca)
+
+            $('#cantidadCerdo').html(stockCerdo)
+            $('#cantidadChivo').html(stockChivo)
+            $('#cantidadCordero').html(stockCordero)
+            $('#cantidadPollo').html(stockPollo)
+            $('#cantidadVaca').html(stockVaca)
         
         }
 

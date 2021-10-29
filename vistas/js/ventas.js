@@ -186,6 +186,7 @@ const cargarSelectListosVenta = (tipo)=>{
 		url,
 		data,
 		success:function(response){
+console.log(response);
 
 			$('#caravanaFaenar').append(response);
 			

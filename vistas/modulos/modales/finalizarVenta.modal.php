@@ -19,8 +19,11 @@
                 <div class='box-body'>
                     
                     <div class='box-header with-border'>    
+
                         <form method="post">
+
                             <input type="hidden" name="idVenta" id="idVenta">
+                            
                             <div class='row'>
                                 
                                 <div class="col-xs-12 col-lg-6">

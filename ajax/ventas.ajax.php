@@ -30,8 +30,9 @@ if(isset($_POST['tipo'])){
 
     $respuesta = ControladorAnimales::ctrMostrarAnimal($item,$valor,$item2,$valor2);
     
-    $opts = array();
 
+    $opts = array(0=>"<option value='frizado'>Frizado</option>");
+    
     for ($i=0; $i < sizeof($respuesta); $i++) { 
         
         $caravana = $respuesta[$i]['caravana'];
