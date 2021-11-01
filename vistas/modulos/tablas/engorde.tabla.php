@@ -55,7 +55,7 @@
           echo '
           <tr>
             <td>'.$respuesta[$i]['caravana'].'</td>
-            <td>'.$respuesta[$i]['fecha'].'</td>
+            <td>'.formatearFecha($respuesta[$i]['fecha']) .'</td>
             <td>'.$respuesta[$i]['peso'].' Kg</td>
             <td>'.$estado.'</td>
             <td><input type="checkbox" class="checkboxEngorde"  idAnimal="'.$respuesta[$i]['idAnimal'].'" '.$check.'></td>
