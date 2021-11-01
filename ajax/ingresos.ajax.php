@@ -3,6 +3,9 @@
 require_once "../controladores/ingresos.controlador.php";
 require_once "../modelos/ingresos.modelo.php";
 
+require_once "../controladores/animales.controlador.php";
+require_once "../modelos/animales.modelo.php";
+
 class AjaxIngresos{
 
     public $caravanasMadre;
@@ -41,21 +44,34 @@ class AjaxIngresos{
 
     }
 
+    public function ajaxCaravanasBuscar(){
+
+        $item = 'tipo';
+
+        $valor = $this->tipoAnimal;
+
+        $item2 = null;
+        
+        $valor2 = null;
+
+        
+        $resultado = ControladorAnimales::ctrMostrarAnimal($item,$valor,$item2,$valor2);
+
+        print_r(json_encode($resultado));
+
+    }
+
 }
 
-// if(isset($_POST["caravanaMadre"])){
+if(isset($_POST["accion"])){
 
-//     $madreValida = new AjaxIngresos();
-
-//     $madreValida -> caravanaMadre = $_POST['caravanaMadre'];
+    $caravanasBuscar = new AjaxIngresos();
     
-//     $madreValida -> tipoAnimal = $_POST['tipo'];
+    $caravanasBuscar -> tipoAnimal = $_POST['tipo'];
 
-//     $madreValida -> ajaxCaravanaValida();
+    $caravanasBuscar -> ajaxCaravanasBuscar();
 
-//     print_r(json_encode($madreValida));
-
-// }
+}
 
 if(isset($_POST['tipoAnimal'])){
 

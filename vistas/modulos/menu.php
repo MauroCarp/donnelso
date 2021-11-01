@@ -335,5 +335,6 @@
     include "modales/stockChazinado.modal.php";
     include "modales/muertes.modal.php";
     include "modales/precios.modal.php";
+    include "modales/buscar.modal.php";
 
 ?>

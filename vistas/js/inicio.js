@@ -150,5 +150,63 @@ if(pathname.find(element => element == 'inicio')){
     
     cargarStockChazinados();
 
-}    
+}  
+
+const ajaxCaravanas = (url,data)=>{
+
+    $.ajax({
+        method:'post',
+        url,
+        data,
+        success:(response)=>{
+
+                let respuesta = JSON.parse(response);
+
+                respuesta.map(animal=>{
+
+                    $('#caravanaBuscar').append(`<option value="${animal.caravana}">${animal.caravana}</option>`)
+                
+                })
+            
+        }
+    })
+
+}
+
+const cargarCaravanaBuscar = (tipo)=>{
+    
+    let url = 'ajax/ingresos.ajax.php'
+    
+    let data = `accion=buscarAnimal&tipo=${tipo}`
+    
+    $('#caravanaBuscar').html('')
+
+    ajaxCaravanas(url,data);
+    
+    if(tipo == 'ovino'){
+        
+        data = `accion=buscarAnimal&tipo=cordero`
+
+        ajaxCaravanas(url,data)
+
+    }
+
+}
+
+
+$('button[data-target="#ventanaModalBuscar"]').on('click',(evt)=>{
+    
+    let animal = $('input[name="animalBuscar"]').val()
+    
+    cargarCaravanaBuscar(animal)
+
+})
+
+$('input[name="animalBuscar"]').on('click',(evt)=>{
+
+    let tipo = evt.target.value
+
+    cargarCaravanaBuscar(tipo)
+ 
+})
 
