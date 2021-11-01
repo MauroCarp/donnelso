@@ -61,7 +61,7 @@ class ControladorIngresos{
 
                 $peso = ($_POST['kgTotalCompra'] / $totalAnimales);
 
-                $kgTotalCompra = ($_POST['kgTotalCompra'] = 0) ? 1  : $_POST['kgTotalCompra'];
+                $kgTotalCompra = ($_POST['kgTotalCompra'] == 0) ? 1  : $_POST['kgTotalCompra'];
 
                 $precio = ($_POST['precioTotalCompra'] == 0) ? 0 : ($_POST['precioTotalCompra'] / $kgTotalCompra); 
                 
@@ -82,7 +82,7 @@ class ControladorIngresos{
                 "listo" => $listoVenta);
                 
                 $datos['idCompra'] = $datos['fecha']."-".$datos['tipo']."-".$datos['cantidad'];
-                
+
                 $ultimoId = ControladorIngresos::ctrObtenerUltimoId(); 
                 
                 $ultimoId = ($ultimoId) ? $ultimoId[0] : 1; 
