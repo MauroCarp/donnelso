@@ -279,7 +279,7 @@ $(".tablaFormulas").on("click", ".btnEliminarFormula", function(){
 });
 
 // CARGAR DATOS EN NUEVA FORMULA
-const cargarDatosInsumo = (insumo,kilos,numeroId,editar)=>{
+const cargarDatosInsumo = (id,insumo,kilos,numeroId,editar)=>{ 
 
   let data = `insumo=${insumo}`;
 
@@ -295,8 +295,8 @@ const cargarDatosInsumo = (insumo,kilos,numeroId,editar)=>{
 
       let totalPrecio = parseFloat(kilos) * parseFloat(respuesta.precioKg);
 
-      $(`#precioInsumo${numeroId}${editar}`).val(totalPrecio);
-      
+      $(`#${id}${editar}${numeroId}`).val(totalPrecio);
+
     }
 
   })
@@ -333,7 +333,7 @@ const calcularDatos = (id,value,editar)=>{
   
   let insumo = $(`#insumo${editar}${numeroId}`).val();  
   
-  cargarDatosInsumo(insumo,value,numeroId,editar);
+  cargarDatosInsumo('precioInsumo',insumo,value,numeroId,editar);
   
   setTimeout(()=>{
 
@@ -355,53 +355,41 @@ const calcularDatos = (id,value,editar)=>{
 // SUMAR CAMPOS KG Y $KG EN NUEVA FORMULA
 
 const sumarTotal = (editar)=>{
-
+  
   const totales = {
-    totalKg: 0,
-    totalPrecio: 0,
-  };
+    
+    totalKg:0,
+    
+    totalPrecio:0
 
-  console.log(editar);
+  }
+  $(`.kgInsumo${editar}`).each(function(){
+
+    let value = parseFloat($(this).val());
+    
+    totales.totalKg += value;
+    
+  });
+
   
   $(`.preciosInsumos${editar}`).each(function(){
 
-    let value = parseFloat($(this).val());
+    value = parseFloat($(this).val());
 
     totales.totalPrecio += value;
-
+        
   });
 
-  $(`.kgInsumo${editar}`).each(function(){
-    
-    let value = parseFloat($(this).val());
-    
-      totales.totalKg += value;
+  return totales
 
-  });
-
-  return totales;  
- 
 }
 
 
 /*******   EDITAR DATOS **********/
 
-$(".tablaFormulas").on("click",".btnEditarFormula",(evt)=>{
-
-  const nodoPadre = document.getElementById('inputsContainerEditar');
-
-  for (let number = 1; number <= 5; number++) {
- 
-    const element = document.getElementById(`campoEditar${number}`);
-    
-    if(element != null){
-      
-      nodoPadre.removeChild(element);
-
-    }
-    
-  }
-  const idFormula = evt.target.attributes.idformula.value;
+$(".tablaFormulas").on("click",".btnVerFormula",function(){
+  
+  let idFormula = $(this).attr('idformula')
 
   let data = `idFormula=${idFormula}`;
 
@@ -414,44 +402,98 @@ $(".tablaFormulas").on("click",".btnEditarFormula",(evt)=>{
     url:url,
 
     success:function(response){
+      
+      $('#inputsContainerVer').html('')
 
       let respuesta = JSON.parse(response);
+      
+      $('#nombreFormulaVer').val(respuesta[0].nombre);
+      
+      $('#formulaAnimalVer').val(respuesta[0].animal);
 
-      $('#nombreFormulaEditar').val(respuesta.nombre);
+      let totalKg = 0;
+      
+      let totalPrecio = 0;
 
       for (let index = 0; index < 3; index++) {
 
-        let insumo = respuesta[`insumo${index + 1}`];
+        let insumo = respuesta[0][`insumo${index + 1}`];
 
         if(insumo != null){
 
-          $(`#kgInsumoEditar${index}`).val(respuesta[`kg${index + 1}`]);
+          let kg = respuesta[0][`kg${index + 1}`]
 
-          $(`#insumoEditar${index}`).prepend(`<option value="${insumo}" selected>${insumo}</option>`);
+          totalKg += parseFloat(kg)
+
+          let row = document.createElement('div')
+          let divInsumo = row.cloneNode(true)
+          let divKg = row.cloneNode(true)
           
-          if(index != 0){
+          row.setAttribute('class','row')
 
-            agregarInput('inputsContainerEditar','Editar');
-
-            document.getElementById(`kgInsumoEditar${index}`).disabled = false;
-                        
-            $(`#kgInsumoEditar${index}`).val(respuesta[`kg${index + 1}`]);
-
-            $(`#insumoEditar${index}`).prepend(`<option value="${insumo}" selected>${insumo}</option>`);
+          divInsumo.setAttribute('class','col-xs-4 col-lg-4')
           
-          }
-
-          setTimeout(()=>{
-            
-            const totales = sumarTotal('Editar')
+          divKg.setAttribute('class','col-xs-3 col-lg-3')
           
-            $(`#kgTotalEditar`).val(totales.totalKg)
-            $(`#precioTotalEditar`).val(totales.totalPrecio)
+          let  divPrecio = divKg.cloneNode(true)
 
-          },500)
-      
+          let inputKg = document.createElement('input')
+          inputKg.setAttribute('type','number')
+          inputKg.setAttribute('readOnly','true')
+          
+          let inputPrecio = inputKg.cloneNode(true)
+                    
+          let inputInsumo = inputKg.cloneNode(true)
+          
+          inputKg.setAttribute('value',kg)
+
+          inputInsumo.setAttribute('type','text')
+          inputInsumo.setAttribute('readOnly','true')
+          inputInsumo.setAttribute('value',insumo)
+
+
+          inputKg.setAttribute('class','form-control insumosVer')
+
+          inputKg.setAttribute('class','form-control kgInsumoVer')
+
+          inputInsumo.setAttribute('class','form-control')
+          
+          inputPrecio.setAttribute('class','form-control preciosInsumosVer')
+          inputPrecio.setAttribute('id',`precioVer${index+1}`)
+          
+          divInsumo.append(inputInsumo)
+          divKg.append(inputKg)
+          divPrecio.append(inputPrecio)
+
+          row.append(divInsumo)
+          row.append(divKg)
+          row.append(divPrecio)
+
+          $('#inputsContainerVer').append(row)
+          
+          let br = document.createElement('br')
+
+          $('#inputsContainerVer').append(br)
+
+          cargarDatosInsumo('precioVer',insumo,kg,index+1,'')
 
         }
+ 
+                
+        $('#kgTotalVer').val(totalKg)
+        
+        setTimeout(() => {
+          let total = 0
+
+          $('.preciosInsumosVer').each(function(){
+
+            total += parseFloat($(this).val())
+
+          })
+        
+          $('#precioTotalVer').val(total)
+          
+        }, 500);
         
       }
       
@@ -474,6 +516,13 @@ $("#tabInsumosFormulas").on('click',function(){
 
 });
 
+$('a[href="consumo"]').on('click',()=>{
+
+  localStorage.setItem('tabConsumo','tabInsumosFormulas');
+
+});
+
+
 $(()=>{
 
   let tabConsumo = localStorage.getItem('tabConsumo');
@@ -481,8 +530,3 @@ $(()=>{
   $(`#${tabConsumo}`).tab('show');
 });
 
-$('a[href="consumo"]').on('click',()=>{
-
-  localStorage.setItem('tabConsumo','tabInsumosFormulas');
-
-});

@@ -116,7 +116,7 @@
 
                             <div class="col-xs-3 col-lg-3">
 
-                                <input type="number" class="form-control preciosInsumosEditar" id="precioInsumoEditar0" name="precioInsumoEditar[]" readOnly>
+                                <!-- <input type="number" class="form-control preciosInsumosEditar" id="precioInsumoEditar0" name="precioInsumoEditar[]" readOnly> -->
 
                             </div>
                         

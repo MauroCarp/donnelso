@@ -53,7 +53,9 @@
 
 include "modales/consumo/agregarFormula.modal.php";
 
-include "modales/consumo/editarFormula.modal.php";
+// include "modales/consumo/editarFormula.modal.php";
+
+include "modales/consumo/verFormula.modal.php";
 
 include "modales/consumo/agregarRacion.modal.php";
 

@@ -44,6 +44,7 @@
 
                   <div class='btn-group'>
                                     
+                    <button class='btn btn-success btnVerFormula' idFormula='".$formulas[$i]['id']."' style='margin-top:0px;' id='modalVerFormula'  data-toggle='modal' data-target='#ventanaModalVerFormula'><span class='fa fa-eye'></span></button>
                     <button class='btn btn-danger btnEliminarFormula' idFormula='".$formulas[$i]['id']."' style='margin-top:0px;'><i class='fa fa-times'></i></button>
                   
                   </div>
@@ -53,7 +54,6 @@
                   </tr>";
                   
                   
-                  // <button class='btn btn-warning btnEditarFormula' idFormula='".$formulas[$i]['id']."' style='margin-top:0px;' id='modalEditarFormula'  data-toggle='modal' data-target='#ventanaModalEditarFormula'><span class='fa fa-pencil'></span></button>
               }
 
               ?>
