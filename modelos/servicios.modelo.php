@@ -36,23 +36,21 @@ class ModeloServicios{
 
 		if($item != null){
 				
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = $valor");
 
 			if($item2 != null){
 
 				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item AND $item2 = :$item2 ORDER BY fecha DESC");
 			
 				$stmt->bindParam(":".$item2, $valor2, PDO::PARAM_STR);
+
 			}
 			
-			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
-			
-		}else{
-			
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = $valor");
 			
 		}
-			// return $stmt;
+
+		// return $stmt;
+		$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
 
         $stmt->execute();
 

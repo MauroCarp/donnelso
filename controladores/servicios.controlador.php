@@ -35,8 +35,6 @@ class ControladorServicios{
 
                 $idRodeo = ControladorServicios::ctrMostrarRodeo($item,$valor,$item2,$valor2);
                 
-                var_dump($idRodeo);
-
                 $idRodeo = $idRodeo[0]['idRodeo'];
 
                 // ACTUALIZO EL IDRODEO DEL MACHO
