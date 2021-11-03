@@ -95,6 +95,22 @@ class ModeloAnimales{
 
 	}
 
+	static public function mdlMostrarAnimalSexo($tabla,$item,$valor,$item2,$valor2,$sexo){
+
+			$tabla2 = ($sexo == 'M') ? 'machos' : 'hembras';
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal WHERE $tabla.$item = :$item AND $tabla.$item2 = :$item2");
+			
+			$stmt-> bindParam(":".$item2, $valor2);
+
+			$stmt-> bindParam(":".$item, $valor);
+
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+
+	}
+
 	static public function mdlCambiarEstado($tabla,$item,$valor,$item2,$valor2){
 
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET $item2 = :$item2 WHERE $item = :$item");
@@ -152,6 +168,70 @@ class ModeloAnimales{
 	
 	}
 
+	static public function mdlEditarAnimal($tabla,$datos){
+	
+		if($datos['sexo'] == 'M'){
+			
+			$tabla2 = 'machos';
+			
+			$sexo = "$tabla2.idRodeo = :idRodeo";
+
+		}else{
+
+			$tabla2 = 'hembras';
+
+			$sexo = "$tabla2.estadoRodeo = :estadoRodeo,$tabla2.caravanaMacho = :caravanaMacho,$tabla2.fecha = :fecha";
+
+		}
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla INNER JOIN $tabla2 ON $tabla.idAnimal = $tabla2.idAnimal
+		 SET $tabla.caravana = :caravana,
+		 $tabla.fecha = :fecha, 
+		 $tabla.edad = :edad, 
+		 $tabla.peso = :peso, 
+		 $tabla.precio = :precio, 
+		 $tabla.proveedor = :proveedor, 
+		 $tabla.sexo = :sexo, 
+		 $tabla.destino = :destino, 
+		 $tabla.complicacion = :complicacion,
+		 $tabla2.estado = :estado,
+		 $sexo
+		 WHERE idAnimal = :idAnimal");
+		
+		$stmt->bindParam(":caravana", $datos['caravana'], PDO::PARAM_STR);
+		$stmt->bindParam(":fecha", $datos['fecha'], PDO::PARAM_STR);
+		$stmt->bindParam(":edad", $datos['edad'], PDO::PARAM_STR);
+		$stmt->bindParam(":peso", $datos['peso'], PDO::PARAM_STR);
+		$stmt->bindParam(":precio", $datos['precio'], PDO::PARAM_STR);
+		$stmt->bindParam(":proveedor", $datos['proveedor'], PDO::PARAM_STR);
+		$stmt->bindParam(":sexo", $datos['sexo'], PDO::PARAM_STR);
+		$stmt->bindParam(":destino", $datos['destino'], PDO::PARAM_STR);
+		$stmt->bindParam(":complicacion", $datos['complicacion'], PDO::PARAM_STR);
+		$stmt->bindParam(":estado", $datos['estado'], PDO::PARAM_STR);
+		
+		if($datos['sexo'] == 'M'){
+			
+			$stmt->bindParam(":idRodeo", $datos['idRodeo'], PDO::PARAM_STR);
+			
+		}else{
+			
+			$stmt->bindParam(":estadoRodeo", $datos['estadoRodeo'], PDO::PARAM_STR);
+
+			$sexo = "$tabla2.estadoRodeo = :estadoRodeo";
+
+		}
+		if($stmt->execute()){
+			
+			return "ok";	
+			
+		}else{
+			print_r($stmt ->errorInfo());
+
+			return 'error';
+			
+		}
+	
+	}
 
 }
 

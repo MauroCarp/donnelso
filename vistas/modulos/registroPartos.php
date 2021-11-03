@@ -65,8 +65,12 @@
             $item = null;
 
             $valor = null;
+        
+            $item2 = null;
 
-            $registros = ControladorIngresos::ctrMostrarPartos($item,$valor);
+            $valor2 = null;
+
+            $registros = ControladorIngresos::ctrMostrarPartos($item,$valor,$item2,$valor2);
             
             $item2 = null;
 

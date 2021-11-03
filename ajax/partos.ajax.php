@@ -12,6 +12,10 @@ class AjaxPartos{
 
     public $dataParto;
 
+    public $caravana;
+
+    public $tipo;
+
     public function ajaxMostrarDatosParto(){
 
         $valor = $this->idParto;
@@ -54,6 +58,22 @@ class AjaxPartos{
 
     }
 
+    public function ajaxMostrarRegistrosPartos(){
+
+        $item = 'caravanaMadre';
+        
+        $valor = $this-> caravana;
+
+        $item2 = 'tipo';
+        
+        $valor2 = $this->tipo;
+        
+        $resultado = ControladorIngresos::ctrMostrarPartos($item,$valor,$item2,$valor2);
+      
+        print_r(json_encode($resultado));
+
+    }
+
 }
 
 if(isset($_POST['accion'])){
@@ -67,6 +87,18 @@ if(isset($_POST['accion'])){
         $datosParto -> ajaxMostrarDatosParto();
 
         print_r(json_encode($datosParto));
+    }
+
+    if($_POST['accion'] == 'mostrarPartos'){
+
+        $registrosPartos = new AjaxPartos();
+    
+        $registrosPartos -> caravana = $_POST['caravana'];
+        
+        $registrosPartos -> tipo = $_POST['tipo'];
+    
+        $registrosPartos -> ajaxMostrarRegistrosPartos();
+
     }
 
 

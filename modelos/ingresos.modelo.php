@@ -339,17 +339,25 @@ class ModeloIngresos{
     MOSTRAR PARTOS
     =============================================*/
     
-    static public function mdlMostrarPartos($tabla,$item,$valor){
+    static public function mdlMostrarPartos($tabla,$item,$valor,$item2,$valor2){
 
 		if($item != null){
 
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY fecha ASC");
 			
+			if($item2 != null){
+				
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item AND $item2 = :$item2 ORDER BY fecha ASC");
+			
+				$stmt -> bindParam(":".$item2, $valor2, PDO::PARAM_STR);
+			}
+
+			// return $valor.$valor2;
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 			
 			$stmt -> execute();
 			
-			return $stmt -> fetch();
+			return $stmt -> fetchAll();
 			
 		}else{
 			

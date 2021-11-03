@@ -193,8 +193,103 @@ const cargarCaravanaBuscar = (tipo)=>{
 
 }
 
+ 
+const mostrarRodeos = (caravana,tipo, idTbody)=>{
 
-$('button[data-target="#ventanaModalBuscar"]').on('click',(evt)=>{
+    let data = `mostrarRodeosBuscar=true&caravana=${caravana}&tipo=${tipo}`
+    
+    let url = 'ajax/servicios.ajax.php'
+
+    $.ajax({
+        method:'post',
+        url,
+        data,
+        success:(response)=>{
+
+            respuesta = JSON.parse(response)
+            
+            respuesta.map(rodeo=>{
+                  
+                let fila = document.createElement('tr')
+
+                let numRodeo = document.createElement('td')
+                let fecha = numRodeo.cloneNode(true)
+                let caravanasHembras = numRodeo.cloneNode(true)
+                let caravanasMachos = numRodeo.cloneNode(true)
+
+                numRodeo.innerText = rodeo.numeroRodeo
+                fecha.innerText = convertirFecha(rodeo.fecha)
+                caravanasHembras.innerText = rodeo.caravanasHembras
+                caravanasMachos.innerText = rodeo.caravanaMacho
+                
+                fila.append(numRodeo)
+                fila.append(fecha)
+                fila.append(caravanasHembras)
+                fila.append(caravanasMachos)
+
+                 $(`#${idTbody}`).append(fila)
+
+            })
+            
+        }
+    
+    })
+
+}
+
+const mostrarPartos = (caravana,tipo, idTbody)=>{
+
+    let data = `accion=mostrarPartos&caravana=${caravana}&tipo=${tipo}`
+    
+    let url = 'ajax/partos.ajax.php'
+
+    $.ajax({
+        method:'post',
+        url,
+        data,
+        success:(response)=>{
+
+            respuesta = JSON.parse(response)
+            console.log(respuesta);
+            
+            respuesta.map(parto=>{
+                
+                let mellizosText = (parto.mellizo == 0) ? 'NO' : 'SI'
+                
+                let fila = document.createElement('tr')
+
+                let carPadre = document.createElement('td')
+                let fecha = carPadre.cloneNode(true)
+                let cantidad = carPadre.cloneNode(true)
+                let sexo = carPadre.cloneNode(true)
+                let mellizos = carPadre.cloneNode(true)
+                let complicacion = carPadre.cloneNode(true)
+
+                carPadre.innerText = parto.caravanaPadre
+                fecha.innerText = convertirFecha(parto.fecha)
+                cantidad.innerText = parto.cantidad
+                sexo.innerText = parto.sexo
+                mellizos.innerText = mellizosText
+                complicacion.innerText = parto.complicacion
+                
+                fila.append(carPadre)
+                fila.append(fecha)
+                fila.append(cantidad)
+                fila.append(sexo)
+                fila.append(mellizos)
+                fila.append(complicacion)
+
+                $(`#${idTbody}`).append(fila)
+
+            })
+            
+        }
+    
+    })
+
+}
+
+$('button[data-target="#ventanaModalBuscar"]').on('click',()=>{
     
     let animal = $('input[name="animalBuscar"]').val()
     
@@ -202,11 +297,127 @@ $('button[data-target="#ventanaModalBuscar"]').on('click',(evt)=>{
 
 })
 
+$('#btnBuscarAnimal').on('click',(evt)=>{
+
+    evt.preventDefault()
+
+    let tipo = $('input[name="animalBuscar"]').val();
+
+    let caravana =  $('#caravanaBuscar').val()
+
+    let data = `accion=mostrarAnimal&tipo=${tipo}&caravana=${caravana}`
+    
+    let url = 'ajax/inicio.ajax.php'
+
+    $('#ventanaModalVerAnimal').show();
+
+    // CARGAR DATA VER ANIMAL
+
+    $.ajax({
+        method:'post',
+        url,
+        data,
+        success:(response)=>{
+
+            respuesta = JSON.parse(response)
+            
+            idAnimal = respuesta[0].idAnimal 
+
+            let caravana = respuesta[0].caravana
+
+            let sexo = respuesta[0].sexo
+
+            let destino = respuesta[0].destino
+
+            let tipo = respuesta[0].tipo
+
+            $('#caravanaBuscada').val(caravana)
+
+            if(sexo == 'M'){
+                
+                $('#sexoMacho').attr('checked',true)
+                $('#sexoHembra').removeAttr('checked')
+            
+            }else{
+                
+                $('#sexoHembra').attr('checked',true)
+                $('#sexoMacho').removeAttr('checked')
+            
+            }
+
+            $('#btnProveedor').html(respuesta[0].proveedor)
+
+            $('#btnDestinoBuscar').html(destino)
+
+            let opt = (respuesta[0].estadoBuscar == undefined) ? '<option value="">-</option>' : `<option value="${respuesta[0].estadoBuscar}">${respuesta[0].estadoBuscar}</option>`  
+
+            $('#estadoBuscar').append(opt)
+
+            $('#complicacionBuscar').innerText = (respuesta[0].complicacion == null) ? '-' : respuesta[0].complicacion
+
+            let optDestino =  `<option value="${destino}">${destino}</option>`
+            
+            $('#destinoBuscar').append(optDestino)
+
+            if(destino == 'Engorde'){
+                
+                $('#divEngorde').show();
+                $('#divReproductor').hide();
+
+                $('#fechaIngresoBuscar').val(respuesta[0].fecha)
+
+                (respuesta[0].listoVenta) ? $('#listoVentaBuscar').attr('checked') : $('#listoVentaBuscar').removeAttr('checked')
+                
+            }else{
+                
+                $('#divEngorde').hide();
+                $('#divReproductor').show();
+
+                if(sexo == 'H'){
+
+                    $('#reproductorHembra').show()
+                    $('#reproductorMacho').hide()
+                    mostrarPartos(caravana,tipo,'partosBuscar')
+                    mostrarRodeos(caravana,tipo,'rodeosHembraBuscar')
+                    
+                    
+                }else{
+                    
+                    $('#reproductorMacho').show()
+                    $('#reproductorHembra').hide()
+                    mostrarRodeos(caravana,tipo,'rodeosMachoBuscar')
+
+                }
+
+            }
+
+            if(respuesta[0].proveedor == 'Propio'){
+
+            }else{
+
+            }
+
+        }
+
+    })
+    
+    
+})
+
 $('input[name="animalBuscar"]').on('click',(evt)=>{
 
     let tipo = evt.target.value
 
     cargarCaravanaBuscar(tipo)
+
+    $('#ventanaModalVerAnimal').hide();
+
  
+})
+
+$('#caravanaBuscar').on('change',()=>{
+
+    $('#ventanaModalVerAnimal').hide()
+
 })
 

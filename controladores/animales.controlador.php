@@ -34,6 +34,14 @@ class ControladorAnimales{
          
     }
 
+    static public function ctrMostrarAnimalSexo($item,$valor,$item2,$valor2,$sexo){
+
+        $tabla = 'animales';
+
+        return $respuesta = ModeloAnimales::mdlMostrarAnimalSexo($tabla,$item,$valor,$item2,$valor2,$sexo);
+         
+    }
+
     static public function ctrCambiarEstado($item,$valor,$item2,$valor2){
 
         $tabla = 'animales';
@@ -49,6 +57,7 @@ class ControladorAnimales{
         return $respuesta = ModeloAnimales::mdlCaravanaValida($tabla,$item,$valor,$item2,$valor2);
         
     }
+    
     
     static public function ctrEliminarAnimal($item,$valor,$item2,$valor2){
     
@@ -66,6 +75,14 @@ class ControladorAnimales{
 
         return $respuesta = ModeloAnimales::mdlEliminarAnimal($tabla,$item,$idAnimal);
 
+    }
+
+    static public function ctrEditarAnimal($datos){
+    
+        $tabla = "animales";
+
+        return $resultado = ModeloAnimales::mdlEditarAnimal($tabla,$datos);
+        
     }
 
 }
