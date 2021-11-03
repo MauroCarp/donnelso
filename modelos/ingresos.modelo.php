@@ -263,7 +263,7 @@ class ModeloIngresos{
 
 		$stmt->bindParam(":tipo", $datos['tipo'], PDO::PARAM_STR);
 		$stmt->bindParam(":caravanaMadre", $datos['caravanaMadre'], PDO::PARAM_STR);
-		$stmt->bindParam(":caravanaPadre", $datos['caravanaPadre'], PDO::PARAM_STR);
+		$stmt->bindParam(":caravanaPadre", $datos['caravanaMacho'], PDO::PARAM_STR);
 		$stmt->bindParam(":fecha", $datos["fechaParto"], PDO::PARAM_STR);
 		$stmt->bindParam(":cantidad", $datos["cantidadNacidos"], PDO::PARAM_STR);
 		$stmt->bindParam(":sexo", $datos["sexo"], PDO::PARAM_STR);
