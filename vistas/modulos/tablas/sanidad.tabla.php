@@ -28,7 +28,11 @@
 
         <?php
 
-        $respuesta = ControladorSanidad::ctrMostrarSanidad($item,$animal);
+        $item2 = null;
+
+        $valor2 = null;
+
+        $respuesta = ControladorSanidad::ctrMostrarSanidad($item,$animal,$item2,$valor2);
 
         for ($i=0; $i < sizeof($respuesta) ; $i++) { 
 

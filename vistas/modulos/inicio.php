@@ -55,3 +55,11 @@
   </section>
  
 </div>
+
+<?php
+
+include 'modales/proveedor.modal.php';
+include 'modales/destino.modal.php';
+include 'modales/sanidadBuscar.modal.php';
+
+?>

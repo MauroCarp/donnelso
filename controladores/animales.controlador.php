@@ -34,6 +34,14 @@ class ControladorAnimales{
          
     }
 
+    static public function ctrMostrarAnimalSexo($item,$valor,$item2,$valor2,$sexo){
+
+        $tabla = 'animales';
+
+        return $respuesta = ModeloAnimales::mdlMostrarAnimalSexo($tabla,$item,$valor,$item2,$valor2,$sexo);
+         
+    }
+
     static public function ctrCambiarEstado($item,$valor,$item2,$valor2){
 
         $tabla = 'animales';
@@ -49,6 +57,7 @@ class ControladorAnimales{
         return $respuesta = ModeloAnimales::mdlCaravanaValida($tabla,$item,$valor,$item2,$valor2);
         
     }
+    
     
     static public function ctrEliminarAnimal($item,$valor,$item2,$valor2){
     
@@ -66,6 +75,68 @@ class ControladorAnimales{
 
         return $respuesta = ModeloAnimales::mdlEliminarAnimal($tabla,$item,$idAnimal);
 
+    }
+
+    static public function ctrEditarAnimal(){
+    
+        if(isset($_GET['editarAnimal'])){
+
+            $tabla = "animales";
+            
+            $data = json_decode($_GET['data'],true);
+            
+            $resultado = ModeloAnimales::mdlEditarAnimal($tabla,$data);
+            // var_dump($resultado);
+            // die();
+            if($resultado == 'ok'){
+                    
+                echo '<script>
+
+                   new swal({
+
+                        icon: "success",
+                        title: "El registro ha sido guardado correctamente!",
+                        showConfirmButton: true,
+                        confirmButtonText: "Cerrar"
+
+                    }).then(function(result){
+
+                        if(result.value){
+                        
+                            window.location = "inicio";
+
+                        }
+
+                    });
+
+                </script>';
+
+            }else{
+        
+                echo '<script>
+
+               new swal({
+
+                    icon: "error",
+                    title: "Hubo un error al cargar. Notificar a Mauro",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+
+                }).then(function(result){
+
+                    if(result.value){
+                    
+                        window.location = "inicio";
+
+                    }
+
+                });
+
+                </script>';
+            
+            }
+        }
+        
     }
 
 }

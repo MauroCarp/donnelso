@@ -427,8 +427,6 @@ class ControladorIngresos{
                     $datosNacido = array(
                         'tipo' => $tipo,
                         'idAnimal' => $idAnimal,
-                        'idPadre'=> $datosParto['idPadre'],
-                        'idMadre'=> $datosParto['idMadre'],
                         'idParto'=> $idParto,
                         'peso' => $_POST['pesoNacido'.($i + 1)],
                         'fechaNacimiento' => $_POST['fechaParto'],
@@ -514,7 +512,6 @@ class ControladorIngresos{
 
     }
 
-
     static public function ctrUltimaCaravanaHija($item,$valor,$item2,$valor2){
 
         $tabla = 'animales';
@@ -529,11 +526,11 @@ class ControladorIngresos{
     MOSTRAR PARTOS
     =============================================*/
     
-    static public function ctrMostrarPartos($item,$valor){
+    static public function ctrMostrarPartos($item,$valor,$item2,$valor2){
 
         $tabla = 'partos';
 
-        return $resultado = ModeloIngresos::mdlMostrarPartos($tabla,$item,$valor);
+        return $resultado = ModeloIngresos::mdlMostrarPartos($tabla,$item,$valor,$item2,$valor2);
 
     }
 }   

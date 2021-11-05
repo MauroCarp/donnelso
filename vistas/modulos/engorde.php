@@ -52,9 +52,3 @@
 
 
 </div> 
-
-<?php
-
-include "modales/varAnimal.modal.php";
-
-?>

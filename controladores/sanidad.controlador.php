@@ -144,11 +144,11 @@ class ControladorSanidad{
         }
     }
 
-    static public function ctrMostrarSanidad($item,$valor){
+    static public function ctrMostrarSanidad($item,$valor,$item2,$valor2){
 
         $tabla = 'sanidad';
 
-        return $respuesta = ModeloSanidad::mdlMostrarSanidad($tabla,$item,$valor);
+        return $respuesta = ModeloSanidad::mdlMostrarSanidad($tabla,$item,$valor,$item2,$valor2);
 
     }
 

@@ -40,6 +40,23 @@ if (isset($_POST['mostrarRodeos'])) {
 
 }
 
+if (isset($_POST['mostrarRodeosBuscar'])) {
+        
+        $item = 'tipo';
+        
+        $valor = $_POST['tipo'];
+
+        $item2 = 'caravanasHembras';
+
+        $valor2 = $_POST['caravana'];
+        
+        $resultado = ControladorServicios::ctrMostrarRodeosBuscar($item,$valor,$item2,$valor2);
+        
+        print_r(json_encode($resultado));
+
+
+}
+
 if(isset($_POST['validarServicio'])){
 
         $item = 'tipo';
@@ -80,6 +97,7 @@ if(isset($_POST['cargarSelect'])){
 
         // print_r(json_encode($machos));
 
+        // print_r(json_encode($hembras));
         print_r(json_encode($respuesta));
 
 }

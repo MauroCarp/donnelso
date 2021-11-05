@@ -51,8 +51,4 @@ $eliminarRodeo = new ControladorServicios;
 
 $eliminarRodeo -> ctrDesctivarRodeo();
 
-// include "modales/sanidad.modal.php";
-
-// include "modales/sanidadEditar.modal.php";
-
 ?>

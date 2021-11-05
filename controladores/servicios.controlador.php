@@ -35,7 +35,6 @@ class ControladorServicios{
 
                 $idRodeo = ControladorServicios::ctrMostrarRodeo($item,$valor,$item2,$valor2);
                 
-
                 $idRodeo = $idRodeo[0]['idRodeo'];
 
                 // ACTUALIZO EL IDRODEO DEL MACHO
@@ -179,15 +178,23 @@ class ControladorServicios{
 
     }
 
+    static public function ctrMostrarRodeosBuscar($item,$valor,$item2,$valor2){
+
+        $tabla = 'rodeos';
+
+        return $respuesta = ModeloServicios::mdlMostrarRodeosBuscar($tabla,$item,$valor,$item2,$valor2);
+
+    }
+
     static public function ctrDesctivarRodeo(){
         
-        if(isset($_GET["numRodeo"]) AND isset($_GET['tipo'])){
+        if(isset($_GET["idRodeo"]) AND isset($_GET['tipo'])){
 
 			$tabla = "rodeos";
             
-            $item = 'numeroRodeo';
+            $item = 'idRodeo';
 
-            $valor = $_GET['numRodeo'];
+            $valor = $_GET['idRodeo'];
             
             $item2 = 'tipo';
 
@@ -195,8 +202,34 @@ class ControladorServicios{
 
             $estadoRodeo = 0;
 
-            $respuesta = ModeloServicios::mdlDesctivarRodeo($tabla, $item,$valor,$item2,$valor2,$estadoRodeo);
+            $respuesta = ModeloServicios::mdlDesctivarRodeo($tabla, $item,$valor,$estadoRodeo);
+
+            // CAMBIAR ID RODEO DE MACHO|
+
+                // MUESTRO DATOS DEL RODEO CON EL ID
             
+                $item2 = null;
+                
+                $valor2 = null;
+
+                $rodeo = ControladorServicios::ctrMostrarRodeo($item,$valor,$item2,$valor2);
+                
+                // OBTENGO CARAVANA MACHO
+
+                $caravanaMacho = $rodeo[0]['caravanaMacho'];
+                
+                $item = "tipo";
+
+                $valor = $_GET['tipo'];
+
+                $item2 = 'caravana';
+
+                $valor2 = $caravanaMacho;
+
+                $idRodeo = null;
+
+                $resultado = ControladorServicios::ctrActualizarIdRodeoMacho($item,$valor,$item2,$valor2,$idRodeo);
+
             if($respuesta == "ok"){
 
                 echo'<script>

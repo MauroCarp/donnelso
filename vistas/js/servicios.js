@@ -355,7 +355,7 @@ const generarRodeo = (props)=>{
 
     let btnEliminarRodeo = document.createElement('button');
     btnEliminarRodeo.setAttribute('class','btn btn-danger btnEliminarRodeo')
-    btnEliminarRodeo.setAttribute('numRodeo',props.numeroRodeo)
+    btnEliminarRodeo.setAttribute('idRodeo',props.idRodeo)
     btnEliminarRodeo.setAttribute('tipo',props.tipo)
     btnEliminarRodeo.setAttribute('type','button')
     btnEliminarRodeo.setAttribute('style','float:right;margin:auto auto')
@@ -417,6 +417,7 @@ const rodeos = (idTab,tipo)=>{
         data,
         success:function(response){
             
+            console.log(response);
             let respuesta = JSON.parse(response)
             
             respuesta.map(rodeo=>{
@@ -463,6 +464,7 @@ const accionBtnServir = (evt,tipo)=>{
         let textButton = evt.target.innerText;
         
         let caravanaMacho = $(`#selectMachos${tipo}${caravana}`).val()
+console.log(`#selectMachos${tipo}${caravana}`);
 
         let fecha = $(`#fechaServida${tipo}${caravana}`).val()
                 
@@ -482,6 +484,8 @@ const accionBtnServir = (evt,tipo)=>{
             tipo
         }
         
+        console.log(props);
+
         servirHembra(props)
 
 }
@@ -600,7 +604,7 @@ $('a[href="servicios"]').on('click',()=>{
 // ELIMINAR RODEO
 const eliminarRodeo = ()=>{
     
-    let numRodeo = window.event.target.attributes[1].nodeValue
+    let idRodeo = window.event.target.attributes[1].nodeValue
     let tipo = window.event.target.attributes[2].nodeValue
 
     
@@ -617,7 +621,7 @@ const eliminarRodeo = ()=>{
     
         if(result.value){
     
-          window.location = `index.php?ruta=servicios&numRodeo=${numRodeo}&tipo=${tipo}`
+          window.location = `index.php?ruta=servicios&idRodeo=${idRodeo}&tipo=${tipo}`
     
         }
     
@@ -650,7 +654,7 @@ $(()=>{
         
         $('.btnServirHembra').on('click',(evt)=>{
                 
-              accionBtnServir(evt);
+              accionBtnServir(evt,tipo);
       
           })
           
