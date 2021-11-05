@@ -53,7 +53,7 @@
            <th>Sexo</th>
            <th>Mellizo</th> 
            <th>Complicaci&oacute;n</th> 
-           <th></th> 
+           <!-- <th></th>  -->
 
          </tr> 
 
@@ -91,11 +91,11 @@
                           <td>".$registros[$a]['sexo']."</td>
                           <td>".$mellizos."</td>
                           <td>".$registros[$a]['complicacion']."</td>
-                          <td><button class='btn btn-success btnVerParto btn-no-margintop' idParto='".$registros[$a]['idParto']."' data-toggle='modal' data-target='#ventanaModalVerParto'><i class='fa fa-eye'></i></button></td>
-                      </tr>
-              ";
-
-            }
+                          </tr>
+                          ";
+                          
+                        }
+                        // <td><button class='btn btn-success btnVerParto btn-no-margintop' idParto='".$registros[$a]['idParto']."' data-toggle='modal' data-target='#ventanaModalVerParto'><i class='fa fa-eye'></i></button></td>
 
         ?>
 
@@ -112,8 +112,3 @@
 </div>
 
 
-<?php
-
-include 'modales/verParto.modal.php';
-
-?>

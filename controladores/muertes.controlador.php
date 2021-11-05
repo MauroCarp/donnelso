@@ -20,6 +20,18 @@ class ControladorMuertes{
 
             $respuesta = ModeloMuertes::mdlNuevaMuerte($tabla,$datos);
 
+            // ELIMINAR ANIMAL
+            
+            $item = 'tipo';
+            
+            $valor = $datos['animal'];
+            
+            $item2 = 'caravana';
+            
+            $valor2 = $datos['caravanaMuerte'];
+
+            $respuesta = ControladorAnimales::ctrEliminarAnimal($item,$valor,$item2,$valor2);
+
             if($respuesta == 'ok'){
                     
                 echo '<script>

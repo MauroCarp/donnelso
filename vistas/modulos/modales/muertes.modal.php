@@ -60,7 +60,9 @@
 
                                         <label for="caravanaMuerte">N° Caravana</label>
                                     
-                                        <input type="text" class="form-control" id="caravanaMuerte" name="caravanaMuerte" placeholder="N° Caravana" required>  
+                                        <select name="caravanaMuerte" id="caravanaMuerte" class="form-control" required>
+
+                                        </select>
 
                                     </div>
 

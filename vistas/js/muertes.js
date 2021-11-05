@@ -41,3 +41,18 @@ $(".tablaMuertes").on("click", ".btnEliminarMuerte", (evt)=>{
     })
     
 });
+
+// CARAGAR SELECT
+$('input[name="animalMuerte"]').on('change',function(){
+
+    let tipo = $(this).val();
+
+    cargarCaravanaBuscar(tipo,'caravanaMuerte')
+    
+})
+
+$(()=>{
+
+    cargarCaravanaBuscar('cerdo','caravanaMuerte')
+
+})

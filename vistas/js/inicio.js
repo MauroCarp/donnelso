@@ -152,7 +152,7 @@ if(pathname.find(element => element == 'inicio')){
 
 }  
 
-const ajaxCaravanas = (url,data)=>{
+const ajaxCaravanas = (url,data,idSelect)=>{
 
     $.ajax({
         method:'post',
@@ -164,7 +164,7 @@ const ajaxCaravanas = (url,data)=>{
 
                 respuesta.map(animal=>{
 
-                    $('#caravanaBuscar').append(`<option value="${animal.caravana}">${animal.caravana}</option>`)
+                    $(`#${idSelect}`).append(`<option value="${animal.caravana}">${animal.caravana}</option>`)
                 
                 })
             
@@ -173,21 +173,23 @@ const ajaxCaravanas = (url,data)=>{
 
 }
 
-const cargarCaravanaBuscar = (tipo)=>{
+const cargarCaravanaBuscar = (tipo,idSelect)=>{
     
     let url = 'ajax/ingresos.ajax.php'
     
     let data = `accion=buscarAnimal&tipo=${tipo}`
     
-    $('#caravanaBuscar').html('')
+    console.log(data,url);
+    
+    $(`#${idSelect}`).html('')
 
-    ajaxCaravanas(url,data);
+    ajaxCaravanas(url,data,idSelect);
     
     if(tipo == 'ovino'){
         
         data = `accion=buscarAnimal&tipo=cordero`
 
-        ajaxCaravanas(url,data)
+        ajaxCaravanas(url,data,idSelect)
 
     }
 
@@ -338,7 +340,7 @@ $('button[data-target="#ventanaModalBuscar"]').on('click',()=>{
     
     let animal = $('input[name="animalBuscar"]').val()
     
-    cargarCaravanaBuscar(animal)
+    cargarCaravanaBuscar(animal,'caravanaBuscar')
 
 })
 
@@ -504,7 +506,7 @@ $('input[name="animalBuscar"]').on('click',(evt)=>{
 
     let tipo = evt.target.value
 
-    cargarCaravanaBuscar(tipo)
+    cargarCaravanaBuscar(tipo,'caravanaBuscar')
 
     const props = {
         onOff: false,
