@@ -297,6 +297,62 @@ class ControladorServicios{
 
     }
 
+    static public function ctrEliminarRegistroRodeo(){
+    
+        $tabla = 'rodeos';
+
+        if(isset($_GET['idRodeo'])){
+
+            $item = 'idRodeo';
+
+            $valor = $_GET['idRodeo'];
+
+            $respuesta = ModeloServicios::mdlEliminarRegistroRodeo($tabla,$item,$valor);
+            
+            if($respuesta == "ok"){
+                
+                echo'<script>
+
+				new swal({
+					  icon: "success",
+					  title: "El registro ha sido borrado correctamente",
+					  showConfirmButton: true,
+					  confirmButtonText: "Cerrar",
+					  closeOnConfirm: false
+					  }).then(function(result) {
+								if (result.value) {
+
+								window.location = "registroServicios";
+
+								}
+							})
+
+				</script>';
+
+            }else{
+
+                echo'<script>
+
+                new swal({
+                    icon: "error",
+                    title: "El registro no ha sido borrado correctamente.Informar a Mauro",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar",
+                    closeOnConfirm: false
+                    }).then(function(result) {
+                                if (result.value) {
+
+                                window.location = "registroServicios";
+
+                                }
+                            })
+
+                </script>';
+
+            }	
+        }
+
+    }
 
 }   
 

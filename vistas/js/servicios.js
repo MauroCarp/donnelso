@@ -630,11 +630,35 @@ const eliminarRodeo = ()=>{
 
 }
 
+
 // ELIMINAR REGISTRO RODEO
 
-$('.tablaRegistrosServicios').on('click','.btnEliminarRegistroRodeo',function(){
+$('.tablaRegistrosServicios').on('click','.btnEliminarRegistroRodeo', function(){
 
-    let idRodeo = $(this).attr('idRodeo');
+    let idRodeo = $(this)[0].attributes[0].nodeValue;
+console.log(idRodeo);
+
+
+
+    new swal({
+        title: '¿Está seguro de borrar el registro?',
+        text: "¡Si no lo está puede cancelar la accíón!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'Cancelar',
+          confirmButtonText: 'Si, borrar registro!'
+      }).then(function(result){
+    
+        if(result.value){
+    
+          window.location = `index.php?ruta=registroServicios&idRodeo=${idRodeo}`
+          
+        }
+    
+      })
+    
     
 });
 

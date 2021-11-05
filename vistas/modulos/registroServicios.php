@@ -6,13 +6,13 @@
 
     <section class="content-header">
 
-        <h1>Sanidad</h1>
+        <h1>Registro Servicios</h1>
 
         <ol class="breadcrumb">
 
             <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
 
-            <li class="active">Sanidad</li>
+            <li class="active">Registro Servicios</li>
 
         </ol>
 
@@ -58,18 +58,40 @@
 
 </div> 
 
+  
+<!-- // // ELIMINAR REGISTRO RODEO
+
+// $('.tablaRegistrosServicios').on('click','.btnEliminarRegistroRodeo', function(){
+
+//     let idRodeo = $(this)[0].attributes[1].nodeValue;
+
+//     new swal({
+//         title: '¿Está seguro de borrar el registro?',
+//         text: "¡Si no lo está puede cancelar la accíón!",
+//         icon: 'warning',
+//         showCancelButton: true,
+//         confirmButtonColor: '#3085d6',
+//           cancelButtonColor: '#d33',
+//           cancelButtonText: 'Cancelar',
+//           confirmButtonText: 'Si, borrar registro!'
+//       }).then(function(result){
+    
+//         if(result.value){
+    
+//           window.location = `index.php?ruta=registroServicios&idRodeo=${idRodeo}`
+          
+//         }
+    
+//       })
+    
+    
+// }); -->
+
+
 <?php
 
-$eliminarRegistroSanidad = new ControladorSanidad;
+$eliminarRegistroServicio = new ControladorServicios();
 
-$eliminarRegistroSanidad -> ctrEliminarSanidad();
-
-$editarRegistroSanidad = new ControladorSanidad;
-
-$editarRegistroSanidad -> ctrActualizarSanidad();
-
-include "modales/sanidad.modal.php";
-
-include "modales/sanidadEditar.modal.php";
+$eliminarRegistroServicio -> ctrEliminarRegistroRodeo();
 
 ?>

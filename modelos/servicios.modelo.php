@@ -215,7 +215,7 @@ class ModeloServicios{
 			return "ok";	
 			
 		}else{
-			return $stmt ->errorInfo();
+			// return $stmt ->errorInfo();
 
 			return 'error';
 			
@@ -223,6 +223,24 @@ class ModeloServicios{
 	
 
     }
+
+	static public function mdlEliminarRegistroRodeo($tabla,$item,$valor){
+	
+		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE $item = :$item");
+
+		$stmt->bindParam(':'.$item, $valor,PDO::PARAM_STR);
+
+		if($stmt->execute()){
+			
+			return "ok";	
+			
+		}else{
+			// return $stmt ->errorInfo();
+
+			return 'error';
+			
+		}
+	}
 	
 
 }
