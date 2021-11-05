@@ -20,7 +20,7 @@
                         
                         <div class='box-header with-border'>    
 
-                            <table class="table table-bordered table-striped dt-responsive tablas tablaSanidadBuscar" width="100%">
+                            <table class="table table-bordered table-striped dt-responsive tablaSanidadBuscar" width="100%">
             
                                 <thead>
                             
@@ -30,12 +30,13 @@
                                         <th>Fecha Aplicacion</th>
                                         <th>Motivo</th>
                                         <th>Comentarios</th>
+                                        <th>Gasto Vet.</th>
                             
                                     </tr> 
                         
                                 </thead>
                         
-                                <tbody>                            
+                                <tbody id="sanidadBuscar">                            
                         
                                 </tbody>
                         

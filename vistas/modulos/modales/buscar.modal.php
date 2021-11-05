@@ -87,5 +87,11 @@
 
 </div>
     
+<?php
 
+$editarAnimal = new ControladorAnimales();
+
+$editarAnimal -> ctrEditarAnimal();
+
+?>
 

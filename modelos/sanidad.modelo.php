@@ -75,12 +75,22 @@ class ModeloSanidad{
 
 	}
 
-    static public function mdlMostrarSanidad($tabla,$item,$valor){
+    static public function mdlMostrarSanidad($tabla,$item,$valor,$item2,$valor2){
 
-        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY fecha DESC");
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item ORDER BY fecha DESC");
+		
+		if($item2 != null){
+			
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item AND $item2 = :$item2 ORDER BY fecha DESC");
 
-        $stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":".$item2, $valor, PDO::PARAM_STR);
+
+		}
+
+        $stmt->bindParam(":".$item, $valor2, PDO::PARAM_STR);
         
+		// return $stmt;
+
         $stmt->execute();
         
 		return $stmt->fetchAll();

@@ -24,7 +24,7 @@
                             <h5 class="description-header">Caravana</h5>
 
                             <input type="text" class="form-control description-text" id="caravanaBuscada"  readOnly>    
-
+                            <input type="hidden" id="idAnimalBuscada">
                         </div>
             
                     </div>
@@ -49,8 +49,8 @@
 
                             <div class="form-group" align="left">
                                     
-                                <input type="radio" id="sexoMacho" name="sexo" checked value="M" style="height:20px;width:20px;"><b>&nbsp;Macho</b><br>
-                                <input type="radio" id="sexoHembra" name="sexo" value="H" style="height:20px;width:20px;"><b>&nbsp;Hembra</b>
+                                <input type="radio" id="sexoMacho" name="sexoBuscada" checked value="M" style="height:20px;width:20px;" disabled><b>&nbsp;Macho</b><br>
+                                <input type="radio" id="sexoHembra" name="sexoBuscada" value="H" style="height:20px;width:20px;" disabled><b>&nbsp;Hembra</b>
                                                                     
                             </div>
 
@@ -117,7 +117,7 @@
 
                             <h5 class="description-header">Complicacion</h5>
 
-                            <textarea name="complicacionBuscar" id="complicacionBuscar" cols="10" rows="3">-</textarea>
+                            <textarea name="complicacionBuscar" id="complicacionBuscar" cols="10" rows="3" disabled="true"></textarea>
     
                         </div>
 
@@ -132,7 +132,7 @@
                     <div class="col-sm-3">
 
                         <button class="btn btn-warning" id="activarEdicion">Activar Edici&oacute;n</button>
-                        <button class="btn btn-success" id="editarAnimal" style="display:none">Editar Animal</button>
+                        <button class="btn btn-success" id="editarAnimal"  name="editarAnimal" style="display:none">Editar Animal</button>
 
                     </div>
 
@@ -145,6 +145,3 @@
     </div>
 
 </div>
-
-
-

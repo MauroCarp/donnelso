@@ -207,7 +207,7 @@
 						<a href="chazinados">
 						
 						<i class="icon-cerdo"></i>
-						<span>Chazinados</span>
+						<span>Carneadas</span>
 						
 						</a>
 						

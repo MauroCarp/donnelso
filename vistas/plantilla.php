@@ -259,6 +259,7 @@ CUERPO DOCUMENTO
 <script src="vistas/js/app.js"></script>
 <script src="vistas/js/plantilla.js"></script>
 <script src="vistas/js/inicio.js"></script>
+<script src="vistas/js/animales.js"></script>
 <script src="vistas/js/usuarios.js"></script>
 <script src="vistas/js/ventas.js"></script>
 <script src="vistas/js/reportes.js"></script>

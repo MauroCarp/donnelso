@@ -77,11 +77,65 @@ class ControladorAnimales{
 
     }
 
-    static public function ctrEditarAnimal($datos){
+    static public function ctrEditarAnimal(){
     
-        $tabla = "animales";
+        if(isset($_GET['editarAnimal'])){
 
-        return $resultado = ModeloAnimales::mdlEditarAnimal($tabla,$datos);
+            $tabla = "animales";
+            
+            $data = json_decode($_GET['data'],true);
+            
+            $resultado = ModeloAnimales::mdlEditarAnimal($tabla,$data);
+            // var_dump($resultado);
+            // die();
+            if($resultado == 'ok'){
+                    
+                echo '<script>
+
+                   new swal({
+
+                        icon: "success",
+                        title: "El registro ha sido guardado correctamente!",
+                        showConfirmButton: true,
+                        confirmButtonText: "Cerrar"
+
+                    }).then(function(result){
+
+                        if(result.value){
+                        
+                            window.location = "inicio";
+
+                        }
+
+                    });
+
+                </script>';
+
+            }else{
+        
+                echo '<script>
+
+               new swal({
+
+                    icon: "error",
+                    title: "Hubo un error al cargar. Notificar a Mauro",
+                    showConfirmButton: true,
+                    confirmButtonText: "Cerrar"
+
+                }).then(function(result){
+
+                    if(result.value){
+                    
+                        window.location = "inicio";
+
+                    }
+
+                });
+
+                </script>';
+            
+            }
+        }
         
     }
 

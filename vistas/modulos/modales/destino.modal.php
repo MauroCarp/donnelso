@@ -25,13 +25,13 @@
                                     
                                         <label for="destinoBuscar">Destino</label>
                                     
-                                        <select class="form-control" id="destinoBuscar" name="destinoBuscar" required>  
+                                        <select class="form-control" id="destinoBuscar" name="destinoBuscar"  readOnly required>  
                                         </select>
 
                                     </div>
 
                                 </div> 
-
+    <br>
                                 <div class="row" id="divEngorde" style="display:none;">
                                     
                                     <div class="col-xs-6 col-lg-4">
@@ -39,8 +39,8 @@
                                         <div class="form-group">
                 
                                             <label for="listoVentaBuscar">Listo Para la Venta</label>
-                                        
-                                            <input type="checkbox" id="listoVentaBuscar"  name="listoVentaBuscar" style>  
+                                        <br>
+                                            <input type="checkbox" id="listoVentaBuscar"  name="listoVentaBuscar" disabled style="width:20px;height:20px;">  
 
                                         </div>
 
