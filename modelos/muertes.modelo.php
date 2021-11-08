@@ -77,6 +77,26 @@ class ModeloMuertes{
 		}
     }
 
+	static public function mdlActualizarMuerte($tabla,$datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET fecha = :fecha, motivo = :motivo WHERE id = :id");
+
+		$stmt->bindParam(':fecha',$datos['fecha'],PDO::PARAM_STR);
+		$stmt->bindParam(':motivo',$datos['motivo'],PDO::PARAM_STR);
+		$stmt->bindParam(':id',$datos['id'],PDO::PARAM_STR);
+
+		if($stmt->execute()){
+			
+			return "ok";	
+			
+		}else{
+			print_r($stmt ->errorInfo());
+
+			return 'error';
+			
+		}
+	}
+
 }
 
 ?>

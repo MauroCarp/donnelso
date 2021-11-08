@@ -19,86 +19,88 @@
                 <div class='box-body'>
                     
                     <div class='box-header with-border'>    
-        
-                        <div class='row'>
-                            
-                            <div class="col-lg-12">
-                            
-                                    <label for="editarAnimal">Animal:</label><br>
-            
-                                    <label style="font-size:2em;">
-                                        <input type="radio" name="editarAnimal" class="hide" value="cerdo" checked/>
-                                        <i class="icon icon-cerdo"></i>
-                                    </label>
-            
-                                    <label style="font-size:2em;">
-                                        <input type="radio" name="editarAnimal" class="hide" value="chivo"/>
-                                        <i class="icon icon-chivo"></i>
-                                    </label>
-            
-                                    <label style="font-size:2em;">
-                                        <input type="radio" name="editarAnimal" class="hide" value="cordero"/>
-                                        <i class="icon icon-cordero"></i>
-                                    </label>
+                        
+                        <form  method="post">
 
-                                    <label style="font-size:2em;">
-                                        <input type="radio" name="editarAnimal" class="hide" value="vaca"/>
-                                        <i class="icon icon-vaca"></i>
-                                    </label>
+                            <input type="hidden" name="editarIdMuerte" id="editarIdMuerte">
                             
-                            </div>
-                          
-                            <div class="col-xs-12 col-lg-4">
+                            <div class='row'>
                                 
-                                <div class="form-group">
-
-                                    <label for="EditarCaravanaMuerte">N° Caravana</label>
+                                <div class="col-lg-12">
                                 
-                                    <input type="text" class="form-control" id="EditarCaravanaMuerte" placeholder="N° Caravana" required>  
+                                        <label for="editarAnimal">Animal:</label><br>
+                
+                                        <label style="font-size:2em;">
+                                            <input type="radio" name="editarAnimal" class="hide" value="cerdo" disabled checked/>
+                                            <i class="icon icon-cerdo"></i>
+                                        </label>
+                
+                                        <label style="font-size:2em;">
+                                            <input type="radio" name="editarAnimal" class="hide" value="chivo" disabled/>
+                                            <i class="icon icon-chivo"></i>
+                                        </label>
+                
+                                        <label style="font-size:2em;">
+                                            <input type="radio" name="editarAnimal" class="hide" value="ovino" disabled/>
+                                            <i class="icon icon-cordero"></i>
+                                        </label>
 
+                                        <label style="font-size:2em;">
+                                            <input type="radio" name="editarAnimal" class="hide" value="vaca" disabled/>
+                                            <i class="icon icon-vaca"></i>
+                                        </label>
+                                
                                 </div>
-
-                            </div>
-
-                            <div class="col-xs-12 col-lg-4">
-                                
-                                <div class="form-group">
-
-                                    <label for="editarFechaMuerte">Fecha:</label>
-                                
-                                    <input type="date" class="form-control" id="editarFechaMuerte" required>  
-
-                                </div>
-
-                            </div>
-
-                            <div class="col-xs-12 col-lg-4">
-                                
-                                <div class="form-group">
-
-                                    <label for="editarMotivoMuerte">Motivo:</label>
-                                
-                                    <select name="editarMotivoMuerte" id="editarMotivoMuerte" class="form-control">
-
+                            
+                                <div class="col-xs-12 col-lg-4">
                                     
-                                        <option value="">Motivo 1</option>
-                                        <option value="">Motivo 2</option>
-                                        <option value="">Motivo 3</option>
-                                        <option value="">Motivo 4</option>
-                                        <option value="">Otro</option>
+                                    <div class="form-group">
+
+                                        <label for="editarCaravanaMuerte">N° Caravana</label>
                                     
-                                    </select>  
+                                        <input type="text" class="form-control" id="editarCaravanaMuerte" name="editarCaravanaMuerte" readOnly required>  
+
+                                    </div>
 
                                 </div>
 
-                            </div>
-                                                      
-                            <div class="col-lg-12">
-                                
-                                <button class="btn btn-primary btn-block" id="btnEditarMuerte">Editar Muerte</button>
+                                <div class="col-xs-12 col-lg-4">
+                                    
+                                    <div class="form-group">
 
-                            </div>
-                        </div> 
+                                        <label for="editarFechaMuerte">Fecha:</label>
+                                    
+                                        <input type="date" class="form-control" id="editarFechaMuerte" name="editarFechaMuerte" required>  
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-xs-12 col-lg-4">
+                                    
+                                    <div class="form-group">
+
+                                        <label for="editarMotivoMuerte">Motivo:</label>
+                                    
+                                        <select name="editarMotivoMuerte" id="editarMotivoMuerte" name="editarMotivoMuerte" class="form-control">
+
+                                        </select> 
+                                        <br>
+                                        <input type="text" class="form-control" id="editarOtroMotivo" name="editarOtroMotivo" style="display:none">  
+
+
+                                    </div>
+
+                                </div>
+                                                        
+                                <div class="col-lg-12">
+                                    
+                                    <button class="btn btn-primary btn-block" id="btnEditarMuerte" name="btnEditarMuerte">Editar Muerte</button>
+
+                                </div>
+                            </div> 
+
+                        </form>
 
                     </div>
 
@@ -113,5 +115,9 @@
 </div>
 
 
-            
+<?php
 
+$editarMuerte = new ControladorMuertes();
+
+$editarMuerte -> ctrActualizarMuerte();
+?>

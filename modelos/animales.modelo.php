@@ -76,7 +76,6 @@ class ModeloAnimales{
 
 			$stmt-> bindParam(":".$item, $valor);
 			
-			// return $stmt;
 			$stmt->execute();
 
 			return $stmt->fetchAll();
@@ -85,8 +84,6 @@ class ModeloAnimales{
 			
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY tipo ASC");
 	
-			// return $stmt;
-
 			$stmt->execute();
 	
 			return $stmt->fetchAll();

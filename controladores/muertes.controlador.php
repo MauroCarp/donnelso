@@ -84,24 +84,19 @@ class ControladorMuertes{
 
     static public function ctrActualizarMuerte(){
 
-        if(isset($_POST['btnSanidadEditar'])){
+        if(isset($_POST['btnEditarMuerte'])){
 
-            $tabla = 'sanidad';
+            $tabla = 'muertes';
             
-            $caravana = ($_POST['caravanaSanidadEditar'] == '') ? null : $_POST['caravanaSanidadEditar'];
+            $motivo = ($_POST['editarMotivoMuerte'] == 'Otro') ? $_POST['editarOtroMotivo'] : $_POST['editarMotivoMuerte'];
 
             $datos = array(
-            'animal'=>$_POST['animalSanidadEditar'],
-            'fecha'=>$_POST['fechaSanidadEditar'],
-            'motivo'=>$_POST['motivoSanidadEditar'],
-            'aplicacion'=>$_POST['aplicacionSanidadEditar'],
-            'caravana'=>$caravana,
-            'comentarios'=>$_POST['comentariosSanidadEditar'],
-            'costoVeterinario'=>$_POST['costoVeterinarioEditar'],
-            'id'=>$_POST['idSanidadEditar']
+            'fecha'=>$_POST['editarFechaMuerte'],
+            'motivo'=>$motivo,
+            'id'=>$_POST['editarIdMuerte']
             );
 
-            $respuesta = ModeloSanidad::mdlActualizarSanidad($tabla,$datos);
+            $respuesta = ModeloMuertes::mdlActualizarMuerte($tabla,$datos);
             
             if($respuesta == 'ok'){
                     
@@ -118,7 +113,7 @@ class ControladorMuertes{
 
                         if(result.value){
                         
-                            window.location = "sanidad";
+                            window.location = "muertes";
 
                         }
 
@@ -133,7 +128,7 @@ class ControladorMuertes{
                 new swal({
 
                     icon: "error",
-                    title: "Hubo un error al cargar. Notificar a Mauro",
+                    title: "Hubo un error al modificar. Notificar a Mauro",
                     showConfirmButton: true,
                     confirmButtonText: "Cerrar"
 
@@ -141,7 +136,7 @@ class ControladorMuertes{
 
                     if(result.value){
                     
-                        window.location = "sanidad";
+                        window.location = "muertes";
 
                     }
 

@@ -1,25 +1,81 @@
-// CAMPO OTRO PROVEEDOR
+// CAMPO OTRO MOTIVO
+const mostrarOtroMotivo = (id,idOtro)=>{
 
-$('#motivoMuerte').on('change', evt => {
-
-    let value = evt.target.value;
-
-    if(value == 'Otro'){        
+    $(`#${id}`).on('change', evt => {
     
-        $('#otroMotivoMuerte').show() 
-        
-    }else{
-        
-        $('#otroMotivoMuerte').hide() 
-
-    }
+        let value = evt.target.value;
     
-});
+        if(value == 'Otro'){        
+        
+            $(`#${idOtro}`).show() 
+            
+        }else{
+            
+            $(`#${idOtro}`).hide() 
+    
+        }
+        
+    });
+
+}
+
+mostrarOtroMotivo('motivoMuerte','otroMotivoMuerte')
+
+const motivosMuerte = ["Empaste","Parto","Neumonia","Diarrea","Otro"]
+
+// EDITAR MUERTE
+$(".tablaMuertes").on("click", ".btnEditarMuerte", function(){
+
+    let idMuerte = $(this).attr('idmuerte')
+    
+    let data = `idMuerte=${idMuerte}`
+
+    let url = 'ajax/muertes.ajax.php'
+    
+    $('#editarMotivoMuerte').html('')
+    $('#editarOtroMotivo').hide()
+
+    mostrarOtroMotivo('editarMotivoMuerte','editarOtroMotivo')
+    
+    $.ajax({
+        method:'post',
+        data,
+        url,
+        success:(response)=>{
+
+            let respuesta = JSON.parse(response)            
+            
+            $('#editarIdMuerte').val(respuesta.id)
+            $('#editarCaravanaMuerte').val(respuesta.caravana)
+            $('#editarFechaMuerte').val(respuesta.fecha)
+            
+            $(`input[name="editarAnimal"]`).removeAttr("checked");
+            $(`input[name="editarAnimal"][value="${respuesta.animal}"]`).attr("checked","checked");
+
+            let opt = `<option value="${respuesta.motivo}">${respuesta.motivo}</option>`
+            $('#editarMotivoMuerte').append(opt)
+            
+
+            motivosMuerte.map(motivo=>{
+                
+                if(motivo != respuesta.motivo){
+
+                    opt = `<option value="${motivo}">${motivo}</option>`
+                    $('#editarMotivoMuerte').append(opt)
+                
+                }
+
+            })
+
+        }
+    })
+})
+
 
 // ELIMINAR MUERTE
-$(".tablaMuertes").on("click", ".btnEliminarMuerte", (evt)=>{
+$(".tablaMuertes").on("click", ".btnEliminarMuerte", function(){
 
-    let id = evt.target.attributes.idmuerte.nodeValue;
+    let id = $(this).attr('idmuerte')
 
     new swal({
         title: '¿Está seguro de borrar el Registro?',

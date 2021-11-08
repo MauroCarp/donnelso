@@ -9,7 +9,7 @@ class ControladorChazinados{
 
             $tabla = 'carneadas';
 
-            $caravanas = implode('-',$_POST['caravanaChazinado']);
+            $caravanas = implode('*',$_POST['caravanaChazinado']);
 
             $propio = (isset($_POST['propioChazinado'])) ? 1 : 0;
 
@@ -34,7 +34,7 @@ class ControladorChazinados{
 
             // ELIMINAR ANIMALES 
 
-            $caravanas = explode('-',$caravanas);
+            $caravanas = explode('*',$caravanas);
 
             $item = 'caravana';
 
@@ -47,10 +47,10 @@ class ControladorChazinados{
                 $valor = $caravanas[$i];
 
                 $respuesta = ControladorAnimales::ctrEliminarAnimal($item,$valor,$item2,$valor2);
-                var_dump($respuesta);
+                // var_dump($respuesta);
+
             }
 
-            die();
 
             if($respuesta == "ok"){
                 

@@ -382,11 +382,8 @@ $('#btnBuscarAnimal').on('click',function(){
         url,
         data,
         success:(response)=>{
-            // console.log(response);
-            // return
             
             respuesta = JSON.parse(response)
-            console.log(respuesta);
             
             let idAnimal = respuesta[0].idAnimal 
 
