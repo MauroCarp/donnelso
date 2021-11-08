@@ -109,6 +109,55 @@ class ControladorChazinados{
 
         if(isset($_POST['btnEditarChazinado'])){
 
+            // ACTUALIZAR STOCK
+
+            $datosStock = array(
+                'chorizo' => $_POST['editarKgChorizos'],
+                'morcilla' => $_POST['editarKgMorcillas'],
+                'salame' => $_POST['editarKgSalames'],
+                'bondiola' => $_POST['editarKgBondiolas'],
+                'jamon' => $_POST['editarKgJamon'],
+                'codeguin' => $_POST['editarKgCodeguines'],
+                'grasa' => $_POST['editarKgGrasa'],
+                'chicharron' => $_POST['editarKgChicharron'],
+                'carne' => $_POST['editarKgCarne']
+            );
+                
+            $tabla = 'ventaschazinados';
+
+            $item = 'idCarneada';
+
+            $valor = $_POST['idCarneada'];
+            
+            $datosOriginales = ControladorChazinados::ctrMostrarChazinado($item,$valor);
+
+            $tabla = 'stockchazinados';
+
+            // // var_dump($datosStock);
+            // var_dump($datosOriginales);
+
+            foreach ($datosStock as $key => $value) {
+                
+                if($value != $datosOriginales[$key]){
+                    
+                    $diferencia = $datosOriginales[$key] - $value;
+
+                    $operador = (esPositivo($diferencia)) ? '-' : '+';
+
+                    $diferencia = (esPositivo($diferencia)) ? $diferencia : str_replace('-','',$diferencia);
+
+                    $item = 'kg'.ucfirst($key);
+
+                    $respuesta = ModeloStock::mdlActualizarStockChazinados($tabla,$item,$diferencia,$operador);
+                    
+                    // var_dump($respuesta);
+                }
+            
+            }
+
+                            
+            // ACTUALIZAR CARNEADA
+
             $tabla = 'carneadas';
 
             $propio = (isset($_POST['editarPropioChazinado'])) ? 1 : 0;
@@ -178,7 +227,9 @@ class ControladorChazinados{
                 </script>';
             
             }
+        
         }
+
     }
 
     static public function ctrEditarVentaChazinados(){
@@ -211,8 +262,6 @@ class ControladorChazinados{
         
             $respuesta = ModeloChazinados::mdlEditarVentaChazinados($tabla,$datos);
             
-            die();
-
             if($respuesta == 'ok'){
                     
                 echo '<script>

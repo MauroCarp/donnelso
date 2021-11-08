@@ -28,6 +28,7 @@ class ControladorStock{
 
     }
 
+
     static public function ctrMostrarStockChazinado($item,$valor){
 
         $tabla = 'stockchazinados';
@@ -35,6 +36,12 @@ class ControladorStock{
         return $respuesta = ModeloStock::mdlMostrarStock($tabla,$item,$valor);
 
     }
+
+    static public function ctrEditarStockChazinado($item,$datos){
+
+    }
+
+
 
     static public function ctrActualizarStockChazinados($productoOriginal,$kgOriginal,$productoNuevo,$kgNuevo){
 
@@ -70,8 +77,6 @@ class ControladorStock{
         }
         
         return $respuesta;
-        // return $diferencia;
-
 
     }
 
