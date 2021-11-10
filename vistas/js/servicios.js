@@ -417,7 +417,6 @@ const rodeos = (idTab,tipo)=>{
         data,
         success:function(response){
             
-            console.log(response);
             let respuesta = JSON.parse(response)
             
             respuesta.map(rodeo=>{
@@ -464,7 +463,6 @@ const accionBtnServir = (evt,tipo)=>{
         let textButton = evt.target.innerText;
         
         let caravanaMacho = $(`#selectMachos${tipo}${caravana}`).val()
-console.log(`#selectMachos${tipo}${caravana}`);
 
         let fecha = $(`#fechaServida${tipo}${caravana}`).val()
                 
@@ -484,8 +482,6 @@ console.log(`#selectMachos${tipo}${caravana}`);
             tipo
         }
         
-        console.log(props);
-
         servirHembra(props)
 
 }
@@ -509,9 +505,7 @@ const servirHembra = (props)=>{
         url,
         data,
         success:function(response){
-            
-            console.log(response);
-            
+                        
             let Toast =  swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -636,9 +630,6 @@ const eliminarRodeo = ()=>{
 $('.tablaRegistrosServicios').on('click','.btnEliminarRegistroRodeo', function(){
 
     let idRodeo = $(this)[0].attributes[0].nodeValue;
-console.log(idRodeo);
-
-
 
     new swal({
         title: '¿Está seguro de borrar el registro?',

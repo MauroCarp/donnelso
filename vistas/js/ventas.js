@@ -78,7 +78,6 @@ $(".tablaVentas").on("click", ".btnEliminarVenta", function(){
   
 });
 
-
 $('.tablaPreVentas').on('click','.btnFinalizarVenta',function(){
 
 	let idVenta = $(this).attr("idPreVenta");
@@ -94,7 +93,7 @@ $('.tablaPreVentas').on('click','.btnFinalizarVenta',function(){
 		success:function(response){
 
 			let respuesta = JSON.parse(response);
-			
+		
 			$('#idVenta').val(respuesta[0].id);
 			$('#fechaVenta').val(respuesta[0].fecha);
 			$('#compradorVenta').val(respuesta[0].comprador);
@@ -103,22 +102,67 @@ $('.tablaPreVentas').on('click','.btnFinalizarVenta',function(){
 			
 			$('#animalFaenar').val(respuesta[0].animal);
 
-			cargarSelectListosVenta(respuesta[0].animal);
+			cargarSelectListosVenta(respuesta[0].animal,'#caravanaFaenar');
 
 			if(respuesta[0].animal ==  'pollo' ||  respuesta[0].animal ==  'vaca'){
 				
 				$('#inputSeccionFinalizar').addClass('hide');
 				
+				$('#inputCaravanaVenta').addClass('hide')
+				
+				$('#inputCaravanaVacasVenta').addClass('hide')
+				
+				$('#inputCaravanaVacasVenta').html('')
+				
 				$('#inputCantidadFinalizar').removeClass('hide');
 				
 				$('#cantidadFinalizar').html(respuesta[0].cantidad);
-				
-				
+
+				$('#cantidadVenta').val(respuesta[0].cantidad);
+
+				if(respuesta[0].animal == 'vaca'){
+					
+					$('#inputCaravanaVacasVenta').removeClass('hide')
+
+					let inputCaravana = `<div class="row">`
+
+					for (let index = 0; index < respuesta[0].cantidad; index++) {
+						
+							inputCaravana += `<div class="col-xs-12 col-lg-6">
+                                    
+																<div class="form-group">
+		
+																	<label>Caravana:</label>
+							
+																		<select name="caravanaVacasVenta[]" class="form-control caravanasVacas"></select>
+								
+																</div>
+					
+															</div>`
+					}
+
+					inputCaravana += `</div>`
+
+					$('#inputCaravanaVacasVenta').append(inputCaravana)
+
+					cargarSelectListosVenta('vaca','.caravanasVacas');
+
+				}
+
+
 			}else{
 				
 				$('#seccionFinalizar').html(capitalizarPrimeraLetra(respuesta[0].seccion));	
 				
 				$('#seccionFaenar').val(respuesta[0].seccion);
+
+				$('#inputCaravanaVenta').removeClass('hide')
+				
+				$('#inputSeccionFinalizar').removeClass('hide')
+				
+				$('#inputCantidadFinalizar').addClass('hide');
+				
+				$('#inputCaravanaVacasVenta').addClass('hide')
 				
 			}
 			
@@ -173,22 +217,22 @@ $('#kgFinal').on('change',function(){
 
 });
 
-const cargarSelectListosVenta = (tipo)=>{
+const cargarSelectListosVenta = (tipo,selectId)=>{
 	
-	$('#caravanaFaenar').html('')
+	$(`${selectId}`).html('')
 
 	let data = `tipo=${tipo}`;
 
 	let url = 'ajax/ventas.ajax.php';
-
+	
 	$.ajax({
 		method: 'post',
 		url,
 		data,
 		success:function(response){
-console.log(response);
-
-			$('#caravanaFaenar').append(response);
+			console.log(response);
+			
+			$(`${selectId}`).append(response);
 			
 		}
 	})

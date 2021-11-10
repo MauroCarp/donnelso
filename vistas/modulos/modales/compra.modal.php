@@ -122,7 +122,7 @@
                                         <label for="proveedorCompra">Proveedor: </label>
                                         
                                         <select id="proveedorCompra" name="proveedorCompra" class="form-control">
-                                        
+                                            <option value="">Seleccionar Proveedor</option>
                                         </select>
                                         
                                         <br>

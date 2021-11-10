@@ -87,11 +87,44 @@ class ControladorVentas{
 
             $respuesta = ModeloVentas::mdlActualizarVenta($tabla,$datos);
             
-            // ELIMINAR ANIMAL FAENADO
-            if($_POST['caravanaFaenar'] != 'frizado'){
-            
-                if($_POST['animalFaenar'] != 'pollo'){
-                
+            if($_POST['caravanaFaenar'] != 'frizado' AND $_POST['animalFaenar'] != 'pollo' AND $_POST['animalFaenar'] != 'vaca'){
+                    
+                    // ACTUALIZO STOCK
+
+                    $cantidad = 0;
+
+                    switch ($_POST['seccionFaenar']) {
+                        case 'entero':
+                                $cantidad = 1;
+                            break;
+                        
+                        case 'medio':
+                                $cantidad = 0.5;
+                            break;
+                        
+                        case 'cuartoDel':
+                                $cantidad = 0.25;
+                            break;
+                        
+                        case 'cuartoTra':
+                                $cantidad = 0.25;
+                            break;
+                        
+                        default:
+                            # code...
+                            break;
+                    }
+
+                    $item = 'animal';
+
+                    $valor = $_POST['animalFaenar'];
+                    
+                    $operador = '-';
+
+                    $respuesta = ControladorStock::ctrActualizarStock($item,$valor,$operador,$cantidad);
+
+                    // ELIMINO ANIMAL VENDIDO
+
                     $item = 'tipo'; 
 
                     $valor = $_POST['animalFaenar'];
@@ -101,45 +134,70 @@ class ControladorVentas{
                     $valor2 = $_POST['caravanaFaenar'];
 
                     $respuesta = ControladorAnimales::ctrEliminarAnimal($item,$valor,$item2,$valor2);
+
+
+
+            }else{
+                
+                if ( $_POST['animalFaenar'] == 'vaca'){
+                        var_dump('ENTRO A VACAS');
+                    // ACTUALIZO STOCK DE VACAS
+                    $caravanas = $_POST['caravanaVacasVenta'];
+
+                    $cantidad = sizeof($caravanas);
+
+                    $item = 'animal';
+
+                    $valor = 'vaca';
+                    
+                    $operador = '-';
+
+                    $respuesta = ControladorStock::ctrActualizarStock($item,$valor,$operador,$cantidad);
+
+                    // ELIMINO CARAVANAS VENDIDAS
+                    
+                    $item = 'tipo'; 
+                    
+                    $item2 = 'caravana';
+
+                    for ($i=0; $i < $cantidad ; $i++) { 
+                        
+                        $valor2 = $caravanas[$i];
+    
+                        $respuesta = ControladorAnimales::ctrEliminarAnimal($item,$valor,$item2,$valor2);
+
+                    }
+
+                }else{
+                    var_dump("ENTRO A POLLOS");
+                    // ACTUALIZAR STOCK DE POLLO
+                    $cantidad = $_POST['cantidadVenta'];
+
+                    $item = 'animal';
+
+                    $valor = 'pollo';
+                    
+                    $operador = '-';
+
+                    $respuesta = ControladorStock::ctrActualizarStock($item,$valor,$operador,$cantidad);
+                    // ELIMINAR POLLOS
+
+                    $item = 'tipo'; 
+                    
+                    $item2 = null;
+
+                    $valor2 = null;
+
+                    for ($i=0; $i < $cantidad ; $i++) { 
+                                
+                        $respuesta = ControladorAnimales::ctrEliminarAnimal($item,$valor,$item2,$valor2);
+
+                    }
+
                 }
-            
+
             }
-            // ELIMNAR POLLOS
-
-
-            // ACTUALIZAR STOCK
-            $cantidad = 0;
-
-            switch ($_POST['seccionFaenar']) {
-                case 'entero':
-                        $cantidad = 1;
-                    break;
-                
-                case 'medio':
-                        $cantidad = 0.5;
-                    break;
-                
-                case 'cuartoDel':
-                        $cantidad = 0.25;
-                    break;
-                
-                case 'cuartoTra':
-                        $cantidad = 0.25;
-                    break;
-                
-                default:
-                    # code...
-                    break;
-            }
-
-            $item = 'animal';
-
-            $valor = $_POST['animalFaenar'];
             
-            $operador = '-';
-
-            $respuesta = ControladorStock::ctrActualizarStock($item,$valor,$operador,$cantidad);
-
             if($respuesta == 'ok'){
                     
                 echo '<script>

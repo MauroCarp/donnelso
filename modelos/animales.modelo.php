@@ -147,9 +147,20 @@ class ModeloAnimales{
 
 	static public function mdlEliminarAnimal($tabla,$item,$valor){
 	
-		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE $item = :$item");
+		if($valor != 'pollo'){
+
+			$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE $item = :$item");
+			
+			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
 		
-		$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE $item = :$item AND listoVenta = 1 AND id = (SELECT MAX(id) FROM $tabla WHERE $item = :$item AND listoVenta = 1)");
+			
+			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+
+		}
 
 		if($stmt->execute()){
 			

@@ -178,9 +178,7 @@ const cargarCaravanaBuscar = (tipo,idSelect)=>{
     let url = 'ajax/ingresos.ajax.php'
     
     let data = `accion=buscarAnimal&tipo=${tipo}`
-    
-    console.log(data,url);
-    
+        
     $(`#${idSelect}`).html('')
 
     ajaxCaravanas(url,data,idSelect);
@@ -408,9 +406,7 @@ $('#btnBuscarAnimal').on('click',function(){
             $('#btnDestinoBuscar').html(destino)
             
             let opt = (respuesta[0].estado == undefined) ? '<option value="">-</option>' : `<option value="${respuesta[0].estado}">${respuesta[0].estado}</option>`  
-            
-            console.log(opt);
-            
+                        
             $('#estadoBuscar').append(opt)
 
             let complicacion = (respuesta[0].complicacion != null) ? respuesta[0].complicacion : '-'
@@ -550,7 +546,6 @@ const selectProveedores = (idDiv,proveedor)=>{
         url,
         data,
         success:(response)=>{
-            console.log(response);
             
             if(proveedor != 'Propio'){
 

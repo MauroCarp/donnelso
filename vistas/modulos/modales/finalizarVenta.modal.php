@@ -80,7 +80,7 @@
                                     <label for="cantidadFinalizar">Cantidad:</label><br>
 
                                     <strong id="cantidadFinalizar" style="font-size:1.4em;"></strong>
-                            
+                                    <input type="hidden" name="cantidadVenta" id="cantidadVenta">
                                 </div>
                             
                             </div>
@@ -94,37 +94,44 @@
                                 </div>
 
                             </div>
-
-                            <div class="row">
-
-                                <div class="col-xs-12 col-lg-6">
-                                
-                                    <div class="form-group">
-
-                                        <label for="caravanaFaenar">Caravana:</label>
-                                        
-                                            <select name="caravanaFaenar" id="caravanaFaenar" class="form-control">
-
-                                            <?php
-                                                
-                                                $item = 'tipo';
-
-                                                $valor = '';
-
-                                                $item2 = 'listoVenta';
-
-                                                $valor2 = 1;
-
-                                                $caravanasListasVenta = ControladorAnimales::ctrMostrarAnimal($item,$valor,$item2,$valor2);
-
-                                            ?>
-                                            
-                                            </select>
-
-                                    </div>
-                                
-                                </div>
                             
+                            <div class="row">
+                                
+                                <div id="inputCaravanaVacasVenta" class="hide">
+                                </div>
+                                    
+                                <div id="inputCaravanaVenta">
+
+                                    <div class="col-xs-12 col-lg-6">
+                                    
+                                        <div class="form-group">
+
+                                            <label for="caravanaFaenar">Caravana:</label>
+                                            
+                                                <select name="caravanaFaenar" id="caravanaFaenar" class="form-control">
+
+                                                <?php
+                                                    
+                                                    $item = 'tipo';
+
+                                                    $valor = '';
+
+                                                    $item2 = 'listoVenta';
+
+                                                    $valor2 = 1;
+
+                                                    $caravanasListasVenta = ControladorAnimales::ctrMostrarAnimal($item,$valor,$item2,$valor2);
+
+                                                ?>
+                                                
+                                                </select>
+
+                                        </div>
+                                    
+                                    </div>
+                            
+                                </div>
+
                                 <div class="col-xs-12 col-lg-6">
                                 
                                     <div class="form-group">

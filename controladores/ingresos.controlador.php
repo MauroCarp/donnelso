@@ -20,7 +20,7 @@ class ControladorIngresos{
 
                     $respuesta = ControladorProveedores::ctrNuevoProveedor($proveedor);
 
-                    if($respesta != 'ok'){
+                    if($respuesta != 'ok'){
                         echo '<script>
 
                         	    new swal({
@@ -31,15 +31,6 @@ class ControladorIngresos{
                                     confirmButtonText: "Cerrar"
         
                         	        })
-                                .then(function(result){
-        
-                        		        if(result.value){
-                                
-                        			    window.location = "registroCompras";
-        
-                        		        }
-                                    
-                                });
                             
                             </script>';
 

@@ -61,19 +61,29 @@ class ControladorAnimales{
     
     static public function ctrEliminarAnimal($item,$valor,$item2,$valor2){
     
-        $animal  = ControladorAnimales::ctrMostrarAnimal($item,$valor,$item2,$valor2);
+        if($item2 != null){
+                
+            $animal  = ControladorAnimales::ctrMostrarAnimal($item,$valor,$item2,$valor2);
+            
+            $item = 'idAnimal';
+
+            $idAnimal = $animal[0]['idAnimal'];
+            
+            $tabla = 'animales';
+
+            $respuesta = ModeloAnimales::mdlEliminarAnimal($tabla,$item,$idAnimal);
         
-        $item = 'idAnimal';
+            $tabla = ($animal[0]['sexo'] == 'M') ? 'machos' : 'hembras';
 
-        $idAnimal = $animal[0]['idAnimal'];
+            return $respuesta = ModeloAnimales::mdlEliminarAnimal($tabla,$item,$idAnimal);
         
-        $tabla = 'animales';
+        }else{
 
-        $respuesta = ModeloAnimales::mdlEliminarAnimal($tabla,$item,$idAnimal);
-    
-        $tabla = ($animal[0]['sexo'] == 'M') ? 'machos' : 'hembras';
+            $tabla = 'animales';
 
-        return $respuesta = ModeloAnimales::mdlEliminarAnimal($tabla,$item,$idAnimal);
+            return $respuesta = ModeloAnimales::mdlEliminarAnimal($tabla,$item,$valor);
+
+        }
 
     }
 
