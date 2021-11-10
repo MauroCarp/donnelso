@@ -149,6 +149,18 @@
 					</a>
 
 				</li>
+				
+				<li>
+
+					<a href="consumo">
+
+						<i class="fa fa-area-chart"></i>
+						
+						<span>Consumo</span>
+
+					</a>
+
+				</li>
 
 				<li>
 
@@ -157,18 +169,6 @@
 						<i class="fa fa-plus-square"></i>
 						
 						<span>Sanidad</span>
-
-					</a>
-
-				</li>
-
-				<li>
-
-					<a href="consumo">
-
-						<i class="fa fa-area-chart"></i>
-						
-						<span>Consumo</span>
 
 					</a>
 
