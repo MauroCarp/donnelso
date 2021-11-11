@@ -292,7 +292,92 @@ class ControladorVentas{
 
             $valor = $_GET['idVenta'];
 
+            $respuesta = ControladorVentas::ctrMostrarVentas($item,$valor);
+            
+            // ACTUALIZO STOCK QUE NO SEA POLLO NI VACA
+
+            $animal = $respuesta[0]['animal'];
+            
+            $seccion = $respuesta[0]['seccion'];
+
+            $cantidad = $respuesta[0]['cantidad'];
+
+            if($animal != 'pollo' AND $animal != 'vaca'){
+
+                $cantidad = 0;
+
+                switch ($seccion) {
+                    case 'entero':
+                            $cantidad = 1;
+                        break;
+                    
+                    case 'medio':
+                            $cantidad = 0.5;
+                        break;
+                    
+                    case 'cuartoDel':
+                            $cantidad = 0.25;
+                        break;
+                    
+                    case 'cuartoTra':
+                            $cantidad = 0.25;
+                        break;
+
+                        case 'costillar':
+                            $cantidad = 0.25;
+                        break;
+                    
+                    default:
+                        # code...
+                        break;
+                }
+
+                $item = 'animal';
+
+                $valor = $animal;
+                
+                $operador = '+';
+
+                $respuesta = ControladorStock::ctrActualizarStock($item,$valor,$operador,$cantidad);
+                
+            }else{
+
+                // ACTUALIZO STOCK POLLO O VACA
+                if ( $animal == 'vaca'){
+                        
+                    // ACTUALIZO STOCK DE VACAS
+
+                    $item = 'animal';
+
+                    $valor = 'vaca';
+                    
+                    $operador = '+';
+
+                    $respuesta = ControladorStock::ctrActualizarStock($item,$valor,$operador,$cantidad);
+
+                }else{
+                    // ACTUALIZAR STOCK DE POLLO
+
+                    $item = 'animal';
+
+                    $valor = 'pollo';
+                    
+                    $operador = '+';
+
+                    $respuesta = ControladorStock::ctrActualizarStock($item,$valor,$operador,$cantidad);
+                
+                }
+    
+            }
+
+            $item = 'id';
+
+            $valor = $_GET['idVenta'];
+
+            // ELIMINO VENTA
             $respuesta = ModeloVentas::mdlEliminarVenta($tabla, $item,$valor);
+
+
 
             if($respuesta == "ok"){
                 
