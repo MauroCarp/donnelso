@@ -21,6 +21,79 @@ class ControladorVentas{
 
             $respuesta = ModeloVentas::mdlNuevaVenta($tabla,$datos);
             
+            // ACTUALIZO STOCK QUE NO SEA POLLO NI VACA
+            
+            if($_POST['animal'] != 'pollo' AND $_POST['animal'] != 'vaca'){
+
+                $cantidad = 0;
+
+                switch ($_POST['seccion']) {
+                    case 'entero':
+                            $cantidad = 1;
+                        break;
+                    
+                    case 'medio':
+                            $cantidad = 0.5;
+                        break;
+                    
+                    case 'cuartoDel':
+                            $cantidad = 0.25;
+                        break;
+                    
+                    case 'cuartoTra':
+                            $cantidad = 0.25;
+                        break;
+
+                        case 'costillar':
+                            $cantidad = 0.25;
+                        break;
+                    
+                    default:
+                        # code...
+                        break;
+                }
+
+                $item = 'animal';
+
+                $valor = $_POST['animal'];
+                
+                $operador = '-';
+
+                $respuesta = ControladorStock::ctrActualizarStock($item,$valor,$operador,$cantidad);
+                
+            }else{
+
+                // ACTUALIZO STOCK POLLO O VACA
+                if ( $_POST['animal'] == 'vaca'){
+                        
+                    // ACTUALIZO STOCK DE VACAS
+                    $cantidad = $_POST['cantidad'];
+
+                    $item = 'animal';
+
+                    $valor = 'vaca';
+                    
+                    $operador = '-';
+
+                    $respuesta = ControladorStock::ctrActualizarStock($item,$valor,$operador,$cantidad);
+
+                }else{
+                    // ACTUALIZAR STOCK DE POLLO
+
+                    $cantidad = $_POST['cantidad'];
+
+                    $item = 'animal';
+
+                    $valor = 'pollo';
+                    
+                    $operador = '-';
+
+                    $respuesta = ControladorStock::ctrActualizarStock($item,$valor,$operador,$cantidad);
+                
+                }
+    
+            }
+
             if($respuesta == 'ok'){
                     
                 echo '<script>
@@ -68,6 +141,7 @@ class ControladorVentas{
                 </script>';
             
             }
+
         }
     }
   
@@ -89,40 +163,6 @@ class ControladorVentas{
             
             if($_POST['caravanaFaenar'] != 'frizado' AND $_POST['animalFaenar'] != 'pollo' AND $_POST['animalFaenar'] != 'vaca'){
                     
-                    // ACTUALIZO STOCK
-
-                    $cantidad = 0;
-
-                    switch ($_POST['seccionFaenar']) {
-                        case 'entero':
-                                $cantidad = 1;
-                            break;
-                        
-                        case 'medio':
-                                $cantidad = 0.5;
-                            break;
-                        
-                        case 'cuartoDel':
-                                $cantidad = 0.25;
-                            break;
-                        
-                        case 'cuartoTra':
-                                $cantidad = 0.25;
-                            break;
-                        
-                        default:
-                            # code...
-                            break;
-                    }
-
-                    $item = 'animal';
-
-                    $valor = $_POST['animalFaenar'];
-                    
-                    $operador = '-';
-
-                    $respuesta = ControladorStock::ctrActualizarStock($item,$valor,$operador,$cantidad);
-
                     // ELIMINO ANIMAL VENDIDO
 
                     $item = 'tipo'; 
@@ -137,62 +177,46 @@ class ControladorVentas{
 
 
 
-            }else{
+            }
+
+            if ( $_POST['animalFaenar'] == 'vaca'){
                 
-                if ( $_POST['animalFaenar'] == 'vaca'){
-                        var_dump('ENTRO A VACAS');
-                    // ACTUALIZO STOCK DE VACAS
-                    $caravanas = $_POST['caravanaVacasVenta'];
+                // ELIMINO CARAVANAS VENDIDAS
+                $caravanas = $_POST['caravanaVacasVenta'];
 
-                    $cantidad = sizeof($caravanas);
-
-                    $item = 'animal';
-
-                    $valor = 'vaca';
+                $cantidad = sizeof($caravanas);
                     
-                    $operador = '-';
+                $item = 'tipo'; 
+                
+                $valor = 'vaca';
 
-                    $respuesta = ControladorStock::ctrActualizarStock($item,$valor,$operador,$cantidad);
+                $item2 = 'caravana';
 
-                    // ELIMINO CARAVANAS VENDIDAS
+                for ($i=0; $i < $cantidad ; $i++) { 
                     
-                    $item = 'tipo'; 
-                    
-                    $item2 = 'caravana';
+                    $valor2 = $caravanas[$i];
 
-                    for ($i=0; $i < $cantidad ; $i++) { 
-                        
-                        $valor2 = $caravanas[$i];
-    
-                        $respuesta = ControladorAnimales::ctrEliminarAnimal($item,$valor,$item2,$valor2);
+                    $respuesta = ControladorAnimales::ctrEliminarAnimal($item,$valor,$item2,$valor2);
 
-                    }
+                }
 
-                }else{
-                    var_dump("ENTRO A POLLOS");
-                    // ACTUALIZAR STOCK DE POLLO
-                    $cantidad = $_POST['cantidadVenta'];
+            }
+            
+            if($_POST['animalFaenar'] == 'pollo'){
 
-                    $item = 'animal';
+                // ELIMINAR POLLOS
 
-                    $valor = 'pollo';
-                    
-                    $operador = '-';
+                $item = 'tipo'; 
 
-                    $respuesta = ControladorStock::ctrActualizarStock($item,$valor,$operador,$cantidad);
-                    // ELIMINAR POLLOS
+                $valor = "pollo";
+                
+                $item2 = null;
 
-                    $item = 'tipo'; 
-                    
-                    $item2 = null;
+                $valor2 = null;
 
-                    $valor2 = null;
-
-                    for ($i=0; $i < $cantidad ; $i++) { 
-                                
-                        $respuesta = ControladorAnimales::ctrEliminarAnimal($item,$valor,$item2,$valor2);
-
-                    }
+                for ($i=0; $i < $cantidad ; $i++) { 
+                            
+                    $respuesta = ControladorAnimales::ctrEliminarAnimal($item,$valor,$item2,$valor2);
 
                 }
 
@@ -245,7 +269,9 @@ class ControladorVentas{
                 </script>';
             
             }
+            
         }
+
     }
 
     static public function ctrMostrarVentas($item,$valor){

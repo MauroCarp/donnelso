@@ -53,13 +53,14 @@
         $respuesta = ControladorVentas::ctrMostrarVentas($item,$valor);
 
         for ($i=0; $i < sizeOf($respuesta) ; $i++) { 
+          
           $seccionCantidad = ($respuesta[$i]['animal'] == 'pollo' OR $respuesta[$i]['animal'] == 'vaca') ? $respuesta[$i]['cantidad'] : ucfirst($respuesta[$i]['seccion']); 
           echo "<tr>
                       <td>".$respuesta[$i]['vendedor']."</td>
                       <td>".$respuesta[$i]['comprador']."</td>
                       <td>".ucfirst($respuesta[$i]['animal'])."</td>
                       <td>".$seccionCantidad."</td>
-                      <td>".$respuesta[$i]['fecha']."</td>
+                      <td>".formatearFecha($respuesta[$i]['fecha'])."</td>
                       <td>
                           
                           <div class='btn-group'>
