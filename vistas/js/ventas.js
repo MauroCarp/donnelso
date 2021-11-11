@@ -238,3 +238,53 @@ const cargarSelectListosVenta = (tipo,selectId)=>{
 	})
 
 }
+
+const validarStock = ()=>{
+
+	let animal = $('input[name="animal"]:checked').val()
+
+	let data = `mostrarStock=true`
+
+	let url = 'ajax/ventas.ajax.php'
+
+	$.ajax({
+		method:'post',
+		url,
+		data,
+		success:(response)=>{
+
+			let respuesta = JSON.parse(response)
+
+			if(respuesta[animal] <= 0){
+
+				$('button[name="cargarVenta"]').attr('disabled','disabled')
+				$('#noHayStock').show()
+				
+			}else{
+				
+				$('button[name="cargarVenta"]').removeAttr('disabled','disabled')
+				$('#noHayStock').hide()
+			
+			}
+
+		}
+	})
+}
+
+$('button[data-target="#ventanaModalPreVenta"]').on('click',()=>{
+
+	validarStock()
+	
+})
+
+$('a[data-target="#ventanaModalPreVenta"]').on('click',()=>{
+
+	validarStock()
+	
+})
+
+$('input[name="animal"]').on('change',function(){
+
+	validarStock()
+	
+})

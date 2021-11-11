@@ -6,6 +6,9 @@ require_once "../modelos/ventas.modelo.php";
 require_once "../controladores/animales.controlador.php";
 require_once "../modelos/animales.modelo.php";
 
+require_once "../controladores/stock.controlador.php";
+require_once "../modelos/stock.modelo.php";
+
 if(isset($_POST['idVenta'])){
     
     $item = 'id';
@@ -43,6 +46,20 @@ if(isset($_POST['tipo'])){
 
     echo implode('',$opts);
 
+}
+
+if(isset($_POST['mostrarStock'])){
+    
+    $item = null;
+    
+    $valor = null;
+    
+    $respuesta = ControladorStock::ctrMostrarStock($item,$valor);
+    
+    // $stockValido = ($respuesta > 0) ? true : false;
+
+    // echo $stockValido;
+print_r(json_encode($respuesta));
 }
 
 
