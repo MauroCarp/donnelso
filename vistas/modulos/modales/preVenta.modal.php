@@ -89,6 +89,11 @@
                                         </label>
                 
                                         <label>
+                                            <input type="radio" name="seccion" class="hide" value="costillar"/>
+                                            <i class="icon icon-costillar"></i>
+                                        </label>
+                
+                                        <label>
                                             <input type="radio" name="seccion" class="hide" value="cuartoTra"/>
                                             <i class="icon icon-cuartoTra"></i>
                                         </label>
