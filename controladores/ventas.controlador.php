@@ -454,7 +454,6 @@ class ControladorVentas{
 
                 $respuesta = ControladorStock::ctrActualizarStockChazinadosSumarRestar($item,$kilos[$i],$operador);
 
-                // var_dump($respuesta);
             }
 
 

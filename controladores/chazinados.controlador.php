@@ -277,7 +277,7 @@ class ControladorChazinados{
 
                         if(result.value){
                         
-                            window.location = "chazinados";
+                            window.location = "ventasChazinado";
 
                         }
 
@@ -300,7 +300,7 @@ class ControladorChazinados{
 
                     if(result.value){
                     
-                        window.location = "chazinados";
+                        window.location = "ventasChazinado";
 
                     }
 

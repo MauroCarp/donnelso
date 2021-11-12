@@ -44,43 +44,85 @@ if( isset($_FILES["nuevosDatos"]) ){
 		$sheetCount = count($Reader->sheets());
         
 		for($i=0;$i<$sheetCount;$i++){
-            
+
             $Reader->ChangeSheet($i);
-            
+        
+            $rowValida = FALSE;
+
+            $rowNumber = 0;
+
             foreach ($Reader as $Row){
 
                 $rowNumber++;
 
                 if($rowValida == TRUE){   
 
-                    $caravanaNumero   =   $Row[0];
-                    $caravanaColor   =   $Row[1];
-                    $sexo   =   $Row[2];
-                    $edad   =   $Row[3];
-                    $proveedor   =   $Row[4];
-                    $servida = $Row[5];
-
-                    $tipoTemp = ($tipo == 'ovino' AND $sexo == 'M') ? 'cordero' : $tipo;
-
-                    $idAnimal = $tipoTemp.$caravanaNumero.$caravanaColor;
-
-                    $caravana = $caravanaNumero.$caravanaColor;
-                    
-                    $sql = "INSERT INTO animales(idAnimal,tipo,caravana,edad,proveedor,sexo)VALUES('$idAnimal','$tipoTemp','$caravana','$edad','$proveedor','$sexo')";
-                    // echo "$sql<br>";
-
-                    mysqli_query($conexion,$sql);
-                    
-                    echo mysqli_error($conexion);
-                    
-                    $tabla = ($sexo == 'H') ? 'hembras' : 'machos';
+                    if($tipo == 'ovino'){
                         
-                    $sql = "INSERT INTO $tabla(idAnimal)VALUES('$idAnimal')";
+                        $caravanaNumero   =   $Row[0];
+                        $caravanaColor   =   $Row[1];
+                        $sexo   =   $Row[2];
+                        $edad   =   $Row[3];
+                        $proveedor   =   $Row[4];
+                        $servida = $Row[5];
+
+                        $tipoTemp = ($tipo == 'ovino' AND $sexo == 'M') ? 'cordero' : $tipo;
+
+                        $idAnimal = $tipoTemp.$caravanaNumero.$caravanaColor;
+
+                        $caravana = $caravanaNumero.$caravanaColor;
+                        
+
+                        $sql = "INSERT INTO animales(idAnimal,tipo,caravana,edad,proveedor,sexo,destino)VALUES('$idAnimal','$tipoTemp','$caravana','$edad','$proveedor','$sexo','Reproductor')";
+                        // echo "$sql<br>";
+
+                        mysqli_query($conexion,$sql);
+                        
+                        echo mysqli_error($conexion);
+                        
+                        $tabla = ($sexo == 'H') ? 'hembras' : 'machos';
+
+                        $intoEstadoRodeo = ($sexo == 'H') ? ',estadoRodeo' : '';
+
+                        $valueEstadoRodeo = ($sexo == 'H') ? ",'Descanso'" : '';
+                            
+                        $sql = "INSERT INTO $tabla(idAnimal $intoEstadoRodeo)VALUES('$idAnimal' $valueEstadoRodeo)";
+                        
+                        // echo "$sql<hr>";
+                        mysqli_query($conexion,$sql);
+                        
+                        echo mysqli_error($conexion);
                     
-                    // echo "$sql<hr>";
-                    mysqli_query($conexion,$sql);
-                    
-                    echo mysqli_error($conexion);
+                    }else{
+    
+                            $caravanaNumero   =   $Row[0];
+                            $sexo   =   $Row[1];
+                            $proveedor   =  'Propio';
+    
+                            $idAnimal = $tipo.$caravanaNumero;
+    
+                            $sql = "INSERT INTO animales(idAnimal,tipo,caravana,proveedor,sexo,destino)VALUES('$idAnimal','$tipo','$caravanaNumero','$proveedor','$sexo','Reproductor')";
+
+                            mysqli_query($conexion,$sql);
+                            
+                            echo mysqli_error($conexion);
+                            
+                            $tabla = ($sexo == 'H') ? 'hembras' : 'machos';
+    
+                            $intoEstadoRodeo = ($sexo == 'H') ? ',estadoRodeo' : '';
+    
+                            $valueEstadoRodeo = ($sexo == 'H') ? ",'Descanso'" : '';
+                                
+                            $sql = "INSERT INTO $tabla(idAnimal $intoEstadoRodeo)VALUES('$idAnimal' $valueEstadoRodeo)";
+                            
+                            // echo "$sql<hr>";
+                            mysqli_query($conexion,$sql);
+                            
+                            echo mysqli_error($conexion);
+                        
+
+                    }
+
 
 
                 
